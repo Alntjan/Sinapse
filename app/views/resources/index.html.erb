@@ -1,0 +1,27 @@
+<div class="jumbotron resources-jumbotron">
+  <div class="container">
+    <h1 class="text-center"><big class="icon-diamond" style="display: block;"></big>
+      Recursos</h1>
+    <p class="text-center"><small>Um projecto pode começar com um recurso...</small></p>
+    <p class="text-center"><a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
+  </div>
+</div>
+<% @resources.reverse.each do |resource| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="media project-entrie">
+          <div class="media-left media-middle">
+            <a href="<%= project_path(resource.project) %>">
+              <span class="icon-diamond"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= link_to resource.name, project_path(resource.project) %></h4>
+            <small>Recurso de <%= link_to resource.user.name, user_path(resource.user) %> em  <%= link_to resource.project.title, project_path(resource.project) %></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

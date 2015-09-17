@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>User</th>
+      <th>Type</th>
+      <th>Inspect</th>
+    </tr>
+  </thead>
+  <% @project_entries.each do |entry| %>
+  <tr>
+    <td><%= entry.name %></td>
+    <td><%= entry.description %></td>
+    <td><%= entry.user.name %></td>
+    <td><%= entry.type %></td>
+    <td><small><%= entry.inspect %></small></td>
+  </tr>
+  <% end %>
+</table>
+
+<h3>Idea</h3>

@@ -1,0 +1,172 @@
+<div class="jumbotron users-jumbotron">
+  <div class="container text-center">
+    <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px; background-color:#f9f9fa; border: 1px solid #ecf0f1; margin-top:25px; border-radius:10px;", :class => "center-block" ) %>
+    <h1 class="text-center"><%= @user.name %></h1>
+    <ul class="user-summary" style="color: #ecf0f1; margin-top:10px;">
+      <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>
+      <li><%= @user.ideas.count %><span class="icon-bulb"></span></li>
+      <li><%= @user.resources.count %><span class="icon-diamond"></span></li>
+      <li><%= @user.appliances.count %><span class="icon-user"></span></li>
+    </ul>
+    <p class="text-center">
+      <a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a>
+      <% if (current_user.id == @user.id) %>
+        <a class="btn btn-primary btn-sm" href="<%= edit_user_registration_path %>" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;margin-left:10px;">Editar Perfil</a>
+      <% end %>
+    </p>
+    <p class="text-center"><small><%= @user.description %></small></p>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="jumbotron">
+  <div class="container text-center">
+    <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px; background-color:#f9f9fa; border: 1px solid #ecf0f1; margin-top:25px;", :class => "center-block" ) %>
+    <h1 class="text-center"><%= @user.name %></h1>
+    <ul class="user-summary">
+      <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>
+      <li><%= @user.ideas.count %><span class="icon-bulb"></span></li>
+      <li><%= @user.resources.count %><span class="icon-diamond"></span></li>
+      <li><%= @user.appliances.count %><span class="icon-user"></span></li>
+    </ul>
+    <p class="text-center">
+    </p>
+    <p class="user-description text-center"><%= @user.description %></p>
+  </div>
+</div> -->
+<h4 class="hidden">
+  Entries<br>
+  <small><%= pluralize(@user.project_entries.count, 'entrada', 'entradas') %><br>
+  <%= pluralize(@user.ideas.count, 'ideia', 'ideias') %><br>
+  <%= pluralize(@user.resources.count, 'recurso', 'recursos') %><br>
+  <%= pluralize(@user.projects.uniq.count, 'projecto', 'projectos') %></small>
+</h4>
+<div class="container" style="padding-bottom:200px;">
+  <div class="row">
+    <div class="col-md-12">
+      <% if @user.project_entries.count > 0 %>
+      <div class="clearfix">
+        <div class="project-entries-filter pull-left">
+          <button type="button" class="btn btn-sm btn-default"><span class="icon-star"></span></button>
+          <button type="button" class="btn btn-sm btn-default"><span class="icon-user"></span> participou em <%= pluralize(@user.projects.uniq.count, 'projecto', 'projectos') %></button>
+        </div>
+        <div class="btn-group btn-group-sm pull-right project-entries-filter" role="group" aria-label="...">
+          <% if (params[:type].present? and params[:type] == "Idea") %>
+            <%= link_to '<span class="icon-bulb"></span>'.html_safe, user_path(), :class => "btn btn-default active" %>
+          <% else %>
+            <%= link_to '<span class="icon-bulb"></span>'.html_safe, user_path(type: "Idea"), :class => "btn btn-default" %>
+          <% end %>
+          <% if (params[:type].present? and params[:type] == "Resource") %>
+            <%= link_to '<span class="icon-diamond"></span>'.html_safe, user_path(), :class => "btn btn-default active" %>
+          <% else %>
+            <%= link_to '<span class="icon-diamond"></span>'.html_safe, user_path(type: "Resource"), :class => "btn btn-default" %>
+          <% end %>
+          <% if (params[:type].present? and params[:type] == "Appliance") %>
+            <%= link_to '<span class="icon-user"></span>'.html_safe, user_path(), :class => "btn btn-default active" %>
+          <% else %>
+            <%= link_to '<span class="icon-user"></span>'.html_safe, user_path(type: "Appliance"), :class => "btn btn-default" %>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+      <% if @user.project_entries.count == 0 %>
+        <div class="row">
+          <div class="col-xs-12">
+            <p class="text-center project-entrie">
+              Ainda não participaste em nenhum projecto!
+            </p>
+          </div>
+        </div>
+      <% end %>
+      <% @entries.reverse.each do |entry| %>
+        <% if entry.is_a?(Idea) %>
+        <div class="media project-entrie">
+          <div class="media-left media-middle">
+            <a href="<%= project_project_entry_path(@user.id, entry.id) %>">
+              <span class="icon-bulb"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= link_to entry.name, project_project_entry_path(@user.id, entry.id) %></h4>
+            <small>Ideia para o projecto <%= link_to entry.project.title, project_path(entry.project) %></small>
+          </div>
+        </div>
+        <!-- <%= link_to entry.name, project_project_entry_path(@user.id, entry.id) %>
+        <%= entry.description %>
+        <%= entry.user_id %>
+        <%= entry.type %>
+        <%= entry.inspect %> -->
+
+        <% elsif entry.is_a?(Resource) %>
+        <div class="media project-entrie">
+          <div class="media-left media-middle">
+            <a href="<%= project_project_entry_path(@user.id, entry.id) %>">
+              <span class="icon-diamond"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= link_to entry.name, project_project_entry_path(@user.id, entry.id) %></h4>
+            <small>Recurso para o projecto <%= link_to entry.project.title, project_path(entry.project) %></small>
+          </div>
+        </div>
+        <% elsif entry.is_a?(Appliance) %>
+        <div class="media project-entrie">
+          <div class="media-left media-middle">
+            <a href="<%= project_project_entry_path(@user.id, entry.id) %>">
+              <span class="icon-user"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Candidatou-se ao projecto <%= link_to entry.project.title, project_path(entry.project) %>!</h4>
+            <small>Não percas a tua oportunidade.</small>
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>User</th>
+      <th>Type</th>
+      <th>Inspect</th>
+    </tr>
+  </thead>
+  <% @user.project_entries.each do |entry| %>
+  <tr>
+    <td><%= link_to entry.name, project_project_entry_path(entry.project, entry.id) %></td>
+    <td><%= entry.description %></td>
+    <td><%= link_to entry.project.title, project_path(entry.project) %></td>
+    <td><%= entry.type %></td>
+    <td><small><%= entry.inspect %></small></td>
+  </tr>
+  <% end %>
+</table>
+
+<h4>Projects in wich the user is envolved</h4>
+<% @user.projects.uniq.each do |p| %>
+  <%= p.title %><br>
+
+<% end %> -->

@@ -1,0 +1,69 @@
+<!-- <div class="jumbotron">
+  <div class="container">
+    <h1>Projectos</h1>
+    <p>Aqui podes encontrar todos os projectos em que podes contribuir!</p>
+    <p><a class="btn btn-primary btn-sm pull-right" href="#" role="button" data-toggle="modal" data-target="#new-project"><span class="icon-lab"></span> Começar Projecto</a></p>
+  </div>
+</div> -->
+<div class="jumbotron projects-jumbotron">
+  <div class="container">
+    <h1 class="text-center"><big class="icon-lab" style="display: block;"></big>
+      Projectos</h1>
+    <p class="text-center"><small>Aqui vais encontrar o teu próximo projecto!</small></p>
+    <p class="text-center"><a class="btn btn-primary btn-sm" href="#" role="button" data-toggle="modal" data-target="#new-project" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
+  </div>
+</div>
+<div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Novo Projecto</h4>
+      </div> -->
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
+
+        <%= form_for Project.new, :html => {class: '' } do |p| %>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label" style="color:#34495e;">Titulo</label>
+            <%= p.text_field :title, class: "form-control", type: "text" %>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label" style="color:#34495e;">Breve Descrição</label>
+            <%= p.text_field :about, class: "form-control" %>
+          </div>
+          <%= p.submit 'Criar Projecto', :class => 'btn btn-primary btn-block'  %>
+          <% end %>
+
+      </div>
+      <!-- <div class="modal-footer" style="background-color: #ecf0f1;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <% @projects.reverse.each do |project| %>
+      <div class="col-md-4">
+        <div class="project">
+          <%= link_to project_path(project), :class => "thumbnail" do %>
+            <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px;" ) %>
+          <% end %>
+          <h6><%= link_to project.title, project_path(project) %></h6>
+          <ul>
+            <!-- <li><%= project.project_entries.count %><span class="icon"></span></li> -->
+            <li><%= project.ideas.count %><span class="icon-bulb"></span></li>
+            <li><%= project.resources.count %><span class="icon-diamond"></span></li>
+            <li><%= project.appliances.count %><span class="icon-user"></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 text-center hidden">
+        <%= project.about %>
+        <%= project.inspect %>
+      </div>
+    <% end %>
+  </div>
+</div>

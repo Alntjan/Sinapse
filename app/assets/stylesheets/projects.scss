@@ -1,0 +1,206 @@
+// Place all the styles related to the projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$clouds: #ecf0f1;
+
+
+table{
+  text-align: center;
+}
+
+th, td{
+  padding: 10px;
+}
+
+h1{
+  text-transform: capitalize;
+}
+
+.project{
+  background-color: #ffffff;
+  text-align: center;
+  padding: 25px;
+  border: 1px solid $clouds;
+  margin-bottom: 25px;
+}
+
+.project h6 a{
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+
+.project ul{
+  list-style: none;
+  padding: 0;
+  color: #395066;
+  margin-bottom: 0;
+}
+
+.project ul li{
+  display: inline-block;
+}
+
+.project ul li:nth-child(2){
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.project ul li span{
+  margin-left: 5px;
+}
+
+.project .thumbnail{
+  background-color: #f9f9fa;
+}
+
+.project-about{
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #ecf0f1;
+  color: #7f8c8d;
+}
+
+.project-entrie {
+  background-color: #fff;
+  border: 1px solid #ecf0f1;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.project-entrie .media-left{
+  font-size: 2em;
+  padding-right: 15px;
+  padding-left: 5px;
+}
+
+.project-no-entries {
+  background-color: #fff;
+  border: 1px solid $clouds;
+  color: #95a5a6;
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+}
+
+.project-no-entries h2 {
+  font-size: 3em;
+}
+
+.project-actions {
+  color: #1abc9c;
+  border: 1px solid $clouds;
+  margin-bottom: 15px;
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.project-entries-filter button{
+  border-color: $clouds;
+  color: #bdc3c7;
+  font-weight: 100;
+}
+
+.mini-icon{
+  font-size: 0.4em;
+  // border: 1px solid #337ab7;
+  border-radius: 50%;
+  padding: 4px;
+  position: absolute;
+  right: 5px;
+  top: 54px;
+  background-color: #1abc9c;
+  color: #fff;
+  line-height: 10px;
+  height: 20px;
+}
+
+.idea{
+  background-color: #ffffff;
+  border: 1px solid $clouds;
+  padding: 25px;
+  margin-bottom: 15px;
+}
+
+.idea h4{
+  margin: 0;
+}
+
+
+/* HOMEPAGE */
+
+.homepage-bg{
+  height: 100vh;
+  background: rgba(44,62,80,1);
+background: -moz-linear-gradient(-45deg, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 10%, rgba(52,152,219,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(44,62,80,1)), color-stop(10%, rgba(52,73,94,1)), color-stop(100%, rgba(52,152,219,1)));
+background: -webkit-linear-gradient(-45deg, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 10%, rgba(52,152,219,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 10%, rgba(52,152,219,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 10%, rgba(52,152,219,1) 100%);
+background: linear-gradient(135deg, rgba(44,62,80,1) 0%, rgba(52,73,94,1) 10%, rgba(52,152,219,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c3e50', endColorstr='#3498db', GradientType=1 );
+text-align: center;
+}
+
+#sinapse-title{
+  color: #fff;
+  padding: 20% 10% 0 10%;
+  margin: 0;
+}
+
+.general-stats{
+  color: #fff;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+ .general-stats span{
+  margin: 0 10px 0 5px;
+}
+
+.home-cta{
+  margin-top: 50px;
+  background-color: #1abc9c;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+}
+
+.navbar.navbar-default{
+  background-color: red;
+}
+
+
+.jumbotron.projects-jumbotron{
+  background: rgba(36,51,66,1);
+  background: -moz-linear-gradient(-45deg, rgba(36,51,66,1) 0%, rgba(52,73,94,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(36,51,66,1)), color-stop(100%, rgba(52,73,94,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(36,51,66,1) 0%, rgba(52,73,94,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(36,51,66,1) 0%, rgba(52,73,94,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(36,51,66,1) 0%, rgba(52,73,94,1) 100%);
+  background: linear-gradient(135deg, rgba(36,51,66,1) 0%, rgba(52,73,94,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#243342', endColorstr='#34495e', GradientType=1 );
+padding-top: 50px;
+}
+
+.jumbotron.projects-jumbotron h1{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.jumbotron.projects-jumbotron h1 big{
+    font-weight: 300;
+    font-size: 4.5em;
+    margin-bottom: 25px;
+}
+
+.jumbotron.projects-jumbotron p{
+  color: #ecf0f1;
+}
+
+.jumbotron.projects-jumbotron a{
+  margin-top: 25px;
+}

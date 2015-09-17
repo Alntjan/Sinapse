@@ -1,0 +1,57 @@
+<div class="jumbotron users-jumbotron">
+  <div class="container">
+    <h1 class="text-center"><big class="icon-user" style="display: block;"></big>
+      Pessoas</h1>
+    <p class="text-center"><small>Um projecto pode começar com uma pessoa...</small></p>
+    <p class="text-center"><a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-md-4">
+        <div class="project">
+          <%= link_to user_path(user), :class => "thumbnail" do %>
+            <%= image_tag("placeholder.png", :alt => "User", :style => "height: 150px; display: block; padding: 35px 25px;" ) %>
+          <% end %>
+          <h6><%= link_to user.name, user_path(user) %></h6>
+          <ul>
+            <li><%= user.ideas.count %><span class="icon-bulb"></span></li>
+            <li><%= user.resources.count %><span class="icon-diamond"></span></li>
+            <li><%= user.appliances.count %><span class="icon-user"></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 text-center hidden">
+        <%= user.description %>
+        <%= user.age %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>About</th>
+      <th>Total Entries</th>
+      <th>Ideas</th>
+      <th>Resources</th>
+      <th>in x Projects</th>
+    </tr>
+  </thead>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.name, user_path(user) %></td>
+    <td><%= user.description %></td>
+    <td><%= user.project_entries.count %></td>
+    <td><%= user.ideas.count %></td>
+    <td><%= user.resources.count %></td>
+    <td><%= user.projects.count %></td>
+  </tr>
+<% end %>
+</table> -->

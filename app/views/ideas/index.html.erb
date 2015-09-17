@@ -1,0 +1,27 @@
+<div class="jumbotron ideas-jumbotron">
+  <div class="container">
+    <h1 class="text-center"><big class="icon-bulb" style="display: block;"></big>
+      Ideias</h1>
+    <p class="text-center"><small>Um projecto pode começar com uma ideia...</small></p>
+    <p class="text-center"><a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
+  </div>
+</div>
+<% @ideas.reverse.each do |idea| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="media project-entrie">
+          <div class="media-left media-middle">
+            <a href="<%= project_path(idea.project) %>">
+              <span class="icon-bulb"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= link_to idea.name, project_path(idea.project) %></h4>
+            <small>Ideia de <%= link_to idea.user.name, user_path(idea.user) %> em  <%= link_to idea.project.title, project_path(idea.project) %></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

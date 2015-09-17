@@ -1,0 +1,41 @@
+// Place all the styles related to the resources controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.navbar.navbar-default{
+  background-color: red;
+}
+
+
+.jumbotron.resources-jumbotron{
+  background: rgba(171,47,36,1);
+background: -moz-linear-gradient(-45deg, rgba(171,47,36,1) 0%, rgba(231,77,60,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(171,47,36,1)), color-stop(100%, rgba(231,77,60,1)));
+background: -webkit-linear-gradient(-45deg, rgba(171,47,36,1) 0%, rgba(231,77,60,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(171,47,36,1) 0%, rgba(231,77,60,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(171,47,36,1) 0%, rgba(231,77,60,1) 100%);
+background: linear-gradient(135deg, rgba(171,47,36,1) 0%, rgba(231,77,60,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ab2f24', endColorstr='#e74d3c', GradientType=1 );
+padding-top: 50px;
+}
+
+.jumbotron.resources-jumbotron h1{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.jumbotron.resources-jumbotron h1 big{
+    font-weight: 300;
+    font-size: 4.5em;
+    margin-bottom: 25px;
+}
+
+.jumbotron.resources-jumbotron p{
+  color: #ecf0f1;
+}
+
+.jumbotron.resources-jumbotron a{
+  margin-top: 25px;
+}

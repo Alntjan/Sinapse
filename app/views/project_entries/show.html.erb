@@ -1,0 +1,5 @@
+<% if @project_entry.is_a?(Idea) %>
+  <h1>Idea</h1>
+<% elsif @project_entry.is_a?(Resource) %>
+<h1>Resource</h1>
+<% end %>

@@ -1,0 +1,12 @@
+<div class="homepage-bg">
+  <h1 class="text-center" id="sinapse-title">Sinapse</h1>
+  <p class="general-stats text-center">
+    <%= @projects.count %><span class="icon-lab"></span>
+    <%= @ideas.count %><span class="icon-bulb"></span>
+    <%= @resources.count %><span class="icon-diamond"></span>
+    <%= @appliances.count %><span class="icon-user" style="position:relative;"><small style="position: absolute; right: -5px; top:-5px; font-size: 0.7em;"><%= @users.count %></small></span>
+  </p>
+  <p>
+    <a href="/projects" class="btn btn-primary home-cta">começar projecto</a>
+  </p>
+</div>

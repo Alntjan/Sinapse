@@ -1,0 +1,57 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user-summary{
+  list-style: none;
+  padding: 0;
+  color: #395066;
+  margin-bottom: 15px;
+}
+
+.user-summary li{
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.user-summary li span{
+  margin-left: 5px;
+}
+
+.user-description {
+  color: #95a5a6;
+}
+
+.jumbotron.users-jumbotron{
+  background: rgba(38,115,163,1);
+background: -moz-linear-gradient(-45deg, rgba(38,115,163,1) 0%, rgba(52,152,219,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(38,115,163,1)), color-stop(100%, rgba(52,152,219,1)));
+background: -webkit-linear-gradient(-45deg, rgba(38,115,163,1) 0%, rgba(52,152,219,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(38,115,163,1) 0%, rgba(52,152,219,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(38,115,163,1) 0%, rgba(52,152,219,1) 100%);
+background: linear-gradient(135deg, rgba(38,115,163,1) 0%, rgba(52,152,219,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2673a3', endColorstr='#3498db', GradientType=1 );
+padding-top: 50px;
+}
+
+.jumbotron.users-jumbotron h1{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.jumbotron.users-jumbotron h1 big{
+    font-weight: 300;
+    font-size: 4.5em;
+    margin-bottom: 25px;
+}
+
+.jumbotron.users-jumbotron p{
+  color: #ecf0f1;
+}
+
+.jumbotron.users-jumbotron a{
+  margin-top: 25px;
+}
