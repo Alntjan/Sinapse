@@ -14,4 +14,14 @@ class User < ActiveRecord::Base
    ideas.count
   end
 
+  def gravatar_url
+    stripped_email = email.strip
+    downcased_email = stripped_email.downcase
+    hash = Digest::MD5.hexdigest(downcased_email)
+
+    require 'uri'
+    default_image = {d: 'https://cdn.shopify.com/s/files/1/0266/9827/files/Gravtar.png'}.to_query
+    "http://gravatar.com/avatar/#{hash}?#{default_image}&s=200"
+  end
+
 end

@@ -1,6 +1,6 @@
 <div class="jumbotron users-jumbotron">
   <div class="container text-center">
-    <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px; background-color:#f9f9fa; border: 1px solid #ecf0f1; margin-top:25px; border-radius:10px;", :class => "center-block" ) %>
+    <%= image_tag(@user.gravatar_url, :alt => "Project", :style => "height: 150px; display: block;  background-color:#f9f9fa; margin-top:25px; border-radius:10px;", :class => "center-block" ) %>
     <h1 class="text-center"><%= @user.name %></h1>
     <ul class="user-summary" style="color: #ecf0f1; margin-top:10px;">
       <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>

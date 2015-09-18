@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$clouds: #ecf0f1;
+$wet: #34495e;
+$pomegranate: #c0392b;
+$alizarin: #e74c3c;
+$midnight: #2c3e50;
+
+
 .user-summary{
   list-style: none;
   padding: 0;
@@ -54,4 +61,52 @@ padding-top: 50px;
 
 .jumbotron.users-jumbotron a{
   margin-top: 25px;
+}
+
+.user{
+  text-align: center;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.user h6{
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 5px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-left: 1px solid #ecf0f1;
+  border-right: 1px solid #ecf0f1;
+  border-bottom: 1px solid #ecf0f1;
+  margin: 0;
+}
+
+.user h6 a{
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+
+.user ul{
+  list-style: none;
+  padding: 0;
+  color: #395066;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.user ul li{
+  display: inline-block;
+}
+
+.user ul li:nth-child(2){
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.user ul li span{
+  margin-left: 5px;
+}
+
+.user .thumbnail{
+  background-color: #f9f9fa;
 }

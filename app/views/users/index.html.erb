@@ -9,18 +9,20 @@
 <div class="container">
   <div class="row">
     <% @users.each do |user| %>
-      <div class="col-md-4">
-        <div class="project">
-          <%= link_to user_path(user), :class => "thumbnail" do %>
-            <%= image_tag("placeholder.png", :alt => "User", :style => "height: 150px; display: block; padding: 35px 25px;" ) %>
+      <div class="col-md-3">
+        <div class="user" style="position: relative;">
+          <%= link_to user_path(user), :class => "", :style => "height: 150px; width: 150px; position: relative;" do %>
+            <%= image_tag(user.gravatar_url, :alt => "User", :style => "display: block;  background-color:#ffffff; border-top-left-radius:10px; border-top-right-radius:10px; width:100%; border-top:1px solid #ecf0f1; border-left:1px solid #ecf0f1; border-right:1px solid #ecf0f1;", :class => "center-block" ) %>
+            <h6 class=""><%= link_to user.name, user_path(user) %></h6>
           <% end %>
-          <h6><%= link_to user.name, user_path(user) %></h6>
-          <ul>
+          <ul style="">
             <li><%= user.ideas.count %><span class="icon-bulb"></span></li>
             <li><%= user.resources.count %><span class="icon-diamond"></span></li>
             <li><%= user.appliances.count %><span class="icon-user"></span></li>
           </ul>
         </div>
+
+
       </div>
       <div class="col-md-8 text-center hidden">
         <%= user.description %>
