@@ -6,4 +6,6 @@ class Project < ActiveRecord::Base
   has_many :users, through: :ideas
   has_many :users, through: :resources
   has_many :users, through: :appliances
+
+  validates :title, presence: :true
 end

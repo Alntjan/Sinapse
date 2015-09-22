@@ -15,8 +15,13 @@ class ProjectsController < ApplicationController
     @entries = @entries.type(params[:type]) if params[:type].present?
   end
   def create
-    p = Project.create(params.require(:project).permit(:title, :about))
-    redirect_to project_path(p)
+    @project = Project.create(params.require(:project).permit(:title, :about))
+    if @project.save
+      redirect_to project_path(@project)
+    else
+      redirect_to "/projects",
+      error: "A criação do projecto falhou."
+    end
   end
   def delete
     Project.delete(params[:id])
