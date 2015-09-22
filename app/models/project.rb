@@ -8,4 +8,5 @@ class Project < ActiveRecord::Base
   has_many :users, through: :appliances
 
   validates :title, presence: :true
+  validates :title, length: {minimum: 3}
 end
