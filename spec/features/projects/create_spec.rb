@@ -25,7 +25,7 @@ describe "Creating projects" do
 
     create_project title: ""
 
-    expect(page).to have_content("Erro")
+    expect(page).to have_content("erro")
     expect(Project.count).to eq(0)
   end
 
@@ -34,7 +34,7 @@ describe "Creating projects" do
 
     create_project title: "Hi"
 
-    expect(page).to have_content("Erro")
+    expect(page).to have_content("erro")
     expect(Project.count).to eq(0)
   end
 

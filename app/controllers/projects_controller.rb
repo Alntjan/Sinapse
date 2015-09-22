@@ -2,6 +2,9 @@ class ProjectsController < ApplicationController
   def index
     @projects = Project.all
   end
+  def new
+    @project = Project.new
+  end
   def home
     @projects = Project.all
     @ideas = Idea.all
@@ -15,15 +18,19 @@ class ProjectsController < ApplicationController
     @entries = @entries.type(params[:type]) if params[:type].present?
   end
   def create
-    @project = Project.create(params.require(:project).permit(:title, :about))
+    @project = Project.create(project_params)
     if @project.save
-      redirect_to project_path(@project)
+      redirect_to @project
     else
-      redirect_to "/projects",
-      error: "A criação do projecto falhou."
+      render 'new'
     end
   end
   def delete
     Project.delete(params[:id])
+  end
+
+  private
+  def project_params
+    params.require(:project).permit(:title, :about)
   end
 end

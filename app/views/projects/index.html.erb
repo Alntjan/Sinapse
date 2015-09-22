@@ -13,12 +13,6 @@
     <p class="text-center"><a class="btn btn-primary btn-sm" href="#" role="button" data-toggle="modal" data-target="#new-project" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
   </div>
 </div>
-<% if !error.nil? %>
-  <div class="alert alert-danger alert-dismissible text-center" role="alert" style="margin-top: -32px; border-radius:0; padding-left:35px;">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Erro!</strong> <%= error.strip %>
-  </div>
-<% end %>
 <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
