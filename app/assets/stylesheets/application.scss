@@ -131,3 +131,12 @@ body{
 .jumbotron p{
   font-size: 1.125em;
 }
+
+
+/* FORMS */
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
