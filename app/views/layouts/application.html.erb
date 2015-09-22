@@ -41,7 +41,7 @@
             <ul class="dropdown-menu" style="padding:0;">
               <li><%= link_to current_user.name, user_path(current_user.id), class: "", style: "color:#000000 !important;" %></li>
               <li><%= link_to "Editar Perfil", edit_user_registration_path, class: "", style: "color:#000000 !important;" %></li>
-              <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn-logout" %></li>
+              <li><%= link_to "Logout", logout_path, class: "btn-logout" %></li>
             </ul>
           </li>
         </ul>
@@ -49,8 +49,8 @@
           <!-- <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-default navbar-btn navbar-right btn-logout" %>
           <%= link_to current_user.name, edit_user_registration_path, class: "btn navbar-btn navbar-right" %> -->
         <% else %>
-          <%= link_to "", new_user_registration_path, class: "btn icon-pen navbar-btn navbar-right" %>
-          <%= link_to "", new_user_session_path, class: "btn icon-key navbar-btn navbar-right" %>
+          <%= link_to "", register_path, class: "btn icon-pen navbar-btn navbar-right" %>
+          <%= link_to "", login_path, class: "btn icon-key navbar-btn navbar-right" %>
 
         <% end %>
       </div>
