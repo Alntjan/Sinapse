@@ -25,5 +25,20 @@ describe "Creating projects" do
     click_button 'Criar Projecto'
 
     expect(page).to have_content("Erro")
+    expect(Project.count).to eq(0)
+  end
+
+  it "redirects to project page on success although the project has no description" do
+    expect(Project.count).to eq(0)
+
+    visit "/projects"
+    click_link "Começar Projecto"
+    within("#new-project") do
+      fill_in 'project_title', :with => 'Titulo Teste'
+      fill_in 'project_about', :with => ''
+    end
+    click_button 'Criar Projecto'
+
+    expect(page).to have_content("Titulo Teste")
   end
 end
