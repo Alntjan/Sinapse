@@ -11,7 +11,12 @@ class ProjectEntriesController < ApplicationController
   end
   def create
     p = Project.find(params[:project_id])
-    p.project_entries.create(params.require(:project_entry).permit(:name, :description, :type, :user_id))
+    p.project_entries.create(project_entrie_params)
     redirect_to project_path(p)
+  end
+
+  private
+  def project_entrie_params
+    params.require(:project_entry).permit(:name, :description, :type, :user_id)
   end
 end
