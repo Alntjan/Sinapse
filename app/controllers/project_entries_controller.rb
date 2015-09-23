@@ -1,4 +1,6 @@
 class ProjectEntriesController < ApplicationController
+  before_filter :authenticate_admin!, only: [:create]
+
   def index
     p = Project.find(params[:project_id])
     @project_entries = p.project_entries.all
