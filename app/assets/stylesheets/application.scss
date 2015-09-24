@@ -116,6 +116,12 @@ body{
   font-weight: 300;
   border: 1px solid #fff;
 }
+.navbar-header{
+  width: 100%;
+}
+
+
+
 
 .jumbotron{
   background-color: #fff;
@@ -145,4 +151,18 @@ body{
 
 .popover-content{
   padding: 0;
+}
+
+@media (max-width: 768px) {
+  .nav.navbar-nav{
+    margin: 5px 0 0 0;
+    float: left;
+  }
+  .nav.navbar-nav li{
+    width: auto;
+    display: inline-block;
+  }
+  .navbar-header{
+    width: auto;
+  }
 }
