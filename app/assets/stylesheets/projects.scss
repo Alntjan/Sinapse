@@ -86,13 +86,23 @@ h1{
   font-size: 3em;
 }
 
+.project-actions-group {
+  margin-bottom: 25px;
+}
+
 .project-actions {
-  color: #1abc9c;
+  color: #3498db;
   border: 1px solid $clouds;
-  margin-bottom: 15px;
   position: relative;
   background-color: #fff;
   cursor: pointer;
+  border-radius:0 !important;
+  font-size:2em !important;
+  color: #3498db;
+}
+
+.project-actions > span {
+  position: relative;
 }
 
 .project-entries-filter button{
@@ -102,17 +112,10 @@ h1{
 }
 
 .mini-icon{
-  font-size: 0.4em;
-  // border: 1px solid #337ab7;
-  border-radius: 50%;
-  padding: 4px;
+  font-size: 0.3em;
   position: absolute;
-  right: 5px;
-  top: 54px;
-  background-color: #1abc9c;
-  color: #fff;
-  line-height: 10px;
-  height: 20px;
+  right: -8px;
+  top: 15px;
 }
 
 .idea{

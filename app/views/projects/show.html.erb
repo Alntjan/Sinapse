@@ -17,25 +17,13 @@
         </p>
       </div>
       <% if @project.project_entries.count > 0 %>
-        <div class="row">
-          <div class="col-xs-4">
-            <a class="project-actions btn-block" href="#" role="button" data-toggle="modal" data-target="#new-idea">
-                <h2 class="text-center"><span class="glyphicon glyphicon-plus mini-icon"></span><span class="icon-bulb"></span></h2>
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a class="project-actions btn-block" href="#" role="button" data-toggle="modal" data-target="#new-resource">
-                <h2 class="text-center"><span class="icon-diamond"><span class="glyphicon glyphicon-plus mini-icon"></span></span></h2>
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a class="project-actions btn-block" href="#" role="button" data-toggle="modal" data-target="#new-appliance">
-                <h2 class="text-center"><span class="icon-user"></span><span class="glyphicon glyphicon-plus mini-icon"></span></h2>
-            </a>
-          </div>
+        <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
+          <a href="#" role="button" data-toggle="modal" data-target="#new-idea" class="btn btn-default project-actions"><span class="icon-bulb"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
+          <a href="#" role="button" data-toggle="modal" data-target="#new-resource" class="btn btn-default project-actions"><span class="icon-diamond"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
+          <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-default project-actions"><span class="icon-user"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
         </div>
       <% end %>
-      <%= link_to "Eliminar", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default" %>
+      <%= link_to "Eliminar", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
     </div>
     <div class="col-md-8">
       <% if @project.project_entries.count > 0 %>
@@ -113,23 +101,23 @@
       <% end %>
       <% if @project.project_entries.count == 0 %>
         <div class="row">
-          <div class="col-xs-4">
-            <a class="project-no-entries btn-block"  href="#" role="button" data-toggle="modal" data-target="#new-idea">
-                <h2 class="text-center"><span class="icon-bulb"></span></h2>
-                <p class="text-center">Submeter Ideia!</p>
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a class="project-no-entries btn-block"  href="#" role="button" data-toggle="modal" data-target="#new-resource">
-                <h2 class="text-center"><span class="icon-diamond"></span></h2>
-                <p class="text-center">Submeter Recurso!</p>
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a class="project-no-entries btn-block" href="#" role="button" data-toggle="modal" data-target="#new-appliance">
-                <h2 class="text-center"><span class="icon-user"></span></h2>
-                <p class="text-center">Candidatar!</p>
-            </a>
+          <div class="col-xs-12">
+            <div class="media project-entrie">
+              <div class="media-left media-middle">
+                <a href="">
+                  <span class="icon-bubble"></span>
+                </a>
+              </div>
+              <div class="media-body media-middle">
+                <h4 class="media-heading media-middle">Começaste este projecto!</h4>
+                <p style="margin:0;">O teu projecto ainda não têm ideias, recursos ou candidaturas. Submete um destes para iniciares a actividade e mostrares às outras pessoas que este projecto vai avançar!</p>
+              </div>
+            </div>
+            <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
+              <a href="#" role="button" data-toggle="modal" data-target="#new-idea" class="btn btn-default project-actions"><span class="icon-bulb"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
+              <a href="#" role="button" data-toggle="modal" data-target="#new-resource" class="btn btn-default project-actions"><span class="icon-diamond"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
+              <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-default project-actions"><span class="icon-user"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
+            </div>
           </div>
         </div>
       <% end %>
