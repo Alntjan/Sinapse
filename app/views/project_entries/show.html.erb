@@ -1,5 +1,56 @@
-<% if @project_entry.is_a?(Idea) %>
-  <h1>Idea</h1>
-<% elsif @project_entry.is_a?(Resource) %>
-<h1>Resource</h1>
-<% end %>
+<div class="jumbotron <% if @project_entry.is_a?(Idea) %>ideas-jumbotron<% elsif @project_entry.is_a?(Resource) %>resources-jumbotron<% end %>">
+  <div class="container">
+    <h1 class="text-center" style="margin-bottom:15px;">
+      <% if @project_entry.is_a?(Idea) %>
+        <big class="icon-bulb" style="display: block;"></big>
+      <% elsif @project_entry.is_a?(Resource) %>
+        <big class="icon-diamond" style="display: block;"></big>
+      <% elsif @project_entry.is_a?(Appliance) %>
+        <big class="icon-user" style="display: block;"></big>
+      <% end %>
+      <%= @project_entry.name %></h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row" style="margin-bottom:100px;">
+    <div class="col-xs-12">
+      <div class="media project-entrie">
+        <div class="media-left media-middle">
+          <a href="<%= project_path(@project_entry.project) %>">
+            <%= image_tag(@project_entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:3px;", :class => "center-block" ) %>
+          </a>
+        </div>
+        <div class="media-body media-middle">
+          <h4 class="media-heading"><%= link_to @project_entry.user.name, project_path(@project_entry.project) %></h4>
+          <small><%= link_to @project_entry.user.description, user_path(@project_entry.user) %></small>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="media project-entrie">
+        <div class="media-left media-middle" style="height:50px; padding-left:15px; padding-right:25px;">
+          <a href="<%= project_path(@project_entry.project) %>" class="text-center" style="width:50px;">
+            <span class="icon-pen"></span>
+          </a>
+        </div>
+        <div class="media-body media-middle">
+          <h4 class="media-heading" style="color:#34495e;">Descrição</h4>
+          <p  style="color:#2c3e50; margin:0;"><%= @project_entry.description %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="media project-entrie">
+        <div class="media-left media-middle" style="height:50px; padding-left:15px; padding-right:25px;">
+          <a href="<%= project_path(@project_entry.project) %>" class="text-center" style="width:50px;">
+            <span class="icon-clip"></span>
+          </a>
+        </div>
+        <div class="media-body media-middle">
+          <h4 class="media-heading" style="color:#34495e;">Link Anexo</h4>
+          <p  style="color:#2c3e50; margin:0;"><%= link_to "https://pt.wikipedia.org/wiki/Ideia", "https://pt.wikipedia.org/wiki/Ideia" %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

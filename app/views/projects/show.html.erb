@@ -163,7 +163,7 @@
         <% elsif entry.is_a?(Appliance) %>
         <div class="media project-entrie">
           <div class="media-left media-middle">
-            <a href="<%= project_project_entry_path(@project.id, entry.id) %>">
+            <a href="<%= user_path(entry.user) %>">
               <span class="icon-user"></span>
             </a>
           </div>
