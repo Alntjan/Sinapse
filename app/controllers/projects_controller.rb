@@ -5,6 +5,11 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
   end
+
+  def edit
+    @project = Project.find(params[:id])
+  end
+
   def home
     @projects = Project.all
     @ideas = Idea.all
@@ -26,6 +31,18 @@ class ProjectsController < ApplicationController
       render 'new'
     end
   end
+
+  def update
+    @project = Project.find(params[:id])
+
+    if @project.update(project_params)
+      redirect_to project_path(@project)
+    else
+      render 'edit'
+    end
+  end
+
+
   def destroy
     @project = Project.find(params[:id])
     @project.destroy

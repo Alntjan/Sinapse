@@ -23,6 +23,7 @@
           <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-default project-actions"><span class="icon-user"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
         </div>
       <% end %>
+      <%= link_to "Editar", edit_project_path(@project), class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;"  %>
       <%= link_to "Eliminar", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
     </div>
     <div class="col-md-8">
