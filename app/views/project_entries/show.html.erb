@@ -65,9 +65,11 @@
         </div>
       </div>
     </div>
+    <% if (current_user.id == @project_entry.user_id) %>
     <div class="col-xs-12" style="margin-top: 25px;">
       <%= link_to "Editar", edit_project_project_entry_path(@project_entry.project, @project_entry), class: "btn btn-default"  %>
       <%= link_to "Eliminar", project_project_entry_path(@project_entry.project, @project_entry), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default" %>
     </div>
+    <% end %>
   </div>
 </div>

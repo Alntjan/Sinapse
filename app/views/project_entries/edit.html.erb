@@ -1,40 +1,66 @@
-<h1>Editing article</h1>
+<% if (current_user.id == @project_entry.user_id) %>
+  <div class="container" style="padding-top:25px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <div class="jumbotron <% if @project_entry.is_a?(Idea) %>ideas-jumbotron<% elsif @project_entry.is_a?(Resource) %>resources-jumbotron<% end %>" style="padding:25px; margin:0; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom:0;">
+          <div class="container">
+            <h1 class="text-center" style="margin:0;"><% if @project_entry.is_a?(Idea) %>
+              <big class="icon-bulb" style="display: block;"></big>
+            <% elsif @project_entry.is_a?(Resource) %>
+              <big class="icon-diamond" style="display: block;"></big>
+            <% elsif @project_entry.is_a?(Appliance) %>
+              <big class="icon-user" style="display: block;"></big>
+            <% end %>
+              Edição <% if @project_entry.is_a?(Idea) %>
+                da Ideia
+              <% elsif @project_entry.is_a?(Resource) %>
+                do Recurso
+              <% elsif @project_entry.is_a?(Appliance) %>
+                da Candidatura
+              <% end %></h1>
+          </div>
+        </div>
+        <div class="project">
 
-<%= form_for :project_entry, url: project_project_entry_path(@project_entry.project, @project_entry), method: :patch do |f| %>
+          <%= form_for :project_entry, url: project_project_entry_path(@project_entry.project, @project_entry), method: :patch do |f| %>
 
-  <% if @project_entry.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@project_entry.errors.count, "error") %> prohibited
-        this article from being saved:
-      </h2>
-      <ul>
-        <% @project_entry.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+            <% if @project_entry.errors.any? %>
+              <div id="error_explanation">
+                <h2>
+                  <%= pluralize(@project_entry.errors.count, "error") %> prohibited
+                  this article from being saved:
+                </h2>
+                <ul>
+                  <% @project_entry.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= label_tag(:name, "Titulo") %><br>
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag(:description, "Descrição") %><br>
+              <%= f.text_area :description, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag(:link, "Link Anexo") %><br>
+              <%= f.text_field :link, class: "form-control" %>
+            </div>
+
+              <%= f.submit 'Editar', :class => 'btn btn-primary btn-block' %>
+
+
+          <% end %>
+          <hr>
+          <%= link_to 'Voltar', project_project_entry_path %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </p>
-
-  <p>
-    <%= f.label :link %><br>
-    <%= f.text_area :link %>
-  </p>
-
-  <p>
-    <%= f.submit %>
-  </p>
-
+  </div>
 <% end %>
-
-<%= link_to 'Back', project_project_entry_path %>
