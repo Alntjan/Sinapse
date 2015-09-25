@@ -1,0 +1,40 @@
+<h1>Editing article</h1>
+
+<%= form_for :project_entry, url: project_project_entry_path(@project_entry.project, @project_entry), method: :patch do |f| %>
+
+  <% if @project_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@project_entry.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @project_entry.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :link %><br>
+    <%= f.text_area :link %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', project_project_entry_path %>

@@ -6,13 +6,28 @@ class ProjectEntriesController < ApplicationController
     @project_entries = p.project_entries.all
   end
 
+  def edit
+    @project_entry = ProjectEntry.find(params[:id])
+  end
+
   def show
     @project_entry = ProjectEntry.find(params[:id])
   end
+
   def create
     p = Project.find(params[:project_id])
     p.project_entries.create(project_entrie_params)
     redirect_to project_path(p)
+  end
+
+  def update
+    @project_entry = ProjectEntry.find(params[:id])
+
+    if @project_entry.update(project_entrie_params)
+      redirect_to project_project_entry_path(@project_entry.project, @project_entry)
+    else
+      render 'edit'
+    end
   end
 
   private
