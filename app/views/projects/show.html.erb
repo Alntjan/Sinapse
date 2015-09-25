@@ -35,6 +35,7 @@
           </div>
         </div>
       <% end %>
+      <%= link_to "Eliminar", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default" %>
     </div>
     <div class="col-md-8">
       <% if @project.project_entries.count > 0 %>
