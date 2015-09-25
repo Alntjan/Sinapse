@@ -22,19 +22,24 @@
       </div> -->
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
-
-        <%= form_for Project.new do |p| %>
-          <div class="form-group">
-            <label for="project_title" class="control-label" style="color:#34495e;">Titulo</label>
-            <%= p.text_field :title, class: "form-control", type: "text" %>
-          </div>
-          <div class="form-group">
-            <label for="project_about" class="control-label" style="color:#34495e;">Breve Descrição</label>
-            <%= p.text_field :about, class: "form-control" %>
-          </div>
-          <%= p.submit 'Criar Projecto', :class => 'btn btn-primary btn-block'  %>
+        <% if user_signed_in? %>
+          <%= form_for Project.new do |p| %>
+            <div class="form-group">
+              <label for="project_title" class="control-label" style="color:#34495e;">Titulo</label>
+              <%= p.text_field :title, class: "form-control", type: "text" %>
+            </div>
+            <div class="form-group">
+              <label for="project_about" class="control-label" style="color:#34495e;">Breve Descrição</label>
+              <%= p.text_field :about, class: "form-control" %>
+            </div>
+            <%= p.submit 'Criar Projecto', :class => 'btn btn-primary btn-block'  %>
           <% end %>
-
+        <% else %>
+          <p class="text-center" style="margin:0;">
+            Tens que estar registado para começar projectos!<br>
+            Regista-te <%= link_to "aqui", register_path %>, é fácil!
+          </p>
+        <% end %>
       </div>
       <!-- <div class="modal-footer" style="background-color: #ecf0f1;">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
