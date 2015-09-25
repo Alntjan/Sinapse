@@ -17,6 +17,6 @@ class ProjectEntriesController < ApplicationController
 
   private
   def project_entrie_params
-    params.require(:project_entry).permit(:name, :description, :type, :user_id)
+    params.require(:project_entry).permit(:name, :description, :type, :user_id, :link)
   end
 end

@@ -61,7 +61,7 @@
         </div>
         <div class="media-body media-middle">
           <h4 class="media-heading" style="color:#34495e;">Link Anexo</h4>
-          <p  style="color:#2c3e50; margin:0;"><%= link_to "https://pt.wikipedia.org/wiki/Ideia", "https://pt.wikipedia.org/wiki/Ideia" %></p>
+          <p  style="color:#2c3e50; margin:0;"><% if @project_entry.link %><%= link_to @project_entry.link, @project_entry.link %><% else %>Não foi anexado nenhum link.<% end %></p>
         </div>
       </div>
     </div>
