@@ -66,7 +66,8 @@
       </div>
     </div>
     <div class="col-xs-12" style="margin-top: 25px;">
-      <%= link_to "Editar", edit_project_project_entry_path(@project_entry.project, @project_entry), class: "btn btn-primary"  %>
+      <%= link_to "Editar", edit_project_project_entry_path(@project_entry.project, @project_entry), class: "btn btn-default"  %>
+      <%= link_to "Eliminar", project_project_entry_path(@project_entry.project, @project_entry), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default" %>
     </div>
   </div>
 </div>
