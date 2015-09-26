@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :ideas
   has_many :resources
   has_many :appliances
-  has_many :projects, through: :project_entries
+  has_many :projects
 
   def total_ideas
    ideas.count
