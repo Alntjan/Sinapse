@@ -3,13 +3,14 @@
 <head>
   <title>Sinapse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <!-- Latest compiled and minified CSS -->
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 
   <%= csrf_meta_tags %>
 </head>
@@ -27,7 +28,8 @@
           </ul>
           <% if user_signed_in? %>
           <ul class="nav navbar-nav navbar-right pull-right">
-            <li><a><span class="icon-stack"></span><div class="badger">1</div></a></li>
+
+            <!-- <li><a><span class="icon-stack"></span><div class="badger">1</div></a></li> -->
             <li><%= link_to user_path(current_user.id), :class => "" do %><span class="icon-user"></span><% end %></li>
             <li class="dropdown hidden-xs">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="icon-settings"></span></a>
