@@ -15,6 +15,7 @@
         <p class="project-about text-left">
           <%= @project.about %>
         </p>
+        <p class="text-left">Manager: <%= link_to @project.user.name, user_path(@project.user) %></p>
       </div>
       <% if @project.project_entries.count > 0 %>
         <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
