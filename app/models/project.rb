@@ -7,6 +7,9 @@ class Project < ActiveRecord::Base
   has_many :users, through: :resources
   has_many :users, through: :appliances
 
+  has_many :project_friendships
+  has_many :users, through: :project_friendships
+
   belongs_to :user
 
   validates :title, presence: :true, length: {minimum: 3}, uniqueness: true

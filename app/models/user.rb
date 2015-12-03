@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   has_many :appliances
   has_many :projects
 
+  has_many :project_friendships
+  has_many :projects, through: :project_friendships
+
   def total_ideas
    ideas.count
   end
