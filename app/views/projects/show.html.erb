@@ -6,6 +6,8 @@
         <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px;" ) %>
         <% end %>
         <h6><%= link_to @project.title, project_path(@project) %></h6>
+        <%= @project.project_friendships.first.user.name %>
+        <%= @project.project_friendships.first.project.title %>
         <ul>
           <!-- <li><%= @project.project_entries.count %><span class="icon"></span></li> -->
           <li><%= @project.ideas.count %><span class="icon-bulb"></span></li>
@@ -16,6 +18,7 @@
           <%= @project.about %>
         </p>
         <p class="text-left">Manager: <%= link_to @project.user.name, user_path(@project.user) %></p>
+        <%= link_to "Pedir Autorização", new_project_friendship_path(project_id: @project) %>
       </div>
       <% if @project.project_entries.count > 0 %>
         <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">

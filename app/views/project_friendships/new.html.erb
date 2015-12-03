@@ -1,0 +1,10 @@
+<% if @project %>
+  <h1><%= @project.title %></h1>
+    <h1><%= @project.id %></h1>
+  <p>Queres mesmo pedir autorização para ver o projecto?</p>
+  <%= form_for @project_friendship, method: :post do |form| %>
+    <%= form.hidden_field :project_id, :value => @project.id %>
+    <%= form.submit 'Pedir Autorização', :class => 'btn btn-primary btn-block'  %>
+    <%= link_to "Cancel", project_path(@project), class: 'btn' %>
+  <% end %>
+<% end %>

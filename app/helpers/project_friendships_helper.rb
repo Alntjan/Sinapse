@@ -1,0 +1,2 @@
+module ProjectFriendshipsHelper
+end
