@@ -23,13 +23,16 @@ Rails.application.routes.draw do
   #   resources :products
   resources :users
 
-  resources :project_friendships
-
   resources :projects do
     resources :project_entries
     resources :ideas
     resources :resources
     resources :appliances
+    resources :project_friendships do
+      member do
+        put :accept
+      end
+    end
   end
   get 'ideas' => 'ideas#index'
   get 'resources' => 'resources#index'

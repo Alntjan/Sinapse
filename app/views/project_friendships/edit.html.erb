@@ -1,0 +1,6 @@
+<% if @project_friendship.pending? %>
+
+  <%= form_for @project_friendship, url: accept_project_project_friendship_path(@project, @project_friendship), method: :put do |form| %>
+      <%= form.submit 'Aceitar', :class => 'btn btn-primary btn-block'  %>
+  <% end %>
+<% end %>

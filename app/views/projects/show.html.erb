@@ -6,8 +6,6 @@
         <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px;" ) %>
         <% end %>
         <h6><%= link_to @project.title, project_path(@project) %></h6>
-        <%= @project.project_friendships.first.user.name %>
-        <%= @project.project_friendships.first.project.title %>
         <ul>
           <!-- <li><%= @project.project_entries.count %><span class="icon"></span></li> -->
           <li><%= @project.ideas.count %><span class="icon-bulb"></span></li>
@@ -17,8 +15,44 @@
         <p class="project-about text-left">
           <%= @project.about %>
         </p>
-        <p class="text-left">Manager: <%= link_to @project.user.name, user_path(@project.user) %></p>
-        <%= link_to "Pedir Autorização", new_project_friendship_path(project_id: @project) %>
+        <%= link_to @project.user.name, user_path(@project.user), class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;"%>
+        <% if user_signed_in? %>
+          <% if (current_user.id == @project.user_id) %>
+            <button class="btn btn-block btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-bottom:15px; border-radius:0; border-color:#ecf0f1;">Definições</button>
+            <div class="collapse" id="collapseExample">
+              <%= link_to "Editar Projecto", edit_project_path(@project), class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;"  %>
+              <%= link_to "Eliminar Projecto", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
+              <%= link_to "Autorizações (#{@project.pending_project_friendships.count} #{"pendente".pluralize(@project.pending_project_friendships.count)})", project_project_friendships_path(@project), class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
+            </div>
+          <% end %>
+        <% end %>
+        <% unless (current_user.id == @project.user_id) %>
+          <% if @project_friendship.present? %>
+            <% if @project_friendship.pending? %>
+              Pediste acesso a este projecto.
+            <% elsif @project_friendship.accepted?  %>
+              Tens acesso a este projecto.
+            <% end %>
+          <% else %>
+              <%= form_for [@project, ProjectFriendship.new] do |form| %>
+                <%= form.hidden_field :project_id, :value => @project.id %>
+                <%= form.hidden_field :user_id, :value => current_user.id %>
+                <%= form.hidden_field :state, :value => :pending %>
+                <%= form.submit 'Pedir Autorização', :class => 'btn btn-primary btn-block'  %>
+              <% end %>
+          <% end %>
+        <% end %>
+
+        <!-- <%= link_to "Pedir Autorização", new_project_project_friendship_path(project_id: @project) %> -->
+        <!-- <%= @project.project_friendships.count %>
+        <%= @project.pending_project_friendships.count %>
+        <%= @project.accepted_project_friendships.count %> -->
+
+        <!-- <% if @project.project_friendships.count > 0 %>
+        <%= @project.project_friendships.first.user.name %>
+        <%= @project.project_friendships.first.project.title %>
+        <%= @project.project_friendships.first.state %>
+        <% end %> -->
       </div>
       <% if @project.project_entries.count > 0 %>
         <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
@@ -27,12 +61,13 @@
           <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-default project-actions"><span class="icon-user"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
         </div>
       <% end %>
-      <% if user_signed_in? %>
+      <!-- <% if user_signed_in? %>
         <% if (current_user.id == @project.user_id) %>
           <%= link_to "Editar", edit_project_path(@project), class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;"  %>
           <%= link_to "Eliminar", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
+          <%= link_to "Autorizações", project_project_friendships_path(@project), class: "btn btn-default btn-block", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
         <% end %>
-      <% end %>
+      <% end %> -->
     </div>
     <div class="col-md-8">
       <% if @project.project_entries.count > 0 %>

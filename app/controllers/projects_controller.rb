@@ -19,6 +19,7 @@ class ProjectsController < ApplicationController
   end
   def show
     @project = Project.find(params[:id])
+    @project_friendship = @project.project_friendships.find_by user_id: current_user
     @entries = @project.project_entries
     @entries = @entries.type(params[:type]) if params[:type].present?
   end

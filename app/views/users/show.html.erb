@@ -8,6 +8,7 @@
       <li><%= @user.resources.count %><span class="icon-diamond"></span></li>
       <li><%= @user.appliances.count %><span class="icon-user"></span></li>
     </ul>
+    <%= @user.project_friendships.count %>
     <p class="text-center">
       <a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a>
       <% if user_signed_in? %>

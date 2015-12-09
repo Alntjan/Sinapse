@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>User</th>
+      <th>Type</th>
+      <th>Inspect</th>
+    </tr>
+  </thead>
+  <% @project_friendships.each do |entry| %>
+  <tr>
+    <td>
+      <% if entry.pending? %>
+      JUBILEU
+      <%= link_to "Aceitar", edit_project_project_friendship_path(entry.project.id, entry) %>
+      <% end %>
+    </td>
+    <td><%= entry.user.name %></td>
+    <td><%= entry.project.title %></td>
+    <td><small><%= entry.inspect %></small></td>
+  </tr>
+  <% end %>
+</table>
+
+<h3>Idea</h3>

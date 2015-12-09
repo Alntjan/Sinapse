@@ -8,6 +8,15 @@ class Project < ActiveRecord::Base
   has_many :users, through: :appliances
 
   has_many :project_friendships
+  has_many :pending_project_friendships,
+            -> { where project_friendships: { state: "pending" } },
+            through: :project_friendships,
+            source: :project
+  has_many :accepted_project_friendships,
+            -> { where project_friendships: { state: "accepted" } },
+            through: :project_friendships,
+            source: :project
+
   has_many :users, through: :project_friendships
 
   belongs_to :user
