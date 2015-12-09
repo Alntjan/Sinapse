@@ -21,5 +21,14 @@ class Project < ActiveRecord::Base
 
   belongs_to :user
 
+  state_machine :state, :initial => :opened do
+    event :close do
+      transition any => :closed
+    end
+    event :open do
+      transition any => :opened
+    end
+  end
+
   validates :title, presence: :true, length: {minimum: 3}, uniqueness: true
 end

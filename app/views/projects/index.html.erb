@@ -33,6 +33,12 @@
               <label for="project_about" class="control-label" style="color:#34495e;">Breve Descrição</label>
               <%= p.text_field :about, class: "form-control" %>
             </div>
+            <div class="form-group">
+              <%= p.radio_button :state, 'opened' %>
+              <%= p.label :project_state, 'Aberto', :value => 'opened' %>
+              <%= p.radio_button :state, 'closed' %>
+              <%= p.label :project_state, 'Fechado', :value => 'closed' %>
+            </div>
             <%= p.submit 'Criar Projecto', :class => 'btn btn-primary btn-block'  %>
           <% end %>
         <% else %>
