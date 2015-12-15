@@ -6,6 +6,17 @@ class ProjectEntriesController < ApplicationController
     @project_entries = p.project_entries.all
   end
 
+  def accept
+    @project = Project.find(params[:project_id])
+    @project_entry = @project.project_entries.find(params[:id])
+    if @project_entry.accept!
+      flash[:success] = "Selecionada!"
+    else
+      flash[:success] = "Erro!"
+    end
+    redirect_to project_path(@project)
+  end
+
   def edit
     @project_entry = ProjectEntry.find(params[:id])
   end
@@ -39,6 +50,6 @@ class ProjectEntriesController < ApplicationController
 
   private
   def project_entrie_params
-    params.require(:project_entry).permit(:name, :description, :type, :user_id, :link)
+    params.require(:project_entry).permit(:name, :description, :type, :user_id, :link, :state)
   end
 end

@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
     @project_friendship = @project.project_friendships.find_by user_id: current_user
     @entries = @project.project_entries
     @entries = @entries.type(params[:type]) if params[:type].present?
+    @entries = @project.project_entries.where(state: "accepted") if params[:state].present?
   end
   def create
     @project = Project.create(project_params)
@@ -49,6 +50,16 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     redirect_to projects_path
+  end
+
+  def ready
+    @project = Project.find(params[:id])
+    if @project.ready!
+      flash[:success] = "Projecto pronto para avançar! Parabéns!"
+    else
+      flash[:success] = "Erro!"
+    end
+    redirect_to project_path(@project)
   end
 
   private

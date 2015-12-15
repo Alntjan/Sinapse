@@ -66,6 +66,16 @@ h1{
   border: 1px solid #ecf0f1;
   margin-bottom: 10px;
   padding: 15px;
+  position: relative;
+}
+
+.project-entrie.accepted {
+  border: none;
+  border-left: 5px solid #1abc9c;
+}
+
+.project-entrie.accepted a {
+  color: #1abc9c;
 }
 
 .project-entrie .media-left{
@@ -110,6 +120,21 @@ h1{
   border-color: $clouds;
   color: #bdc3c7;
   font-weight: 100;
+}
+
+.inline-accept{
+  display: inline !important;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.inline-accept > form{
+  display: inline !important;
+}
+
+.inline-accept > span{
+  color: #1abc9c;
+  border: 1px #1abc9c solid;
 }
 
 .mini-icon{

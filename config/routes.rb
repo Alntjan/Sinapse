@@ -24,7 +24,11 @@ Rails.application.routes.draw do
   resources :users
 
   resources :projects do
-    resources :project_entries
+    resources :project_entries do
+      member do
+        put :accept
+      end
+    end
     resources :ideas
     resources :resources
     resources :appliances
@@ -32,6 +36,9 @@ Rails.application.routes.draw do
       member do
         put :accept
       end
+    end
+    member do
+      put :ready
     end
   end
   get 'ideas' => 'ideas#index'

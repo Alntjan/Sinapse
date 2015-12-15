@@ -12,6 +12,42 @@
           <li><%= @project.resources.count %><span class="icon-diamond"></span></li>
           <li><%= @project.appliances.count %><span class="icon-user"></span></li>
         </ul>
+        <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
+        <p class="text-left" style="margin:25px 0 15px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px;">Estado<span class="icon-settings pull-right" style="margin-top:3px;"></span></p>
+        <p class="text-left">
+          <% if @project.has_ideas? && @project.has_resources? && @project.has_appliances? %>
+            A comunidade Sinapse já te deu Ideias, Recursos e Pessoas, seleciona os melhores e avança com o teu Projecto!
+          <% end %>
+        </p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= @project.has_percentage? %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @project.has_percentage? %>%; background-color:#3498db;">
+            <% if @project.has_percentage? == 100 %><%= @project.has_percentage? %>%<% end %>
+            <span class="sr-only"><%= @project.has_percentage? %>% Completo</span>
+          </div>
+        </div>
+        <p class="text-left">
+          <% if @project.has_accepted_percentage? == 100 %>
+            Já tens tudo o que precisas para avançar!
+          <% elsif @project.has_accepted_ideas? || @project.has_accepted_resources? || @project.has_accepted_appliances? %>
+            Já selecionaste entre as <% @project.accepted_entry_types.each_with_index do |type, index| %><% if index == 1 %> e <% end %><%= type %><% end %> que te apresentaram. Só falta selecionares pelo menos 1 <% @project.missing_entry_types.each_with_index do |type, index| %><% if index == 1 %> e 1 <% end %><%= type %><% end %>.
+          <% end %>
+        </p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= @project.has_accepted_percentage? %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @project.has_accepted_percentage? %>%; background-color: #1abc9c;">
+            <% if @project.has_accepted_percentage? == 100 %><%= @project.has_accepted_percentage? %>%<% end %>
+            <span class="sr-only"><%= @project.has_accepted_percentage? %>% Aceites</span>
+          </div>
+        </div>
+        <div>
+          <% if @project.ready? %>
+            <p class="btn btn-block btn-success">Parabéns!</p>
+          <% elsif @project.has_accepted_percentage? == 100 %>
+            <%= form_for @project, url: ready_project_path(@project), method: :put do |form|%>
+              <%= form.submit 'Completar Sinapse!', :class => 'btn btn-primary btn-block btn-sm'  %>
+            <% end %>
+          <% end %>
+        </div>
+        <% end %>
         <p class="project-about text-left">
           <%= @project.about %>
         </p>
@@ -26,7 +62,7 @@
             </div>
           <% end %>
         <% end %>
-        <% unless (current_user.id == @project.user_id) || @project.opened? %>
+        <% if user_signed_in? && current_user.id != @project.user_id && @project.closed? %>
           <% if @project_friendship.present? %>
             <% if @project_friendship.pending? %>
               Pediste acesso a este projecto.
@@ -76,6 +112,9 @@
           <button type="button" class="btn btn-sm btn-default"><span class="icon-star"></span></button>
           <button type="button" class="btn btn-sm btn-default"><span class="icon-lock"></span><% if @project.opened? %> Projecto Aberto<% else %> Projecto Fechado<% end %></button>
         </div>
+        <%= @project.accepted_ideas.count %>
+        <%= @project.accepted_resources.count %>
+        <%= @project.accepted_appliances.count %>
         <div class="btn-group btn-group-sm pull-right project-entries-filter" role="group" aria-label="...">
           <% if (params[:type].present? and params[:type] == "Idea") %>
             <%= link_to '<span class="icon-bulb"></span>'.html_safe, project_path(), :class => "btn btn-default active" %>
@@ -92,10 +131,17 @@
           <% else %>
             <%= link_to '<span class="icon-user"></span>'.html_safe, project_path(type: "Appliance"), :class => "btn btn-default" %>
           <% end %>
+          <% unless @project.accepted_project_entries.count == 0 %>
+            <% if (params[:state].present? and params[:state] == "accepted") %>
+              <%= link_to '<span class="">Aceites</span>'.html_safe, project_path(), :class => "btn btn-default active" %>
+            <% else %>
+              <%= link_to '<span class="">Aceites</span>'.html_safe, project_path(state: "accepted"), :class => "btn btn-default" %>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <% end %>
-      <% if (current_user.id == @project.user_id) || @project.opened? || (@project.closed? && @project_friendship.present? && @project_friendship.accepted? ) %>
+      <% if user_signed_in? && ((current_user.id == @project.user_id) || @project.opened? || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)) %>
         <% if (params[:type].present? and params[:type] == "Idea" and @project.ideas.count == 0) %>
           <div class="row" style="margin-top:15px;">
             <div class="col-xs-12">
@@ -167,43 +213,42 @@
           </div>
         <% end %>
         <% @entries.reverse.each do |entry| %>
-          <% if entry.is_a?(Idea) %>
-          <div class="media project-entrie">
+          <div class="media project-entrie <% if entry.accepted? %>accepted<% end %>">
+            <% if (current_user.id == @project.user_id) && entry.pending? %>
+              <div class="inline-accept">
+                <%= form_for [@project_entry, entry], url: accept_project_project_entry_path(@project, entry), method: :put do |form|%>
+                  <%= form.submit 'Aceitar', :class => 'btn btn-xs btn-default'  %>
+                <% end %>
+              </div>
+            <% elsif entry.accepted?  %>
+              <div class="inline-accept">
+                <span class="btn btn-xs">Aceite</span>
+              </div>
+            <% end %>
             <div class="media-left media-middle">
               <a href="<%= project_project_entry_path(@project.id, entry.id) %>">
-                <span class="icon-bulb"></span>
+                <% if entry.is_a?(Idea) %>
+                  <span class="icon-bulb"></span>
+                <% elsif entry.is_a?(Resource) %>
+                  <span class="icon-diamond"></span>
+                <% elsif entry.is_a?(Appliance) %>
+                  <span class="icon-user"></span>
+                <% end %>
               </a>
             </div>
             <div class="media-body media-middle">
-              <h4 class="media-heading media-middle"><%= link_to entry.name, project_project_entry_path(@project.id, entry.id) %></h4>
-              <small>Ideia de <a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a></small>
+              <% if entry.is_a?(Appliance) %>
+                <h4 class="media-heading"><a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a> candidatou-se ao projecto!</h4>
+              <% else %>
+                <h4 class="media-heading media-middle"><%= link_to entry.name, project_project_entry_path(@project.id, entry.id) %></h4>
+              <% end %>
+              <small><% if entry.is_a?(Idea) %>Ideia de
+              <% elsif entry.is_a?(Resource) %>Recurso de
+              <% elsif entry.is_a?(Appliance) %>Não percas a tua oportunidade.
+              <% end %><% unless entry.is_a?(Appliance) %> de <a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a><% end %></small>
             </div>
           </div>
-          <% elsif entry.is_a?(Resource) %>
-          <div class="media project-entrie">
-            <div class="media-left media-middle">
-              <a href="<%= project_project_entry_path(@project.id, entry.id) %>">
-                <span class="icon-diamond"></span>
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"><%= link_to entry.name, project_project_entry_path(@project.id, entry.id) %></h4>
-              <small>Recurso de <a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a></small>
-            </div>
-          </div>
-          <% elsif entry.is_a?(Appliance) %>
-          <div class="media project-entrie">
-            <div class="media-left media-middle">
-              <a href="<%= user_path(entry.user) %>">
-                <span class="icon-user"></span>
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"><a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a> candidatou-se ao projecto!</h4>
-              <small>Não percas a tua oportunidade.</small>
-            </div>
-          </div>
-          <% end %>
+
         <% end %>
       <% else %>
 
@@ -229,6 +274,7 @@
       <div class="modal-footer" style="background-color: #ecf0f1;">
         <%= form_for [@project, Appliance.new] do |f| %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.hidden_field :state, :value => 'pending' %>
           <%= f.submit 'Sim, quero candidatar-me!', :class => 'btn btn-primary btn-block'  %>
         <% end %>
       <% end %>
@@ -246,6 +292,7 @@
 
         <%= form_for [@project, Resource.new] do |f| %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.hidden_field :state, :value => 'pending' %>
           <div class="form-group">
             <label for="name" class="control-label" style="color:#34495e;">Titulo</label>
             <%= f.text_field :name, class: "form-control", type: "text" %>
@@ -283,6 +330,7 @@
 
         <%= form_for [@project, Idea.new] do |f| %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.hidden_field :state, :value => 'pending' %>
           <div class="form-group">
             <label for="recipient-name" class="control-label" style="color:#34495e;">Titulo</label>
             <%= f.text_field :name, class: "form-control", type: "text" %>
