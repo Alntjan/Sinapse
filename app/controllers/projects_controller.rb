@@ -20,9 +20,10 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @project_friendship = @project.project_friendships.find_by user_id: current_user
-    @entries = @project.project_entries
+    @entries = @project.project_entries.order("created_at desc")
     @entries = @entries.type(params[:type]) if params[:type].present?
-    @entries = @project.project_entries.where(state: "accepted") if params[:state].present?
+    @entries = @entries.where(state: "accepted") if params[:state].present?
+    @project_pending_friendships = @project.pending_project_friendships
   end
   def create
     @project = Project.create(project_params)
@@ -64,6 +65,6 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:title, :about, :user_id, :state)
+    params.require(:project).permit(:title, :about, :user_id, :state, :seeks_ideas, :seeks_resources, :seeks_appliances)
   end
 end

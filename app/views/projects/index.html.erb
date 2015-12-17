@@ -32,12 +32,25 @@
             <div class="form-group">
               <label for="project_about" class="control-label" style="color:#34495e;">Breve Descrição</label>
               <%= p.text_field :about, class: "form-control" %>
+              <p>Não descrevas o projecto!</p>
             </div>
             <div class="form-group">
               <%= p.radio_button :state, 'opened' %>
               <%= p.label :project_state, 'Aberto', :value => 'opened' %>
               <%= p.radio_button :state, 'closed' %>
               <%= p.label :project_state, 'Fechado', :value => 'closed' %>
+            </div>
+            <div class="form-group">
+              <%= p.label "Aceitar Ideias?" %>
+              <%= p.check_box :seeks_ideas %>
+            </div>
+            <div class="form-group">
+              <%= p.label "Aceitar Recursos?" %>
+              <%= p.check_box :seeks_resources %>
+            </div>
+            <div class="form-group">
+              <%= p.label "Aceitar Candidaturas?" %>
+              <%= p.check_box :seeks_appliances %>
             </div>
             <%= p.submit 'Criar Projecto', :class => 'btn btn-primary btn-block'  %>
           <% end %>

@@ -12,13 +12,13 @@
       <div class="col-md-12">
         <div class="media project-entrie">
           <div class="media-left media-middle">
-            <a href="<%= project_path(idea.project) %>">
+            <a href="<%= project_path(idea.project_id) %>">
               <span class="icon-bulb"></span>
             </a>
           </div>
           <div class="media-body">
-            <h4 class="media-heading"><%= link_to idea.name, project_path(idea.project) %></h4>
-            <small>Ideia de <%= link_to idea.user.name, user_path(idea.user) %> em  <%= link_to idea.project.title, project_path(idea.project) %></small>
+            <h4 class="media-heading"><%= link_to idea.name, project_path(idea.project_id) %></h4>
+            <small>Ideia de <%= link_to idea.user.name, user_path(idea.user) %> em  <%= link_to idea.project.title, project_path(idea.project_id) %></small>
           </div>
         </div>
       </div>

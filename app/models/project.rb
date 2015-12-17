@@ -52,6 +52,11 @@ class Project < ActiveRecord::Base
   end
 
   validates :title, presence: :true, length: {minimum: 3}, uniqueness: true
+  validates_inclusion_of :seeks_ideas, in: [true, false]
+  validates_inclusion_of :seeks_resources, in: [true, false]
+  validates_inclusion_of :seeks_appliances, in: [true, false]
+
+
 
   def has_ideas?
     if ideas.count > 0
@@ -138,6 +143,20 @@ class Project < ActiveRecord::Base
       i << "Recursos"
     end
     if has_accepted_appliances?
+      i << "Candidaturas"
+    end
+    return i;
+  end
+
+  def entry_types
+    i = [];
+    if has_ideas?
+      i << "Ideias"
+    end
+    if has_resources?
+      i << "Recursos"
+    end
+    if has_appliances?
       i << "Candidaturas"
     end
     return i;
