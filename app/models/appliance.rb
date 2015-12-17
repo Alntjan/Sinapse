@@ -6,4 +6,7 @@ class Appliance < ProjectEntry
       transition any => :accepted
     end
   end
+
+  validates_uniqueness_of :user_id, scope: :project_id
+
 end
