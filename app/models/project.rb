@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   has_many :ideas
   has_many :resources
   has_many :appliances
+  has_many :statuses
 
   has_many :accepted_project_entries,
             -> { where project_entries: { state: "accepted" } },

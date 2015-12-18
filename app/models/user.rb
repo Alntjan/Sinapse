@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :resources
   has_many :appliances
   has_many :projects
+  has_many :statuses
 
   has_many :project_friendships
   has_many :projects, through: :project_friendships

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         put :accept
       end
     end
+    resources :statuses
     resources :ideas
     resources :resources
     resources :appliances

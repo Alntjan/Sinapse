@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
     @entries = @entries.type(params[:type]) if params[:type].present?
     @entries = @entries.where(state: "accepted") if params[:state].present?
     @project_pending_friendships = @project.pending_project_friendships
+    @statuses = @project.statuses
   end
   def create
     @project = Project.create(project_params)
