@@ -10,17 +10,17 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <%= f.hidden_field :user_id, :value => current_user.id %>
 
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+
+  <div class="form-group project-entrie">
+    <!-- <%= f.label :title %><br> -->
+    <%= f.text_field :title, class: "form-control", placeholder: "Título", style: "border-color: #ecf0f1;"   %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <hr style="border: none; margin:10px 0;">
+    <!-- <%= f.label :description %><br> -->
+    <%= f.text_area :description, class: "form-control", placeholder: "Descrição", style: "border-color: #ecf0f1;"  %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Atualizar', :class => 'btn btn-primary btn-sm pull-right'  %>
   </div>
 <% end %>
