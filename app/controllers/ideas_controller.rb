@@ -6,6 +6,7 @@ class IdeasController < ApplicationController
   end
   def index
     @ideas = Idea.all
+
   end
   private
   def idea_params

@@ -53,7 +53,7 @@
         <%= @project.project_friendships.first.state %>
         <% end %> -->
       </div>
-      <% if user_signed_in? && (current_user.id == @project.user_id || @project_friendship.present?) %>
+      <% if user_signed_in? && (current_user.id == @project.user_id || @project_friendship.present? || @project.opened?) %>
         <% if @project.project_entries.count > 0 && (current_user.id == @project.user_id || (@project.opened? || (@project.closed? && @project_friendship.accepted?)))  %>
           <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
             <% if @project.seeks_ideas? || current_user.id == @project.user_id %>
