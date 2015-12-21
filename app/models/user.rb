@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :project_entries
   has_many :ideas
@@ -27,5 +27,6 @@ class User < ActiveRecord::Base
     default_image = {d: 'https://cdn.shopify.com/s/files/1/0266/9827/files/Gravtar.png'}.to_query
     "http://gravatar.com/avatar/#{hash}?#{default_image}&s=200"
   end
+
 
 end
