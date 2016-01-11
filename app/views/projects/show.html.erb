@@ -23,6 +23,15 @@
               <%= link_to "Eliminar Projecto", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
               <%= link_to "Autorizações (#{@project.pending_project_friendships.count} #{"pendente".pluralize(@project.pending_project_friendships.count)})", project_project_friendships_path(@project), class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;" %>
             </div>
+            <div>
+              <% if @project.ready? %>
+                <p class="btn btn-block btn-success">Parabéns!</p>
+              <% elsif @project.has_accepted_percentage? == 100 %>
+                <%= form_for @project, url: ready_project_path(@project), method: :put do |form|%>
+                  <%= form.submit 'Completar Sinapse!', :class => 'btn btn-primary btn-block'  %>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
         <% end %>
         <% if user_signed_in? && current_user.id != @project.user_id && @project.closed? %>
@@ -41,6 +50,7 @@
               <% end %>
           <% end %>
         <% end %>
+
 
         <!-- <%= link_to "Pedir Autorização", new_project_project_friendship_path(project_id: @project) %> -->
         <!-- <%= @project.project_friendships.count %>
@@ -314,12 +324,13 @@
           </div>
         </div>
       </div>
-      <% if @project.closed? %>
+      <% if @project.closed? && current_user = @project.user %>
         <div role="tabpanel" class="tab-pane fade" id="invites" style="margin-top:15px;">
           <div class="project-entrie" style="margin-bottom:15px;">
             <p class="text-left" style="margin:0px 0 10px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px; text-transform: uppercase; font-weight: 700; color:#34495e;"><small>Autorizações</small><span class="icon-key pull-right" style="margin-top:3px;"></span></p>
             <div class="row">
               <div class="col-xs-12">
+                <% if false %>
                 <div class="text-left">
                   <div class="btn-group btn-group-justified" style="margin: 0 auto !important;">
                     <a class="btn"><%= @project.pending_project_friendships.count %>&nbsp;em espera</a>
@@ -327,21 +338,26 @@
                     <%= link_to "Autorizações (#{@project.pending_project_friendships.count} #{"pendente".pluralize(@project.pending_project_friendships.count)})", project_project_friendships_path(@project), class: "btn" %>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <% if @project.ready? %>
-                <p class="btn btn-block btn-success">Parabéns!</p>
-              <% elsif @project.has_accepted_percentage? == 100 %>
-                <%= form_for @project, url: ready_project_path(@project), method: :put do |form|%>
-                  <%= form.submit 'Completar Sinapse!', :class => 'btn btn-primary btn-block btn-sm'  %>
                 <% end %>
-              <% end %>
+                <div class="list-group">
+                  <% @project.project_friendships.each do |friendship| %>
+                    <div class="list-group-item" style="border-color: #ecf0f1;">
+                      <%= image_tag(friendship.user.gravatar_url, :alt => "Project", :style => "background-color:#f9f9fa; height: 50px; border-radius:5px; margin-right: 10px;", :class => "" ) %>
+                      <a href="<%= edit_project_project_friendship_path(@project, friendship) %>"><%= friendship.user.name %></a><% if friendship.pending? %> pediu autorização para ver o projecto.
+                        <%= form_for [@project, friendship], url: accept_project_project_friendship_path(@project, friendship), :html => {:class => 'form-inline', :style => 'display: inline-block;'}, method: :put do |form| %>
+                          <div class="form-group">
+                            <%= form.submit 'Aceitar?', :class => 'btn btn-link'  %>
+                          </div>
+                      <% end %><% else %> tem autorização &#x2714;<% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       <% end %>
-      <div role="tabpanel" class="tab-pane fade" id="statuses" style="margin-top:15px;">
+      <div role="tabpanel" class="tab-pane fade <% if @project.closed? && (@project_friendship.blank? || @project_friendship.pending? ) %> in active <% end %>" id="statuses" style="margin-top:15px;">
         <% if current_user == @project.user %>
         <div class="clearfix" style="margin-bottom:15px;">
           <%= render 'statuses/form' %>

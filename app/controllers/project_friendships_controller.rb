@@ -14,7 +14,7 @@ class ProjectFriendshipsController < ApplicationController
     else
       flash[:success] = "Erro!"
     end
-    redirect_to project_project_friendships_path
+    redirect_to @project
   end
 
   def new

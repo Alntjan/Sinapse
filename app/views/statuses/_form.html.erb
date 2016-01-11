@@ -1,3 +1,4 @@
+<% if user_signed_in? && current_user == @project.user %>
 <%= form_for [@project, Status.new] do |f| %>
   <% if @status && @status.errors.any? %>
     <div id="error_explanation">
@@ -23,4 +24,5 @@
   <div class="actions">
     <%= f.submit 'Atualizar', :class => 'btn btn-primary btn-sm pull-right'  %>
   </div>
+<% end %>
 <% end %>
