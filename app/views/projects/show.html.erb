@@ -405,8 +405,8 @@
       <% if user_signed_in? %>
       <div class="modal-footer" style="background-color: #ecf0f1;">
         <%= form_for [@project, Appliance.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-          <% if current_user.id == @project.user_id%>
+          <%= f.hidden_field :user_id, :value => current_user %>
+          <% if current_user == @project.user %>
             <%= f.hidden_field :state, :value => 'accepted' %>
           <% else %>
             <%= f.hidden_field :state, :value => 'pending' %>
@@ -427,8 +427,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
 
         <%= form_for [@project, Resource.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-          <% if current_user.id == @project.user_id%>
+          <%= f.hidden_field :user_id, :value => current_user %>
+          <% if current_user == @project.user %>
             <%= f.hidden_field :state, :value => 'accepted' %>
           <% else %>
             <%= f.hidden_field :state, :value => 'pending' %>
@@ -468,26 +468,26 @@
         <% if user_signed_in? %>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
 
-        <%= form_for [@project, Idea.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-          <% if current_user.id == @project.user_id%>
-            <%= f.hidden_field :state, :value => 'accepted' %>
+        <%= form_for [@project, Idea.new] do |p| %>
+          <%= p.hidden_field :user_id %>
+          <% if current_user == @project.user %>
+            <%= p.hidden_field :state, :value => 'accepted' %>
           <% else %>
-            <%= f.hidden_field :state, :value => 'pending' %>
+            <%= p.hidden_field :state, :value => 'pending' %>
           <% end %>
           <div class="form-group">
             <label for="recipient-name" class="control-label" style="color:#34495e;">Titulo</label>
-            <%= f.text_field :name, class: "form-control", type: "text" %>
+            <%= p.text_field :name, class: "form-control", type: "text" %>
           </div>
           <div class="form-group">
             <label for="message-text" class="control-label" style="color:#34495e;">Breve Descrição</label>
-            <%= f.text_field :description, class: "form-control" %>
+            <%= p.text_field :description, class: "form-control" %>
           </div>
           <div class="form-group">
             <label for="link" class="control-label" style="color:#34495e;">Link Anexo</label>
-            <%= f.text_field :link, class: "form-control" %>
+            <%= p.text_field :link, class: "form-control" %>
           </div>
-          <%= f.submit 'Submeter Ideia', :class => 'btn btn-primary btn-block'  %>
+          <%= p.submit 'Submeter Ideia', :class => 'btn btn-primary btn-block'  %>
         <% end %>
         <% else %>
           <p class="text-center" style="margin:0;">
