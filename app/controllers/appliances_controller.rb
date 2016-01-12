@@ -1,12 +1,19 @@
 class AppliancesController < ApplicationController
   def create
-    p = Project.find(params[:project_id])
-    p.appliances.create(params.require(:appliance).permit(:user_id, :state))
-    if p.save
-      flash[:success] = "Candidatura submetida!"
+    @project = Project.find(params[:project_id])
+    @appliance = @project.appliances.build(appliance_params)
+    @appliance.user_id = current_user.id
+    if @appliance.save
+      flash[:success] = "Candidatura submetida com sucesso!"
+      redirect_to project_path(@project)
     else
-      flash[:error] = "Já te candidatas-te a este projecto!"
+      flash[:success] = "Já te candidatas-te a este projecto!"
     end
-    redirect_to project_path(p)
   end
+
+  private
+  def appliance_params
+    params.require(:resource).permit(:user_id, :state)
+  end
+
 end

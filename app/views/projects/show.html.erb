@@ -405,7 +405,7 @@
       <% if user_signed_in? %>
       <div class="modal-footer" style="background-color: #ecf0f1;">
         <%= form_for [@project, Appliance.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user %>
+          <%= f.hidden_field :user_id %>
           <% if current_user == @project.user %>
             <%= f.hidden_field :state, :value => 'accepted' %>
           <% else %>
@@ -427,7 +427,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
 
         <%= form_for [@project, Resource.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user %>
+          <%= f.hidden_field :user_id %>
           <% if current_user == @project.user %>
             <%= f.hidden_field :state, :value => 'accepted' %>
           <% else %>
