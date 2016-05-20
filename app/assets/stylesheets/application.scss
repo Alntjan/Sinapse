@@ -15,159 +15,164 @@
  *= require_self
  */
 
+@import "animate.min.css";
+$enable-flex: true;
+@import "bootstrap";
+@import "app.min.css";
+
 $clouds: #ecf0f1;
 $wet: #34495e;
 $pomegranate: #c0392b;
 $alizarin: #e74c3c;
 $midnight: #2c3e50;
 
-body{
-  background-color: #f9f9fa !important;
-}
-
-/* NAVBAR */
-
-.navbar.navbar-default{
-  margin-bottom: 0;
-  background-color: $wet;
-  color: #fff;
-  border: none;
-  border-radius: 0;
-}
-
-.navbar.navbar-default.ideas-index{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default.resources-index{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default.projects-index{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default.users-index{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default.users-show{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default.project_entries-show{
-  background-color: transparent !important;
-  margin-bottom: -52px;
-}
-
-.navbar.navbar-default a{
-  color: #fff;
-}
-
-.navbar-nav li a{
-  color: $clouds !important;
-  font-size: 1.2em;
-}
-
-.navbar-nav li a{
-  border-left: 2px solid transparent;
-}
-
-.navbar-nav li a .tool {
-  display: none;
-  position: absolute;
-  bottom: -24px;
-  background-color: #fff;
-  padding: 2px 5px;
-  font-size: 0.8em;
-  color: $wet;
-
-  width: 100px;
-  text-align: center;
-  left: -2px;
-}
-
-.navbar-nav li a:hover {
-  border-left: 2px solid #fff;
-}
-
-.navbar-nav li a:hover .tool {
-  display: inline-block;
-}
-
-.btn-logout{
-  background-color: $pomegranate !important;
-  border-color: $alizarin !important;
-  color: #EE8277 !important;
-}
-
-.badger{
-  position: absolute;
-  top: 7px;
-  right: 12px;
-  width:15px;
-  height:15px;
-  border-radius:50%;
-  font-size:8px;
-  color:#fff;
-  line-height:13px;
-  text-align:center;
-  background: $midnight;
-  font-weight: 300;
-  border: 1px solid #fff;
-}
-.navbar-header{
-  width: 100%;
-}
-
-
-
-
-.jumbotron{
-  background-color: #fff;
-  border-bottom: 2px solid #ecf0f1;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.jumbotron h1{
-  font-size: 2.5em;
-}
-
-.jumbotron p{
-  font-size: 1.125em;
-}
-
-
-/* FORMS */
-
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
-
-/* POPOVER */
-
-.popover-content{
-  padding: 0;
-}
-
-@media (max-width: 768px) {
-  .nav.navbar-nav{
-    margin: 5px 0 0 0;
-    float: left;
-  }
-  .nav.navbar-nav li{
-    width: auto;
-    display: inline-block;
-  }
-  .navbar-header{
-    width: auto;
-  }
-}
+// body{
+//   background-color: #f9f9fa !important;
+// }
+//
+// /* NAVBAR */
+//
+// .navbar.navbar-default{
+//   margin-bottom: 0;
+//   background-color: $wet;
+//   color: #fff;
+//   border: none;
+//   border-radius: 0;
+// }
+//
+// .navbar.navbar-default.ideas-index{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default.resources-index{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default.projects-index{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default.users-index{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default.users-show{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default.project_entries-show{
+//   background-color: transparent !important;
+//   margin-bottom: -52px;
+// }
+//
+// .navbar.navbar-default a{
+//   color: #fff;
+// }
+//
+// .navbar-nav li a{
+//   color: $clouds !important;
+//   font-size: 1.2em;
+// }
+//
+// .navbar-nav li a{
+//   border-left: 2px solid transparent;
+// }
+//
+// .navbar-nav li a .tool {
+//   display: none;
+//   position: absolute;
+//   bottom: -24px;
+//   background-color: #fff;
+//   padding: 2px 5px;
+//   font-size: 0.8em;
+//   color: $wet;
+//
+//   width: 100px;
+//   text-align: center;
+//   left: -2px;
+// }
+//
+// .navbar-nav li a:hover {
+//   border-left: 2px solid #fff;
+// }
+//
+// .navbar-nav li a:hover .tool {
+//   display: inline-block;
+// }
+//
+// .btn-logout{
+//   background-color: $pomegranate !important;
+//   border-color: $alizarin !important;
+//   color: #EE8277 !important;
+// }
+//
+// .badger{
+//   position: absolute;
+//   top: 7px;
+//   right: 12px;
+//   width:15px;
+//   height:15px;
+//   border-radius:50%;
+//   font-size:8px;
+//   color:#fff;
+//   line-height:13px;
+//   text-align:center;
+//   background: $midnight;
+//   font-weight: 300;
+//   border: 1px solid #fff;
+// }
+// .navbar-header{
+//   width: 100%;
+// }
+//
+//
+//
+//
+// .jumbotron{
+//   background-color: #fff;
+//   border-bottom: 2px solid #ecf0f1;
+//   padding-top: 20px;
+//   padding-bottom: 20px;
+// }
+//
+// .jumbotron h1{
+//   font-size: 2.5em;
+// }
+//
+// .jumbotron p{
+//   font-size: 1.125em;
+// }
+//
+//
+// /* FORMS */
+//
+// .field_with_errors {
+//   padding: 2px;
+//   background-color: red;
+//   display: table;
+// }
+//
+// /* POPOVER */
+//
+// .popover-content{
+//   padding: 0;
+// }
+//
+// @media (max-width: 768px) {
+//   .nav.navbar-nav{
+//     margin: 5px 0 0 0;
+//     float: left;
+//   }
+//   .nav.navbar-nav li{
+//     width: auto;
+//     display: inline-block;
+//   }
+//   .navbar-header{
+//     width: auto;
+//   }
+// }
