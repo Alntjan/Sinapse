@@ -15,8 +15,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render '/layouts/aside' %>
+  <div id="content" class="app-content box-shadow-z0 ng-scope" role="main">
+    <%= render '/layouts/navbar' %>
+
+
   <% unless current_page?(controller: '/projects', action: 'home') %>
-  <nav class="navbar navbar-default <%= controller.controller_name %>-<%= controller.action_name %>">
+  <nav class="navbar navbar-default <%= controller.controller_name %>-<%= controller.action_name %> hidden-xs-up">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand hidden-xs" href="/">Sinapse</a>
@@ -59,8 +64,11 @@
       <span class="<%= type %>"><%= message %></span>
     </div>
   <% end %>
+  <div class="app-body">
+    <%= yield %>
 
-  <%= yield %>
+  </div>
+</div>
 
 </body>
 </html>
