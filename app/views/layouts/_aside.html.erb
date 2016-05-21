@@ -18,7 +18,7 @@
             <span class="text-xs text-muted">Header</span>
           </li>
           <li>
-            <a class="text-white b-b b-dk">
+            <a href="/projects" class="text-white b-b b-dk">
               <span class="nav-icon">
                 <i class="icon-lab">
                 </i>
@@ -27,7 +27,7 @@
             </a>
           </li>
           <li class="">
-            <a class="text-white b-b b-dk">
+            <a href="/ideas" class="text-white b-b b-dk">
               <span class="nav-caret text-muted">
                 <i class="fa fa-caret-down"></i>
               </span>
@@ -39,7 +39,7 @@
             </a>
           </li>
           <li>
-            <a class="text-white b-b b-dk">
+            <a href="/resources" class="text-white b-b b-dk">
               <span class="nav-icon">
                 <i class="icon-diamond"></i>
               </span>
@@ -47,7 +47,7 @@
             </a>
           </li>
           <li>
-            <a class="text-white b-b b-dk">
+            <a href="/users" class="text-white b-b b-dk">
               <span class="nav-icon">
                 <i class="icon-user"></i>
               </span>
@@ -59,27 +59,30 @@
     </div>
     <div flex-no-shrink="" class="ng-scope p-b-sm">
       <nav ui-nav="" class="ng-scope">
-        <ul class="nav">
-          <li class="no-bg">
-            <a class="text-white b-dk b-t">
-              <span class="nav-icon"><i class="icon-key"></i></span>
-              <span class="nav-text">Login</span>
-            </a>
-          </li>
-        </ul>
-        <div flex-no-shrink="" class="ng-scope">
-          <div class="nav-fold ng-scope">
-            <a href="#/app/page/profile">
-              <span class="pull-left">
-                <img src="https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/1186027_10201541721642370_749509065_n.jpg?oh=c3bc2b0dd1f6ff74427e2f0f7f66655a&oe=57DD9169" alt="..." class="w-32 img-circle">
-              </span>
-              <span class="clear hidden-folded p-x">
-                <span class="block _500">Jack Perez</span>
-                <small class="block text-muted">Administrator</small>
-              </span>
-            </a>
+        <% if user_signed_in? %>
+          <div flex-no-shrink="" class="ng-scope">
+            <div class="nav-fold ng-scope">
+              <%= link_to user_path(current_user.id), :class => "" do %>
+                <span class="pull-left">
+                  <img src="https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/1186027_10201541721642370_749509065_n.jpg?oh=c3bc2b0dd1f6ff74427e2f0f7f66655a&oe=57DD9169" alt="..." class="w-32 img-circle">
+                </span>
+                <span class="clear hidden-folded p-x">
+                  <span class="block _500">Jack Perez</span>
+                  <small class="block text-muted">Administrator</small>
+                </span>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% else %>
+          <ul class="nav">
+            <li class="no-bg">
+              <%= link_to login_path, :class => "text-white b-dk b-t" do %>
+                <span class="nav-icon"><i class="icon-key"></i></span>
+                <span class="nav-text">Login</span>
+              <% end %>
+            </li>
+          </ul>
+        <% end %>
       </nav>
     </div>
   </div>
