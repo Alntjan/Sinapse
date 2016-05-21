@@ -12,10 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
 //= require tether
 //= require bootstrap-sprockets
-$(function () {
-  $('[data-toggle="popover"]').popover();
-});
+//= require turbolinks
+//= require_tree .
+// $(function () {
+//   $('[data-toggle="popover"]').popover();
+// });
