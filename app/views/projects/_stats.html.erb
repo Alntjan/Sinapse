@@ -1,0 +1,86 @@
+<div class="tab-pane" id="stats">
+  <div class="box">
+    <div class="box-header light b-b">
+      <h3>Stats</h3>
+    </div>
+    <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
+    <div>
+      <div class="row no-gutter">
+        <div class="col-xs-12 col-sm-6 b-r text-blue-hover">
+          <a class="p-y b-b block text-center" ui-toggle-class=""><strong class="block"><%= @project.project_entries.count %></strong> <span class="block">Sumbitted Entries</span></a>
+          <div class="row no-gutter">
+            <div class="col-xs-4">
+              <a class="p-a block text-center pos-rlt" ui-toggle-class="">
+                <i class="icon-bulb text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_ideas? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.ideas.count %></span>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a class="p-a block text-center" ui-toggle-class="">
+                <i class="icon-diamond text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_resources? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.resources.count %></span>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a class="p-a block text-center" ui-toggle-class="">
+                <i class="icon-user text-light text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_appliances? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.appliances.count %></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 text-blue-hover">
+          <a class="p-y b-b block text-center" ui-toggle-class="">
+            <strong class="block"><%= @project.accepted_project_entries.count %></strong>
+            <span class="block">Accepted Entries</span>
+          </a>
+          <div class="row no-gutter">
+            <div class="col-xs-4">
+              <a class="p-a block text-center pos-rlt" ui-toggle-class="">
+                <i class="icon-bulb text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_accepted_ideas? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.accepted_ideas.count %></span>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a class="p-a block text-center" ui-toggle-class="">
+                <i class="icon-diamond text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_accepted_resources? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.accepted_resources.count %></span>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a class="p-a block text-center" ui-toggle-class="">
+                <i class="icon-user text-light text-lg m-v-sm inline pos-rlt">
+                  <% if @project.has_accepted_appliances? %>
+                    <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+                  <% end %>
+                </i>
+                <span class="block"><%= @project.accepted_appliances.count %></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

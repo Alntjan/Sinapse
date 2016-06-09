@@ -1,0 +1,99 @@
+<div class="tab-pane <% if !(@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>active<% end %>" id="messages">
+  <div class="box">
+    <% if user_signed_in? && current_user.id != @project.user_id && @project.closed? %>
+      <% if @project_friendship.present? %>
+        <% if @project_friendship.pending? %>
+          <p class="p-a m-b-xs text-center">
+            Your request is pending approval from the project manager.
+          </p>
+        <% elsif @project_friendship.accepted?  %>
+          <p class="p-a m-b-xs text-center">
+            The project manager granted you access to this project.
+          </p>
+        <% end %>
+      <% else %>
+        <p class="p-t p-x m-b-xs text-center">
+          This project is closed.
+        </p>
+        <%= form_for [@project, ProjectFriendship.new], :html => { :class => "form-inline text-center m-b-xs" } do |form|%>
+        <div class="form-group m-b">
+          <%= form.hidden_field :project_id, :value => @project.id %>
+          <%= form.hidden_field :user_id, :value => current_user.id %>
+          <%= form.hidden_field :state, :value => :pending %>
+          <%= form.submit 'Join', :class => 'btn btn-sm btn-outline rounded b-primary text-primary m-l-sm w-md'  %>
+        </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="box">
+    <div class="box-header light b-b">
+      <h3>Timeline</h3>
+    </div>
+    <% if current_user == @project.user %>
+    <div class="box-tool">
+      <a class="btn btn-xs white" data-toggle="collapse" data-target="#new-status">New Message</a>
+    </div>
+    <div class="box-header b-b collapse" id="new-status">
+      <%= render 'statuses/form' %>
+    </div>
+    <% end %>
+    <div class="box-body">
+      <% if @statuses.count == 0 %>
+        <p class="m-a-0 text-muted p-a">
+          This project has no messages yet.
+        </p>
+      <% else %>
+      <div class="streamline m-b m-l b-l">
+        <% @statuses.each do |status| %>
+        <div class="sl-item">
+          <div class="sl-left">
+            <img src="<%= status.user.gravatar_url %>" class="img-circle">
+          </div>
+          <div class="sl-content">
+            <div class="sl-date text-muted"><%= time_ago_in_words(status.created_at) %></div>
+            <div class="sl-author">
+              <a href=""><%= status.user.name %></a>
+            </div>
+            <div>
+              <h6 class="_600 text-primary"><%= status.title %></h6>
+              <p><%= status.description %></p>
+            </div>
+            <div class="sl-footer text-dark-hover ">
+              <% if current_user == @project.user %>
+                <% if false %>
+                  <%= link_to 'Show', status %>
+                  <%= link_to 'Edit', edit_project_status_path(@project, status) %>
+                <% end %>
+                <%= link_to 'Delete', project_status_path(@project, status), method: :delete, data: { confirm: 'Are you sure?' } , class: "text-muted text-sm p-r"%>
+              <% end %>
+              <a href="" data-toggle="collapse" data-target="#reply-<%= status.id %>" class="text-primary text-sm b-l p-x">Reply</a>
+            </div>
+            <div class="box collapse m-a-0 b-a" id="reply-<%= status.id %>">
+              <form class="ng-pristine ng-valid">
+                <textarea class="form-control no-border" rows="3" placeholder="Type something..."></textarea>
+              </form>
+              <div class="box-footer clearfix">
+                <button class="btn btn-info pull-right btn-sm">Post</button>
+                <ul class="nav nav-pills nav-sm">
+                  <li class="nav-item">
+                    <a class="nav-link" href="">
+                      <i class="fa fa-camera text-muted"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="">
+                      <i class="fa fa-video-camera text-muted"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

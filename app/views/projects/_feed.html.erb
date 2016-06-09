@@ -1,0 +1,112 @@
+<div class="tab-pane active" id="feed">
+  <!-- <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="box p-a light">
+        <div class="pull-left m-r">
+          <span class="w-40 rounded light b-a">
+            <i class="icon-bulb text-lg v-m text-dark"></i>
+          </span>
+        </div>
+        <div class="clear v-m">
+          <h4 class="m-a-0 text-md _500 text-primary-hover">
+            <a href="" data-toggle="modal" data-target="#new-idea">Submit your Idea</a>
+          </h4>
+          <small class="text-muted"><% if @project.ideas.count > 0 %><%= pluralize(@project.ideas.count, 'idea') %> so far...<% else %>Be the first!<% end %></small>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <div class="box p-a">
+        <div class="pull-left m-r">
+          <span class="w-40 rounded danger">
+            <i class="icon-diamond text-lg v-m text-white"></i>
+          </span>
+        </div>
+        <div class="clear v-m">
+          <h4 class="m-a-0 text-md _500 text-danger-hover">
+            <a href="" data-toggle="modal" data-target="#new-resource">Submit your Resource</a>
+          </h4>
+          <small class="text-muted"><% if @project.resources.count > 0 %><%= pluralize(@project.resources.count, 'resource') %> so far...<% else %>Be the first!<% end %></small>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <div class="box p-a">
+        <div class="pull-left m-r">
+          <span class="w-40 rounded blue">
+            <i class="icon-user text-lg text-white" style="font-size: 1.35rem; line-height: 1.75;"></i>
+          </span>
+        </div>
+        <div class="clear v-m">
+          <h4 class="m-a-0 text-md _500 text-blue-hover">
+            <a href="" data-toggle="modal" data-target="#new-appliance">Apply</a>
+          </h4>
+          <small class="text-muted"><% if @project.appliances.count > 0 %><%= pluralize(@project.appliances.count, 'person') %> so far...<% else %>Be the first!<% end %></small>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="row no-gutter m-b">
+    <div class="col-xs-12 col-sm-6 text-blue-hover">
+      <div class="clearfix nav-active-info v-b">
+        <ul class="nav nav-sm nav-pills" ui-nav="">
+          <li class="nav-item">
+            <a class="btn btn-sm no-radius b-b-primary b-b-3x text-primary m-r-xs">New Idea</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-sm no-radius b-b-danger b-b-3x text-danger m-r-xs">New Resource</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-sm no-radius b-b-blue b-b-3x text-blue ">Apply</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 text-blue-hover">
+      <div class="nav-active-border b-blue text-right">
+        <div class="nav nav-md nav-right">
+          <a class="nav-link white b-r" href=""><span class="icon-bulb"></span></a>
+          <a class="nav-link white" href=""><span class="icon-diamond"></span></a>
+          <a class="nav-link white" href=""><span class="icon-user"></span></a>
+          <a class="nav-link white" href=""><span class="fa fa-check text-success"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% @entries.each do |entry| %>
+    <div ng-repeat="inbox in inboxes" ng-class="labelClass(inbox.label)" class="list-item white box-shadow b-l b-l-3x ng-scope <% if entry.accepted? %>b-l-success<% else %>b-l-blue<% end %> m-b-sm">
+      <div class="list-left">
+        <span class="w-40 avatar blue">
+          <% if entry.accepted? %>
+            <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
+          <% end %>
+          <span class="<% if entry.is_a?(Idea) %>icon-bulb<% elsif entry.is_a?(Resource) %>icon-diamond<% elsif entry.is_a?(Appliance) %>icon-user<% end %> v-m text-lg text-white"></span>
+        </span>
+      </div>
+      <div class="list-body">
+        <% if user_signed_in? && (current_user.id == @project.user_id) && entry.pending? %>
+          <div class="pull-right v-m p-y-sm">
+            <%= form_for [@project_entry, entry], url: accept_project_project_entry_path(@project, entry), method: :put do |form|%>
+              <%= form.submit 'Accept?', :class => 'btn btn-xs white'  %>
+            <% end %>
+          </div>
+        <% elsif entry.accepted?  %>
+          <div class="pull-right v-m p-y-sm">
+            <span class="btn btn-xs btn-outline b-success text-success">Accepted</span>
+          </div>
+        <% end %>
+        <div>
+          <% if entry.is_a?(Appliance) %>
+            <span class="text-blue _500"><%= entry.user.name %> applied! </span>
+          <% else %>
+            <%= link_to entry.name, project_project_entry_path(@project, entry.id), class: "_500 text-blue" %>
+          <% end %>
+        </div>
+        <div class="text-ellipsis text-sm ng-binding text-primary-hover">
+          <% if !entry.is_a?(Appliance) %><%= link_to entry.user.name, user_path(entry.user_id), class: "link" %><% end %> <small class="text-muted"><%= time_ago_in_words(entry.created_at) %></small>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

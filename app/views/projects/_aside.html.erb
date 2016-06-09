@@ -1,12 +1,12 @@
-<div class="col-sm w w-auto-xs b-r bg-auto">
+<div class="col-sm w w-auto-xs b-r bg-auto white">
   <div class="p-a-sm pos-rlt">
     <div>
       <button class="btn btn-sm white pull-right hidden-sm-up" ui-toggle-class="show" target="#inbox-menu"><i class="fa fa-bars"></i></button>
-      <a class="btn btn-sm btn-block white text-primary w-xs" data-toggle="modal" data-target="#new-project">New Project</a>
+      <a class="btn btn-sm btn-block text-white primary" data-toggle="modal" data-target="#new-project">New Project</a>
     </div>
     <div class="hidden-xs-down m-t" id="inbox-menu">
       <div class="nav-active-danger">
-        <div class="nav nav-pills nav-xs">
+        <div class="nav nav-pills nav">
           <a class="nav-link ng-binding ng-scope"  ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/">
             Open
           </a>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="nav-active-white m-t">
-        <div class="nav nav-pills nav-xs">
+        <div class="nav nav-pills nav">
           <a class="nav-link ng-binding ng-scope"  ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/">
             Art
           </a>

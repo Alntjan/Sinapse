@@ -13,7 +13,7 @@ class AppliancesController < ApplicationController
 
   private
   def appliance_params
-    params.require(:resource).permit(:user_id, :state)
+    params.require(:appliance).permit(:user_id, :state)
   end
 
 end

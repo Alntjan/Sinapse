@@ -1,7 +1,27 @@
-<div class="col-sm w-xxl w-auto-xs b-r bg-auto">
+<div class="col-sm w-xxl w-auto-xs b-r bg-auto white">
   <div class="pos-rlt">
-    <h6 class="p-a m-a-0"><%= link_to @project.title, project_path(@project) %></h6>
-    <div class="row no-gutter b-t b-b">
+    <h6 class="p-a m-a-0 text-blue text-primary-hover">
+      <%= link_to @project.title, project_path(@project) %>
+      <span class="block text-xs text-muted m-t-sm text-dark"><% if @project.opened? %>Closed Project<% else %>Open Project<% end %></span>
+    </h6>
+    <ul class="list inset m-a-0 light b-b b-t no-radius">
+      <li class="list-item v-m">
+        <a herf="" class="list-left p-r-sm">
+          <span class="w-32 avatar">
+            <%= image_tag(@project.user.gravatar_url, :alt => "Project", :class => "" ) %>
+          </span>
+        </a>
+        <div class="list-body v-m">
+          <div class="m-t-sm text-ellipsis">
+            <a href="" class="v-b text-muted"><%= @project.user.name %></a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p class="project-about text-left p-a m-b-0 text-dark text-sm">
+      <%= @project.about %>
+    </p>
+    <div class="row no-gutter b-t text-blue-hover pos-abs">
       <div class="col-xs-4 b-r">
         <a class="p-a block text-center" ui-toggle-class="">
           <i class="icon-bulb inline text-md"></i>
@@ -21,44 +41,8 @@
         </a>
       </div>
     </div>
-    <p class="project-about text-left p-a m-b-0 text-dark text-sm">
-      <%= @project.about %>
-    </p>
-    <div class="row no-gutter b-t b-b">
-      <div class="col-xs-4 b-r">
-        <a class="p-a block text-center">
-          <%= image_tag(@project.user.gravatar_url, :alt => "Project", :class => "img-circle w-32 v-m" ) %>
-        </a>
-      </div>
-      <div class="col-xs-8">
-        <a class="p-a block text-left v-m" ui-toggle-class="">
-          <span class="block l-h-1x"><%= @project.user.name %></span>
-          <span class="block text-sm text-muted"><%= @project.user.description %></span>
-        </a>
-      </div>
-    </div>
-    <div class="p-a-md">
-      <p>
-        <img src="../assets/images/a4.jpg" class="img-circle w-32">
-      </p>
-      <a href="" class="text-md block">Kyle Kelley</a>
-      <p><small>London, UK</small></p>
-      <a href="" class="btn btn-sm btn-outline rounded b-accent">Follow</a>
-    </div>
     <div class="">
       <div class="project">
-        <!-- <%= link_to project_path(@project), :class => "w-40" do %>
-        <%= image_tag("placeholder.png", :alt => "Project", :class => "" ) %>
-        <% end %> -->
-        <ul>
-          <li><%= @project.ideas.count %><span class="icon-bulb"></span></li>
-          <li><%= @project.resources.count %><span class="icon-diamond"></span></li>
-          <li><%= @project.appliances.count %><span class="icon-user"></span></li>
-        </ul>
-        <p class="project-about text-left">
-          <%= @project.about %>
-        </p>
-        <%= link_to @project.user.name, user_path(@project.user), class: "btn btn-block btn-default", style: "margin-bottom:15px; border-radius:0; border-color:#ecf0f1;"%>
         <% if user_signed_in? %>
           <% if (current_user.id == @project.user_id) %>
             <button class="btn btn-block btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-bottom:15px; border-radius:0; border-color:#ecf0f1;">Definições</button>
@@ -78,22 +62,7 @@
             </div>
           <% end %>
         <% end %>
-        <% if user_signed_in? && current_user.id != @project.user_id && @project.closed? %>
-          <% if @project_friendship.present? %>
-            <% if @project_friendship.pending? %>
-              Pediste acesso a este projecto.
-            <% elsif @project_friendship.accepted?  %>
-              Tens acesso a este projecto.
-            <% end %>
-          <% else %>
-              <%= form_for [@project, ProjectFriendship.new] do |form| %>
-                <%= form.hidden_field :project_id, :value => @project.id %>
-                <%= form.hidden_field :user_id, :value => current_user.id %>
-                <%= form.hidden_field :state, :value => :pending %>
-                <%= form.submit 'Pedir Autorização', :class => 'btn btn-primary btn-block'  %>
-              <% end %>
-          <% end %>
-        <% end %>
+
 
 
         <!-- <%= link_to "Pedir Autorização", new_project_project_friendship_path(project_id: @project) %> -->
@@ -131,4 +100,4 @@
       <% end %> -->
     </div>
   </div>
-</div
+</div>

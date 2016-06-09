@@ -1,330 +1,38 @@
 <div class="row-col ng-scope layout-fill">
   <%= render 'projects/aside_show' %>
   <div class="col-sm-12">
-    <div class="p-a light clearfix nav-active-primary">
-      <ul class="nav nav-pills nav-sm">
-        <li class="nav-item" aria-expanded="false">
-          <a class="nav-link active text-sm" href="" data-toggle="tab" data-target="#tab_1" aria-expanded="true">Activities</a>
-        </li>
+    <div class="p-a light clearfix nav-active-primary top b-b b-grey-500">
+      <ul class="nav nav-pills nav-sm no-borders">
+        <% if (@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>
+          <li class="nav-item" aria-expanded="false">
+            <a class="nav-link active text-sm" href="" data-toggle="tab" data-target="#feed" aria-expanded="true">Feed</a>
+          </li>
+        <% end %>
         <li class="nav-item">
-          <a class="nav-link" href="" data-toggle="tab" data-target="#tab_2" aria-expanded="false">Stream</a>
+          <a class="nav-link text-sm <% if !(@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>active<% end %>" href="" data-toggle="tab" data-target="#messages" aria-expanded="false">Messages</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="" data-toggle="tab" data-target="#tab_3" aria-expanded="false">Friends</a>
+        <% if user_signed_in? && current_user.id == @project.user_id %>
+          <li class="nav-item">
+            <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#settings" aria-expanded="false">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#stats" aria-expanded="false">Stats</a>
+          </li>
+        <% end %>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#tab_3" aria-expanded="false">Ideas</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="" data-toggle="tab" data-target="#tab_4" aria-expanded="false">Profile</a>
-        </li>
+        <li class="nav-item text-sm"><a class="nav-link" href="" data-toggle="tab" data-target="#tab_4" aria-expanded="false">Resources</a>
+        </li> -->
       </ul>
     </div>
-  </div>
-<div class="container">
-  <div class="">
-
-    <div class="col-md-8">
-      <% if @project.project_entries.count > 0 %>
-      <div class="clearfix">
-        <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
-
-
-
-
-        <% end %>
-        <div class="project-entries-filter pull-left">
-          <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
-            <a href="#timeline" aria-controls="timeline" role="tab" data-toggle="tab" class="btn btn-sm btn-default"><span class="icon-stack"></span></a>
-          <% end %>
-          <a href="#statuses" aria-controls="statuses" role="tab" data-toggle="tab" class="btn btn-sm btn-default"><span class="icon-news"></span></a>
-          <a type="button" class="btn btn-sm btn-default"><span class="icon-lock"></span><% if @project.opened? %> Projecto Aberto<% else %> Projecto Fechado<% end %></a>
-          <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
-            <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" class="btn btn-sm btn-default" ><span class="icon-settings"></span></a>
-            <a class="btn btn-sm btn-default" href="#stats" aria-controls="stats" role="tab" data-toggle="tab"><span class="icon-params"></span></a>
-            <% if @project.closed? %>
-              <a href="#invites" aria-controls="invites" role="tab" data-toggle="tab" class="btn btn-sm btn-default" style="position:relative;"><span class="icon-key"></span><% if @project.pending_project_friendships.count > 0 %><span class="badge" style="position: absolute; top: -7px; right: -10px; font-size: 0.8em; background-color:#3498db; opacity:0.9;"><%= @project.pending_project_friendships.count %></span><% end %></a>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="btn-group btn-group-sm pull-right project-entries-filter" role="group" aria-label="...">
-          <% if (params[:type].present? and params[:type] == "Idea") %>
-            <%= link_to '<span class="icon-bulb"></span>'.html_safe, project_path(), :class => "btn btn-default active" %>
-          <% else %>
-            <%= link_to '<span class="icon-bulb"></span>'.html_safe, project_path(type: "Idea"), :class => "btn btn-default" %>
-          <% end %>
-          <% if (params[:type].present? and params[:type] == "Resource") %>
-            <%= link_to '<span class="icon-diamond"></span>'.html_safe, project_path(), :class => "btn btn-default active" %>
-          <% else %>
-            <%= link_to '<span class="icon-diamond"></span>'.html_safe, project_path(type: "Resource"), :class => "btn btn-default" %>
-          <% end %>
-          <% if (params[:type].present? and params[:type] == "Appliance") %>
-            <%= link_to '<span class="icon-user"></span>'.html_safe, project_path(), :class => "btn btn-default active" %>
-          <% else %>
-            <%= link_to '<span class="icon-user"></span>'.html_safe, project_path(type: "Appliance"), :class => "btn btn-default" %>
-          <% end %>
-          <% unless @project.accepted_project_entries.count == 0 %>
-            <% if (params[:state].present? and params[:state] == "accepted") %>
-              <%= link_to '<span class="">Aceites</span>'.html_safe, project_path(), :class => "btn btn-default active" %>
-            <% else %>
-              <%= link_to '<span class="">Aceites</span>'.html_safe, project_path(state: "accepted"), :class => "btn btn-default" %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-      <% end %>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane fade in active" id="timeline" style="margin-top:15px;">
-      <% if (@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || @project.opened? || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>
-        <% if (params[:type].present? and params[:type] == "Idea" and @project.ideas.count == 0) %>
-          <div class="row" style="margin-top:15px;">
-            <div class="col-xs-12">
-              <div class="media project-entrie">
-                <div class="media-left media-middle">
-                  <a href="">
-                    <span class="icon-bulb"></span>
-                  </a>
-                </div>
-                <div class="media-body media-middle">
-                  <h4 class="media-heading media-middle">Sê o primeiro a submeter uma ideia!</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% if (params[:type].present? and params[:type] == "Resource" and @project.resources.count == 0) %>
-          <div class="row" style="margin-top:15px;">
-            <div class="col-xs-12">
-              <div class="media project-entrie">
-                <div class="media-left media-middle">
-                  <a href="">
-                    <span class="icon-diamond"></span>
-                  </a>
-                </div>
-                <div class="media-body media-middle">
-                  <h4 class="media-heading media-middle">Sê o primeiro a submeter um recurso!</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% if (params[:type].present? and params[:type] == "Appliance" and @project.appliances.count == 0) %>
-          <div class="row" style="margin-top:15px;">
-            <div class="col-xs-12">
-              <div class="media project-entrie">
-                <div class="media-left media-middle">
-                  <a href="">
-                    <span class="icon-user"></span>
-                  </a>
-                </div>
-                <div class="media-body media-middle">
-                  <h4 class="media-heading media-middle">Sê o primeiro a candidatares-te!</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% if @project.project_entries.count == 0 %>
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="media project-entrie">
-                <div class="media-left media-middle">
-                  <a href="">
-                    <span class="icon-bubble"></span>
-                  </a>
-                </div>
-                <div class="media-body media-middle">
-                  <h4 class="media-heading media-middle">Começaste este projecto!</h4>
-                  <p style="margin:0;">O teu projecto ainda não têm ideias, recursos ou candidaturas. Submete um destes para iniciares a actividade e mostrares às outras pessoas que este projecto vai avançar!</p>
-                </div>
-              </div>
-              <div class="btn-group btn-group-lg btn-group-justified project-actions-group" role="group" aria-label="Large button group">
-                <% if @project.seeks_ideas? || current_user == @project.user %>
-                  <a href="#" role="button" data-toggle="modal" data-target="#new-idea" class="btn btn-default project-actions"><span class="icon-bulb"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
-                <% end %>
-                <% if @project.seeks_resources? || current_user == @project.user %>
-                  <a href="#" role="button" data-toggle="modal" data-target="#new-resource" class="btn btn-default project-actions"><span class="icon-diamond"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
-                <% end %>
-                <% if @project.seeks_appliances? || current_user == @project.user %>
-                  <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-default project-actions"><span class="icon-user"><span class="glyphicon glyphicon-plus mini-icon"></span></span></a>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <% @entries.each do |entry| %>
-          <div class="media project-entrie <% if entry.accepted? %>accepted<% end %>">
-            <% if user_signed_in? && (current_user.id == @project.user_id) && entry.pending? %>
-              <div class="inline-accept">
-                <%= form_for [@project_entry, entry], url: accept_project_project_entry_path(@project, entry), method: :put do |form|%>
-                  <%= form.submit 'Aceitar', :class => 'btn btn-xs btn-default'  %>
-                <% end %>
-              </div>
-            <% elsif entry.accepted?  %>
-              <div class="inline-accept">
-                <span class="btn btn-xs">Aceite</span>
-              </div>
-            <% end %>
-            <div class="media-left media-middle">
-              <a href="<%= project_project_entry_path(@project.id, entry.id) %>">
-                <% if entry.is_a?(Idea) %>
-                  <span class="icon-bulb"></span>
-                <% elsif entry.is_a?(Resource) %>
-                  <span class="icon-diamond"></span>
-                <% elsif entry.is_a?(Appliance) %>
-                  <span class="icon-user"></span>
-                <% end %>
-              </a>
-            </div>
-            <div class="media-body media-middle">
-              <% if entry.is_a?(Appliance) %>
-                <h4 class="media-heading"><a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a> candidatou-se ao projecto!</h4>
-              <% else %>
-                <h4 class="media-heading media-middle"><%= link_to entry.name, project_project_entry_path(@project.id, entry.id) %></h4>
-              <% end %>
-              <small><% if entry.is_a?(Idea) %>Ideia de
-              <% elsif entry.is_a?(Resource) %>Recurso de
-              <% elsif entry.is_a?(Appliance) %>Não percas a tua oportunidade.
-              <% end %><% unless entry.is_a?(Appliance) %> de <a href="<%= user_path(entry.user_id) %>" data-container="body" data-toggle="popover" data-placement="top" data-content='<div class="media" style="width:200px;"><div class="media-left media-middle"><a href="<%= user_path(entry.user_id) %>"><%= image_tag(entry.user.gravatar_url, :alt => "Project", :style => "height: 50px; display: block;  background-color:#f9f9fa; border-radius:4px;", :class => "media-object" ) %></a></div><div class="media-body media-middle text-center" style="vertical-align:middle;"><h6 class="media-heading"><%= entry.user.name %></h6><p style="color:#34495e; margin:0;"><small><%= entry.user.projects.uniq.count %> <span class="icon-lab"></span>&nbsp;&nbsp;<%= entry.user.ideas.count %> <span class="icon-bulb"></span>&nbsp;&nbsp;<%= entry.user.resources.count %> <span class="icon-diamond"></span>&nbsp;&nbsp;<%= entry.user.appliances.count %> <span class="icon-user"></span><small></p></div></div>' data-html="true" data-trigger="hover"><%= entry.user.name %></a><% end %></small>
-            </div>
-          </div>
-
-        <% end %>
-      <% else %>
-
-      <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="settings" style="margin-top:15px;">
-        <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
-          <div class="project-entrie" style="margin-bottom:15px;">
-            <p class="text-left" style="margin:0 0 10px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px; text-transform: uppercase; font-weight: 700; color:#34495e;"><small>Definições</small><span class="icon-settings pull-right" style="margin-top:3px;"></span></p>
-            <div class="row">
-              <div class="col-xs-12 col-sm-6">
-                <div class="btn-group btn-group-justified" role="group">
-                    <a type="button" class="btn btn-sm <% unless @project.seeks_ideas? %> disabled <% end %>"><span class="icon-bulb"></span>&nbsp;<% if @project.seeks_ideas? %>&#x2714;<% else %>&#10008;<% end %></a>
-                    <a type="button" class="btn btn-sm <% unless @project.seeks_resources? %> disabled <% end %>" style=" border-left: none; border-right:none;"><span class="icon-diamond"></span>&nbsp;<% if @project.seeks_resources? %>&#x2714;<% else %>&#10008;<% end %></a>
-                    <a type="button" class="btn btn-sm <% unless @project.seeks_appliances? %> disabled <% end %>"><span class="icon-user"></span>&nbsp;<% if @project.seeks_appliances? %>&#x2714;<% else %>&#10008;<% end %></a>
-                    <a type="button" class="btn btn-sm" style="text-align:left; border-left:none;"><% if @project.opened? %>Aberto<% else %>Fechado<% end %><span class="icon-lock pull-right" style="margin-top:3px;"></span></a>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-6">
-                <div class="btn-group btn-group-justified btn-group-sm" role="group">
-                  <%= link_to "Editar Projecto", edit_project_path(@project), class: "btn btn-primary", style: ""  %>
-                  <%= link_to "Eliminar Projecto", project_path(@project), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-danger", style: "" %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="stats" style="margin-top:15px">
-        <div class="project-entrie" style="margin-bottom:15px;">
-          <p class="text-left" style="margin:0 0 10px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px; text-transform: uppercase; font-weight: 700; color:#34495e;"><small>Estatísticas</small><span class="icon-params pull-right" style="margin-top:3px;"></span></p>
-          <div class="row" style="margin-top:15px;">
-            <div class="col-xs-12 col-sm-6">
-              <p class="text-left" style="text-transform: uppercase; font-weight: 700; font-size:0.8em; color:#3498db; margin-bottom: 5px;">Submetidas</p>
-              <div class="progress" style="margin-bottom:5px;">
-                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= @project.has_percentage? %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @project.has_percentage? %>%; background-color:#3498db;">
-                  <% if @project.has_percentage? == 100 %><%= @project.has_percentage? %>%<% end %>
-                  <span class="sr-only"><%= @project.has_percentage? %>% Completo</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-              <div class="text-left" style="margin-top:13px;">
-                <div class="btn-group btn-group-justified" style="margin: 0 auto !important;">
-                  <a class="btn"><%= @project.ideas.count %>&nbsp;<span class="icon-bulb"></span></a>
-                  <a class="btn"><%= @project.resources.count %>&nbsp;<span class="icon-diamond"></span></a>
-                  <a class="btn"><%= @project.appliances.count %>&nbsp;<span class="icon-user"></span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-top:15px;">
-            <div class="col-xs-12 col-sm-6">
-              <p class="text-left" style="text-transform: uppercase; font-weight: 700; font-size:0.8em; color:#1abc9c; margin-bottom: 5px;">Aceites</p>
-              <div class="progress" style="margin-bottom:5px;">
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= @project.has_accepted_percentage? %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @project.has_accepted_percentage? %>%; background-color: #1abc9c;">
-                  <% if @project.has_accepted_percentage? == 100 %><%= @project.has_accepted_percentage? %>%<% end %>
-                  <span class=""><%= @project.has_accepted_percentage? %>%</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-              <div class="text-left" style="margin-top:13px;">
-                <div class="btn-group btn-group-justified" style="margin: 0 auto !important;">
-                  <a class="btn" style="color: #1abc9c"><%= @project.accepted_ideas.count %>&nbsp;<span class="icon-bulb"></span></a>
-                  <a class="btn" style="color: #1abc9c"><%= @project.accepted_resources.count %>&nbsp;<span class="icon-diamond"></span></a>
-                  <a class="btn" style="color: #1abc9c"><%= @project.accepted_appliances.count %>&nbsp;<span class="icon-user"></span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <% if @project.closed? && current_user = @project.user %>
-        <div role="tabpanel" class="tab-pane fade" id="invites" style="margin-top:15px;">
-          <div class="project-entrie" style="margin-bottom:15px;">
-            <p class="text-left" style="margin:0px 0 10px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px; text-transform: uppercase; font-weight: 700; color:#34495e;"><small>Autorizações</small><span class="icon-key pull-right" style="margin-top:3px;"></span></p>
-            <div class="row">
-              <div class="col-xs-12">
-                <% if false %>
-                <div class="text-left">
-                  <div class="btn-group btn-group-justified" style="margin: 0 auto !important;">
-                    <a class="btn"><%= @project.pending_project_friendships.count %>&nbsp;em espera</a>
-                    <a class="btn"><%= @project.accepted_project_friendships.count %>&nbsp;aceite</a>
-                    <%= link_to "Autorizações (#{@project.pending_project_friendships.count} #{"pendente".pluralize(@project.pending_project_friendships.count)})", project_project_friendships_path(@project), class: "btn" %>
-                  </div>
-                </div>
-                <% end %>
-                <div class="list-group">
-                  <% @project.project_friendships.each do |friendship| %>
-                    <div class="list-group-item" style="border-color: #ecf0f1;">
-                      <%= image_tag(friendship.user.gravatar_url, :alt => "Project", :style => "background-color:#f9f9fa; height: 50px; border-radius:5px; margin-right: 10px;", :class => "" ) %>
-                      <a href="<%= edit_project_project_friendship_path(@project, friendship) %>"><%= friendship.user.name %></a><% if friendship.pending? %> pediu autorização para ver o projecto.
-                        <%= form_for [@project, friendship], url: accept_project_project_friendship_path(@project, friendship), :html => {:class => 'form-inline', :style => 'display: inline-block;'}, method: :put do |form| %>
-                          <div class="form-group">
-                            <%= form.submit 'Aceitar?', :class => 'btn btn-link'  %>
-                          </div>
-                      <% end %><% else %> tem autorização &#x2714;<% end %>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <div role="tabpanel" class="tab-pane fade <% if @project.closed? && (@project_friendship.blank? || @project_friendship.pending? ) %> in active <% end %>" id="statuses" style="margin-top:15px;">
-        <% if current_user == @project.user %>
-        <div class="clearfix" style="margin-bottom:15px;">
-          <%= render 'statuses/form' %>
-        </div>
-        <% end %>
-        <div class="row">
-        <% @statuses.each do |status| %>
-          <div class="col-xs-12" style="margin-bottom:15px;">
-            <small><%= time_ago_in_words(status.created_at) %> por <%= status.user.name %></small>
-
-            <div class="project-entrie">
-              <h4 class="media-heading media-middle" style=" padding: 5px 15px 5px 15px; color: #3b9bdc;"><%= status.title %></h4>
-              <hr style="margin: 10px 0;">
-              <p style="margin:0; padding: 5px 15px 5px 15px; font-size: 1.1em;"><%= status.description %><% if current_user == @project.user %><br>
-              <% if false %>
-                <%= link_to 'Show', status %>
-                <%= link_to 'Edit', edit_project_status_path(@project, status) %>
-              <% end %>
-              <small><%= link_to 'Eliminar', project_status_path(@project, status), method: :delete, data: { confirm: 'Are you sure?' } %></small><% end %></p>
-            </div>
-
-
-          </div>
-        <% end %>
-        </div>
-
-      </div>
+    <div class="p-a light layout-fill">
+      <%= render 'projects/content' %>
     </div>
   </div>
 
-</div>
 <!-- Modal New Appliance -->
-<div class="modal fade" id="new-appliance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="new-appliance" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body text-center">
@@ -340,7 +48,7 @@
       <% if user_signed_in? %>
       <div class="modal-footer" style="background-color: #ecf0f1;">
         <%= form_for [@project, Appliance.new] do |f| %>
-          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
           <% if current_user == @project.user %>
             <%= f.hidden_field :state, :value => 'accepted' %>
           <% else %>
@@ -354,7 +62,7 @@
   </div>
 </div>
 <!-- Modal New Resource -->
-<div class="modal fade" id="new-resource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="new-resource" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
@@ -396,7 +104,7 @@
   </div>
 </div>
 <!-- Modal New Idea -->
-<div class="modal fade" id="new-idea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="new-idea" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">

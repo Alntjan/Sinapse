@@ -1,28 +1,24 @@
 <% if user_signed_in? && current_user == @project.user %>
-<%= form_for [@project, Status.new] do |f| %>
-  <% if @status && @status.errors.any? %>
-    <div id="error_explanation">
+  <%= form_for [@project, Status.new] do |f| %>
+    <% if @status && @status.errors.any? %>
+      <div id="error_explanation">
       <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
-
       <ul>
-      <% @status.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @status.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
-
-  <div class="form-group project-entrie">
-    <!-- <%= f.label :title %><br> -->
-    <%= f.text_field :title, class: "form-control", placeholder: "Título", style: "border-color: #ecf0f1;"   %>
+  <div class="form-group p-y-xs w-full m-b-sm">
+    <%= f.text_field :title, class: "form-control r-2x form-control-sm", placeholder: "Title" %>
     <%= f.hidden_field :user_id, :value => current_user.id %>
-    <hr style="border: none; margin:10px 0;">
-    <!-- <%= f.label :description %><br> -->
-    <%= f.text_area :description, class: "form-control", placeholder: "Descrição", style: "border-color: #ecf0f1;"  %>
   </div>
-  <div class="actions">
-    <%= f.submit 'Atualizar', :class => 'btn btn-primary btn-sm pull-right'  %>
+  <div class="form-group m-b-sm">
+    <%= f.text_area :description, class: "form-control r-2x form-control-sm", placeholder: "Message" %>
   </div>
-<% end %>
+  <div class="text-left clearfix">
+    <%= f.submit 'Send', :class => 'btn blue btn-sm'  %>
+  </div>
+  <% end %>
 <% end %>
