@@ -2,13 +2,6 @@
   <div class="container-fluid text-left">
     <%= image_tag(@user.gravatar_url, :alt => "Project", :style => "", :class => "w-128 r-2x box-shadow-z0 white" ) %>
     <h1 class="text-left text-white p-t"><%= @user.name %></h1>
-    <h6 style="display:none;"><% @user.project_friendships.each do |friendship| %>
-          <%= friendship.project_id %>
-        <% end %>
-    <% current_user.project_friendships.each do |friendship| %>
-          <%= friendship.project_id %>
-        <% end %>
-    </h6>
     <ul class="user-summary" style="color: #ecf0f1; margin-top:10px; display: none;">
       <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>
       <li><%= @user.ideas.count %><span class="icon-bulb"></span></li>
@@ -29,13 +22,138 @@
 
   </div>
 </div>
+<div class="col-xs-12 white p-y p-x-0 box-shadow-z0 b-b">
   <div class="p-y-0 text-center row">
+    <% if (params[:type].present? and params[:type] == "Idea") %>
+      <a href="<%= user_path() %>" class="inline p-x text-center col-xs-3">
+        <span class="h4 block m-a-0"><i class="text-accent _500 text-center fa fa-close text-lg"></i></span>
+        <small class="text-xs text-muted"><%= @user.ideas.count %> <span class="hidden-sm-down"><%= "Idea".pluralize(@user.ideas.count) %></span></small>
+      </a>
+    <% else %>
+      <a href="<%= user_path(type: "Idea") %>" class="inline p-x text-center col-xs-3">
+        <span class="h4 block m-a-0"><i class="text-accent _500 text-center icon-bulb text-lg"></i></span>
+        <small class="text-xs text-muted"><%= @user.ideas.count %> <span class="hidden-sm-down"><%= "Idea".pluralize(@user.ideas.count) %></span></small>
+      </a>
+    <% end %>
+    <% if (params[:type].present? and params[:type] == "Resource") %>
+      <a href="<%= user_path() %>" class="inline p-x b-l b-r text-center col-xs-3">
+        <span class="h4 block m-a-0"><i class="text-accent _500 text-center fa fa-close text-lg"></i></span>
+        <small class="text-xs text-muted"><%= @user.resources.count %> <span class="hidden-sm-down"><%= "Resource".pluralize(@user.resources.count) %></span></small>
+      </a>
+    <% else %>
+      <a href="<%= user_path(type: "Resource") %>" class="inline p-x b-l b-r text-center col-xs-3">
+        <span class="h4 block m-a-0"><i class="text-accent _500 text-center icon-diamond text-lg"></i></span>
+        <small class="text-xs text-muted"><%= @user.resources.count %> <span class="hidden-sm-down"><%= "Resource".pluralize(@user.resources.count) %></span></small>
+      </a>
+    <% end %>
+    <a href="<%= user_path(type: "Appliance") %>" class="inline p-x  b-r text-center col-xs-3">
+      <span class="h4 block m-a-0"><i class="text-accent _500 text-center icon-user text-lg"></i></span>
+      <small class="text-xs text-muted"><%= @user.appliances.count %> <span class="hidden-sm-down"><%= "Application".pluralize(@user.appliances.count) %></span></small>
+    </a>
+    <a href="<%= user_path(type: "Project") %>" class="inline p-x text-center col-xs-3">
+      <span class="h4 block m-a-0"><i class="text-accent _500 text-center icon-lab text-lg"></i></span>
+      <small class="text-xs text-muted"><%= @user.projects.count %> <span class="hidden-sm-down"><%= "Project".pluralize(@user.projects.count) %></span></small>
+    </a>
+  </div>
+</div>
+<% @entries.reverse.each do |entry| %>
+<% unless entry.project.closed? %>
+<div class="list-item white box-shadow-z0 p-a-md <% if entry.accepted? %>b-l-primary<% else %>b-l-blue<% end %> m-b-0">
+  <div class="list-left">
+    <span class="w-40 avatar white <% if entry.accepted? %>b-primary<% else %>b-blue<% end %>" style="border-width: 1px; border-style: solid; border-radius:50%;">
+      <% if entry.accepted? %>
+        <span class="fa fa-check up text-xs primary p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
+      <% end %>
+      <span class="<% if entry.is_a?(Idea) %>icon-bulb<% elsif entry.is_a?(Resource) %>icon-diamond<% elsif entry.is_a?(Appliance) %>icon-user<% end %> v-m text-lg <% if entry.accepted? %>text-primary<% else %>text-blue<% end %>"></span>
+    </span>
+  </div>
+  <div class="list-body">
+    <% if entry.project.closed? %>
+    <% elsif entry.accepted?  %>
+      <div class="pull-right v-m p-y-sm">
+        <span class="btn btn-xs btn-outline b-primary text-primary">Accepted</span>
+      </div>
+    <% end %>
+    <div class="<% if entry.accepted? %>text-primary<% else %>text-blue<% end %>">
+      <% if entry.is_a?(Appliance) %>
+        <span class="text-blue _500"><%= entry.user.name %> applied! </span>
+      <% else %>
+        <%= link_to entry.name, project_project_entry_path(entry.project.id, entry.id), class: "_500" %>
+      <% end %>
+    </div>
+    <div class="text-ellipsis text-sm ng-binding text-primary-hover">
+      <% if !entry.is_a?(Appliance) %><%= link_to entry.user.name, user_path(entry.user_id), class: "link" %> in <%= link_to entry.project.title, project_path(entry.project_id), class: "link" %><% end %> <small class="text-muted"><%= time_ago_in_words(entry.created_at) %></small>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>
+<% if (params[:type].present? and params[:type] == "Project") %>
+<% @projects.reverse.each do |project| %>
+  <div class="list-item white p-a-md b-b">
+    <div class="list-left">
+      <% if project.closed? %>
+        <span class="w-40 b-blue icon-lock text-lg text-muted light" style="border: 1px solid #bdbdbd; border-radius:50%;">
+      <% else %>
+        <span class="w-40 b-blue icon-lab text-lg text-accent" style="border: 1px solid #af94e0; border-radius:50%;">
+      <% end %>
+        <% if project.closed? and false %>
+          <span class="icon-lock up text-xs danger p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
+        <% end %>
+        <% if false %>
+        <%= image_tag("placeholder.png", :alt => "Project") %>
+        <% end %>
+      </span>
+    </div>
+    <div class="list-body">
+      <div class="pull-right text-xs">
+        <div>
+          <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+            <% if project.seeks_ideas? %>
+              <i class="text-dark" style="font-style: normal !important;"><%= project.ideas.count %></i>
+              <i class="blue _400 text-center icon-bulb"></i>
+            <% else %>
+              <i class="icon-bulb"></i>
+              <i class="fa fa-ban nested"></i>
+              <i class="fa fa-ban nested text-warning"></i>
+            <% end %>
+          </a>
+          <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+            <% if project.seeks_resources? %>
+              <i class="text-dark" style="font-style: normal !important;"><%= project.resources.count %></i>
+              <i class="blue _400 text-center icon-diamond"></i>
+            <% else %>
+              <i class="icon-diamond"></i>
+              <i class="fa fa-ban nested"></i>
+              <i class="fa fa-ban nested text-warning"></i>
+            <% end %>
+          </a>
+          <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+            <% if project.seeks_resources? %>
+              <i class="text-dark" style="font-style: normal !important;"><%= project.appliances.count %></i>
+              <i class="blue _400 text-center icon-user"></i>
+            <% else %>
+              <i class="icon-user"></i>
+              <i class="fa fa-ban nested"></i>
+              <i class="fa fa-ban nested text-warning"></i>
+            <% end %>
+          </a>
+        </div>
+      </div>
+      <div>
+        <%= link_to project.title, project_path(project), class: "_500" %>
+      </div>
+      <div class="text-muted text-sm ng-binding"><%= project.about %></div>
+      <button class="btn btn-xs btn-outline b-accent text-accent m-t">More</button>            </div>
+  </div>
+<% end %>
+<% end %>
 
 
 
 
 
-
+<div class="container" style="padding-bottom:200px; display:none;">
   <div class="row">
     <div class="col-md-12">
       <% if @user.project_entries.count > 0 %>
@@ -64,10 +182,10 @@
       </div>
       <% end %>
       <% if @user.project_entries.count == 0 %>
-        <div class="row">
-          <div class="col-xs-12">
-            <p class="text-center project-entrie">
-              Ainda não participaste em nenhum projecto!
+        <div class="">
+          <div class="">
+            <p class="text-center p-a-lg">
+              You still haven't synapsed with any project!
             </p>
           </div>
         </div>
