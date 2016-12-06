@@ -32,7 +32,7 @@
             <div class="list-body">
               <div class="pull-right text-xs">
                 <div>
-                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                  <a href="<%= project_path(project) %>" class="btn btn-icon btn-social rounded white btn-sm">
                     <% if project.seeks_ideas? %>
                       <i class="text-dark" style="font-style: normal !important;"><%= project.ideas.count %></i>
                       <i class="blue _400 text-center icon-bulb"></i>
@@ -42,7 +42,7 @@
                       <i class="fa fa-ban nested text-warning"></i>
                     <% end %>
                   </a>
-                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                  <a href="<%= project_path(project) %>" class="btn btn-icon btn-social rounded white btn-sm">
                     <% if project.seeks_resources? %>
                       <i class="text-dark" style="font-style: normal !important;"><%= project.resources.count %></i>
                       <i class="blue _400 text-center icon-diamond"></i>
@@ -52,7 +52,7 @@
                       <i class="fa fa-ban nested text-warning"></i>
                     <% end %>
                   </a>
-                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                  <a href="<%= project_path(project) %>" class="btn btn-icon btn-social rounded white btn-sm">
                     <% if project.seeks_appliances? %>
                       <i class="text-dark" style="font-style: normal !important;"><%= project.appliances.count %></i>
                       <i class="blue _400 text-center icon-user"></i>

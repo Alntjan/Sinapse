@@ -94,7 +94,7 @@
 <% end %>
 
 
-<div class="jumbotron <% if @project_entry.is_a?(Idea) %>ideas-jumbotron<% elsif @project_entry.is_a?(Resource) %>resources-jumbotron<% end %>">
+<div class="jumbotron <% if @project_entry.is_a?(Idea) %>ideas-jumbotron<% elsif @project_entry.is_a?(Resource) %>resources-jumbotron<% end %>" display:"none;">
   <div class="container">
     <h1 class="text-center" style="margin-bottom:15px;">
       <% if @project_entry.is_a?(Idea) %>
@@ -108,7 +108,7 @@
     </h1>
   </div>
 </div>
-<div class="container">
+<div class="container" display:"none;">
   <div class="row" style="margin-bottom:100px;">
     <div class="col-xs-12">
       <div class="media project-entrie">
