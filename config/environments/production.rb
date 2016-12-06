@@ -88,7 +88,7 @@ Rails.application.configure do
     authentication: "plain",
     enable_starttls_auto: true,
     user_name: "suporte.synapse@gmail.com", ###oliveiracatarino88@gmail.com
-    password: "Synapse#2015" ###tiwpbjwtecewnadv
+    password: "fekjliffynmknmaj" ###tiwpbjwtecewnadv
 }
 
 
