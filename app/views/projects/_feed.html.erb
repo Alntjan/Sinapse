@@ -46,42 +46,57 @@
       </div>
     </div>
   </div> -->
-  <div class="row no-gutter m-b">
+  <div class="row no-gutter m-b" style="display: none;">
     <div class="col-xs-12 col-sm-6 text-blue-hover">
       <div class="clearfix nav-active-info v-b">
         <ul class="nav nav-sm nav-pills" ui-nav="">
           <li class="nav-item">
-            <a class="btn btn-sm no-radius b-b-primary b-b-3x text-primary m-r-xs">New Idea</a>
+            <a class="nav-link white p-a-sm no-radius" href=""><span class="icon-bulb text-primary"></span>&nbsp;New Idea</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-sm no-radius b-b-danger b-b-3x text-danger m-r-xs">New Resource</a>
+            <a class="btn btn-sm no-radius b-b-dark b-b text-dark m-r-xs" data-toggle="modal" data-target="#new-resource">New Resource</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-sm no-radius b-b-blue b-b-3x text-blue ">Apply</a>
+            <a class="btn btn-sm no-radius b-b-dark b-b light ">Apply</a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 text-blue-hover">
+    <div class="col-xs-12 col-sm-12 text-blue-hover">
       <div class="nav-active-border b-blue text-right">
         <div class="nav nav-md nav-right">
-          <a class="nav-link white b-r" href=""><span class="icon-bulb"></span></a>
-          <a class="nav-link white" href=""><span class="icon-diamond"></span></a>
-          <a class="nav-link white" href=""><span class="icon-user"></span></a>
-          <a class="nav-link white" href=""><span class="fa fa-check text-success"></span></a>
+          <a class="nav-link white box-shadow-z0 text-accent" href=""><span class="icon-bulb"></span></a>
+          <a class="nav-link white box-shadow-z0 text-accent" href=""><span class="icon-diamond"></span></a>
+          <a class="nav-link white box-shadow-z0 text-accent" href=""><span class="icon-user"></span></a>
+          <a class="nav-link white box-shadow-z0 text-primary" href=""><span class="fa fa-check"></span></a>
         </div>
       </div>
     </div>
   </div>
+  <% if @project.ready? %>
+    <div class="p-a-lg primary box-shadow-z0">
+      <p class="text-white h4 maven text-uppercase">Synapse completed!<i class="fa fa-smile-o m-l-sm"></i></p>
+      <p class="text-white text-uppercase m-b-0">This project is up and running...<br>You can still apply, share ideas or resources that can help this synapse to thrive!</p>
+    </div>
+    <% elsif @project.has_accepted_percentage? == 100 %>
+    <div class="p-a-lg primary box-shadow-z0">
+      <p class="text-white h4 maven text-uppercase">Wow!</p>
+      <p class="text-white text-uppercase">You've chosen <span class="_800"><%= @project.accepted_ideas.count %></span> <%= "idea".pluralize(@project.accepted_ideas.count) %>, <span class="_800"><%= @project.accepted_resources.count %></span> <%= "resource".pluralize(@project.accepted_resources.count) %> and <span class="_800"><%= @project.accepted_appliances.count %></span> <%= "person".pluralize(@project.accepted_appliances.count) %>...<br>That's everything you need to kickstart your project and complete this synapse!</p>
+
+      <%= form_for @project, url: ready_project_path(@project), method: :put do |form|%>
+        <%= form.submit 'Complete Synapse!', :class => 'btn btn-sm btn-outline text-uppercase text-sm b-white text-white b-2x _600'  %>
+      <% end %>
+  </div>
+  <% end %>
 
   <% @entries.each do |entry| %>
-    <div ng-repeat="inbox in inboxes" ng-class="labelClass(inbox.label)" class="list-item white box-shadow b-l b-l-3x ng-scope <% if entry.accepted? %>b-l-success<% else %>b-l-blue<% end %> m-b-sm">
+    <div class="list-item white box-shadow-z0 p-a-md <% if entry.accepted? %>b-l-primary<% else %>b-l-blue<% end %> m-b-0">
       <div class="list-left">
-        <span class="w-40 avatar blue">
+        <span class="w-40 avatar white <% if entry.accepted? %>b-primary<% else %>b-blue<% end %>" style="border-width: 1px; border-style: solid; border-radius:50%;">
           <% if entry.accepted? %>
-            <span class="fa fa-check up text-xs success p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
+            <span class="fa fa-check up text-xs primary p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
           <% end %>
-          <span class="<% if entry.is_a?(Idea) %>icon-bulb<% elsif entry.is_a?(Resource) %>icon-diamond<% elsif entry.is_a?(Appliance) %>icon-user<% end %> v-m text-lg text-white"></span>
+          <span class="<% if entry.is_a?(Idea) %>icon-bulb<% elsif entry.is_a?(Resource) %>icon-diamond<% elsif entry.is_a?(Appliance) %>icon-user<% end %> v-m text-lg <% if entry.accepted? %>text-primary<% else %>text-blue<% end %>"></span>
         </span>
       </div>
       <div class="list-body">
@@ -93,14 +108,14 @@
           </div>
         <% elsif entry.accepted?  %>
           <div class="pull-right v-m p-y-sm">
-            <span class="btn btn-xs btn-outline b-success text-success">Accepted</span>
+            <span class="btn btn-xs btn-outline b-primary text-primary">Accepted</span>
           </div>
         <% end %>
-        <div>
+        <div class="<% if entry.accepted? %>text-primary<% else %>text-blue<% end %>">
           <% if entry.is_a?(Appliance) %>
-            <span class="text-blue _500"><%= entry.user.name %> applied! </span>
+            <span class="_500"><%= entry.user.name %> applied! </span>
           <% else %>
-            <%= link_to entry.name, project_project_entry_path(@project, entry.id), class: "_500 text-blue" %>
+            <%= link_to entry.name, project_project_entry_path(@project, entry.id), class: "_500" %>
           <% end %>
         </div>
         <div class="text-ellipsis text-sm ng-binding text-primary-hover">

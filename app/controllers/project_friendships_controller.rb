@@ -10,9 +10,9 @@ class ProjectFriendshipsController < ApplicationController
     @project = Project.find(params[:project_id])
     @project_friendship = @project.project_friendships.find(params[:id])
     if @project_friendship.accept!
-      flash[:success] = "Tás autorizado"
+      flash[:success] = "You've authorized your colleague."
     else
-      flash[:success] = "Erro!"
+      flash[:success] = "Error!"
     end
     redirect_to @project
   end

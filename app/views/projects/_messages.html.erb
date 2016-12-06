@@ -1,21 +1,22 @@
 <div class="tab-pane <% if !(@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>active<% end %>" id="messages">
-  <div class="box">
     <% if user_signed_in? && current_user.id != @project.user_id && @project.closed? %>
+    <div class="box p-a m-b-0 box-shadow-z0">
+
       <% if @project_friendship.present? %>
         <% if @project_friendship.pending? %>
-          <p class="p-a m-b-xs text-center">
+          <p class="m-b-xs text-center text-dark">
             Your request is pending approval from the project manager.
           </p>
         <% elsif @project_friendship.accepted?  %>
-          <p class="p-a m-b-xs text-center">
+          <p class="m-b-xs text-center text-dark">
             The project manager granted you access to this project.
           </p>
         <% end %>
       <% else %>
-        <p class="p-t p-x m-b-xs text-center">
+        <p class="p-t p-x m-b-xs text-center text-dark">
           This project is closed.
         </p>
-        <%= form_for [@project, ProjectFriendship.new], :html => { :class => "form-inline text-center m-b-xs" } do |form|%>
+        <%= form_for [@project, ProjectFriendship.new], :html => { :class => "form-inline text-center m-b-0" } do |form|%>
         <div class="form-group m-b">
           <%= form.hidden_field :project_id, :value => @project.id %>
           <%= form.hidden_field :user_id, :value => current_user.id %>
@@ -24,21 +25,22 @@
         </div>
         <% end %>
       <% end %>
+    </div>
+
     <% end %>
-  </div>
   <div class="box">
-    <div class="box-header light b-b">
+    <div class="box-header text-muted">
       <h3>Timeline</h3>
     </div>
     <% if current_user == @project.user %>
     <div class="box-tool">
-      <a class="btn btn-xs white" data-toggle="collapse" data-target="#new-status">New Message</a>
+      <a class="btn btn-xs white text-accent" data-toggle="collapse" data-target="#new-status">New Message</a>
     </div>
     <div class="box-header b-b collapse" id="new-status">
       <%= render 'statuses/form' %>
     </div>
     <% end %>
-    <div class="box-body">
+    <div class="box-body p-x-lg p-y">
       <% if @statuses.count == 0 %>
         <p class="m-a-0 text-muted p-a">
           This project has no messages yet.
@@ -67,7 +69,7 @@
                 <% end %>
                 <%= link_to 'Delete', project_status_path(@project, status), method: :delete, data: { confirm: 'Are you sure?' } , class: "text-muted text-sm p-r"%>
               <% end %>
-              <a href="" data-toggle="collapse" data-target="#reply-<%= status.id %>" class="text-primary text-sm b-l p-x">Reply</a>
+              <a href="" data-toggle="collapse" data-target="#reply-<%= status.id %>" class="text-primary text-sm b-l p-x" style="display: none;">Reply</a>
             </div>
             <div class="box collapse m-a-0 b-a" id="reply-<%= status.id %>">
               <form class="ng-pristine ng-valid">

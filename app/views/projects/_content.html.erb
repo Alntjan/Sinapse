@@ -4,14 +4,13 @@
   <% end %>
   <%= render '/projects/messages' %>
   <% if user_signed_in? && current_user.id == @project.user_id %>
-    <%= render '/projects/settings' %>
+    <% if @project.closed? %>
+      <%= render '/projects/settings' %>
+    <% end %>
     <%= render '/projects/stats' %>
   <% end %>
 
-
-
   <div class="tab-pane" id="tab_3">
-
     <div class="col-md-8">
       <% if @project.project_entries.count > 0 %>
       <div class="clearfix">
@@ -251,7 +250,7 @@
         </div>
       </div>
       <% if @project.closed? && current_user = @project.user %>
-        <div role="tabpanel" class="tab-pane fade" id="invites" style="margin-top:15px;">
+        <div role="tabpanel" class="tab-pane fade" id="requests" style="margin-top:15px;">
           <div class="project-entrie" style="margin-bottom:15px;">
             <p class="text-left" style="margin:0px 0 10px; border-bottom: 1px solid #ecf0f1; padding-bottom:5px; text-transform: uppercase; font-weight: 700; color:#34495e;"><small>Autorizações</small><span class="icon-key pull-right" style="margin-top:3px;"></span></p>
             <div class="row">

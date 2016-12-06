@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   def index
     @projects = Project.all
+    @projects = @projects.where(state: params[:state]) if params[:state].present?
   end
   def new
     @project = Project.new
@@ -23,6 +24,7 @@ class ProjectsController < ApplicationController
     @entries = @project.project_entries.order("created_at desc")
     @entries = @entries.type(params[:type]) if params[:type].present?
     @entries = @entries.where(state: "accepted") if params[:state].present?
+    @project_accepted_friendships = @project.accepted_project_friendships
     @project_pending_friendships = @project.pending_project_friendships
     @statuses = @project.statuses.order("created_at desc")
   end
@@ -30,7 +32,7 @@ class ProjectsController < ApplicationController
     @project = Project.create(project_params)
     if @project.save
       redirect_to @project,
-        notice: "Projecto criado com sucesso!"
+        notice: "Project successfully created!"
     else
       render 'new'
     end
@@ -57,9 +59,9 @@ class ProjectsController < ApplicationController
   def ready
     @project = Project.find(params[:id])
     if @project.ready!
-      flash[:success] = "Projecto pronto para avançar! Parabéns!"
+      flash[:success] = "Congratulations! You're project is ready!"
     else
-      flash[:success] = "Erro!"
+      flash[:success] = "Error!"
     end
     redirect_to project_path(@project)
   end

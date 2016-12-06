@@ -1,96 +1,141 @@
-<div class="row-col ng-scope layout-fill">
-  <%= render 'projects/aside' %>
-  <div class="col-sm light">
-    <div ui-view="" class="padding fade-in ng-scope">
-      <div class="ng-scope">
-        <div class="list">
-          <% @projects.reverse.each do |project| %>
-          <div ng-repeat="inbox in inboxes" ng-class="labelClass(inbox.label)" class="list-item white box-shadow b-l b-l-3x ng-scope b-l-blue m-b-sm">
+<div class="jumbotron users-jumbotron home-bg no-radius box-shadow-z3 m-b-0" style="z-index:99999999999;">
+  <div class="container-fluid">
+    <h1 class="text-left m-b-0 text-white">Projects</h1>
+      <p class="text-left text-white text-md _300">A project can begin with only one person...</p>
+      <p class="text-left"><a class="btn btn-sm btn-outline text-uppercase text-sm b-white text-white b-2x _600"  data-toggle="modal" data-target="#new-project">Start a project</a></p>
+  </div>
+</div>
+<div class="">
+  <div class="row m-x-0 layout-fill">
+    <div class="col-xs-12 col-sm-4 col-md-3 white p-x-0">
+      <%= render 'projects/aside' %>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-9 light p-x-0 b-l b-3x" style="border-color:#f8f8f8;">
+      <div class="">
+        <% if true %>
+        <% @projects.reverse.each do |project| %>
+          <div class="list-item white p-a-md b-b">
             <div class="list-left">
-              <span class="w-40 avatar">
-                <% if project.closed? %>
+              <% if project.closed? %>
+                <span class="w-40 b-blue icon-lock text-lg text-muted light" style="border: 1px solid #bdbdbd; border-radius:50%;">
+              <% else %>
+                <span class="w-40 b-blue icon-lab text-lg text-accent" style="border: 1px solid #af94e0; border-radius:50%;">
+              <% end %>
+                <% if project.closed? and false %>
                   <span class="icon-lock up text-xs danger p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -10px; bottom: -10px;"></span>
                 <% end %>
+                <% if false %>
                 <%= image_tag("placeholder.png", :alt => "Project") %>
+                <% end %>
               </span>
             </div>
             <div class="list-body">
               <div class="pull-right text-xs">
-                <span class="hidden-xs ng-binding">
-                  <div class="btn-group">
-                    <a><i class="icon-bulb"></i>&nbsp;<span class="label rounded blue up"><%= project.ideas.count %></span></a>
-                    <a class="m-l-sm"><i class="icon-diamond"></i>&nbsp;<span class="label rounded blue up"><%= project.resources.count %></span></a>
-                    <a class="m-l-sm">&nbsp;<i class="icon-user"></i><span class="label rounded blue up"><%= project.appliances.count %></span></a>
-                  </div>
-                </span>
+                <div>
+                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                    <% if project.seeks_ideas? %>
+                      <i class="text-dark" style="font-style: normal !important;"><%= project.ideas.count %></i>
+                      <i class="blue _400 text-center icon-bulb"></i>
+                    <% else %>
+                      <i class="icon-bulb"></i>
+                      <i class="fa fa-ban nested"></i>
+                      <i class="fa fa-ban nested text-warning"></i>
+                    <% end %>
+                  </a>
+                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                    <% if project.seeks_resources? %>
+                      <i class="text-dark" style="font-style: normal !important;"><%= project.resources.count %></i>
+                      <i class="blue _400 text-center icon-diamond"></i>
+                    <% else %>
+                      <i class="icon-diamond"></i>
+                      <i class="fa fa-ban nested"></i>
+                      <i class="fa fa-ban nested text-warning"></i>
+                    <% end %>
+                  </a>
+                  <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                    <% if project.seeks_appliances? %>
+                      <i class="text-dark" style="font-style: normal !important;"><%= project.appliances.count %></i>
+                      <i class="blue _400 text-center icon-user"></i>
+                    <% else %>
+                      <i class="icon-user"></i>
+                      <i class="fa fa-ban nested"></i>
+                      <i class="fa fa-ban nested text-warning"></i>
+                    <% end %>
+                  </a>
+                </div>
               </div>
               <div>
-                <%= link_to project.title, project_path(project), class: "_500" %>
+                <%= link_to project.title, project_path(project), class: "_500 text-dark" %>
               </div>
-              <div class="text-ellipsis text-muted text-sm ng-binding"><%= project.about %></div>
+              <div class="text-muted text-sm ng-binding"><%= project.about %></div>
+              <a href="<%= project_path(project) %>" class="btn btn-xs btn-outline b-accent text-accent m-t">More</a>
             </div>
           </div>
-          <% end %>
-        </div>
+        <% end %>
+        <% end %>
       </div>
     </div>
-  <div>
   </div>
-  <div id="new-project" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false" style="display: none;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">New Project</h5>
-        </div>
-        <div class="modal-body text-center p-lg">
-          <% if user_signed_in? %>
-            <%= form_for Project.new do |p| %>
-              <%= p.hidden_field :user_id, :value => current_user.id %>
-              <div class="form-group">
-                <label for="project_title" class="control-label" style="color:#34495e;">Titulo</label>
-                <%= p.text_field :title, class: "form-control", type: "text" %>
-              </div>
-              <div class="form-group">
-                <label for="project_about" class="control-label" style="color:#34495e;">Breve Descrição</label>
-                <%= p.text_field :about, class: "form-control" %>
-              </div>
-              <div class="form-group">
-                <%= p.radio_button :state, 'opened' %>
-                <%= p.label :project_state, 'Aberto', :value => 'opened' %>
-                <%= p.radio_button :state, 'closed' %>
-                <%= p.label :project_state, 'Fechado', :value => 'closed' %>
-              </div>
-              <div class="form-group">
-                <%= p.label "Aceitar Ideias?" %>
-                <%= p.check_box :seeks_ideas %>
-              </div>
-              <div class="form-group">
-                <%= p.label "Aceitar Recursos?" %>
-                <%= p.check_box :seeks_resources %>
-              </div>
-              <div class="form-group">
-                <%= p.label "Aceitar Candidaturas?" %>
-                <%= p.check_box :seeks_appliances %>
-              </div>
-              <div class="b-t p-t text-right">
-                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancelar</button>
-                <%= p.submit 'Criar Projecto', :class => 'btn btn-success'  %>
-              </div>
-            <% end %>
-          <% else %>
-            <p class="text-center">
-              You have to be logged in to start a new project.<br>
-              Log in or register <%= link_to "here", register_path %> for free!
-            </p>
-            <div class="b-t p-t m-t text-right">
+</div>
 
-              <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn primary p-x-md" data-dismiss="modal">Login</button>
 
+
+
+
+<div id="new-project" class="modal gd-overlay ng-scope" data-backdrop="false" style="display: none;">
+  <div class="modal-dialog box-shadow-z3 no-radius">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Project <i class="icon-lab pull-right m-t-xs"></i></h5>
+      </div>
+      <div class="modal-body text-center p-a-0">
+        <% if user_signed_in? %>
+          <%= form_for Project.new do |p| %>
+            <%= p.hidden_field :user_id, :value => current_user.id %>
+            <div class="form-group text-left p-x p-t">
+              <label for="project_title" class="control-label text-sm text-dark">Title</label>
+              <%= p.text_field :title, class: "form-control", type: "text" %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_about" class="control-label text-sm text-dark">Description</label>
+              <%= p.text_field :about, class: "form-control" %>
+            </div>
+            <div class="form-group text-left p-x b-b p-b-md">
+              <label for="project_state" class="control-label block text-sm text-dark">Visibility</label>
+              <%= p.select(:state, options_for_select([['Open to everyone', 'opened'], ['By request', 'closed']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Ideas</span>?</label>
+              <%= p.select(:seeks_ideas, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Resources</span>?</label>
+              <%= p.select(:seeks_resources, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x p-b">
+              <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700 text-blue">Applications</span>?</label>
+              <%= p.select(:seeks_appliances, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
             </div>
 
+
+            <div class="b-t p-a text-right light">
+              <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+              <%= p.submit 'Start Project', :class => 'btn blue text-white'  %>
+            </div>
           <% end %>
-        </div>
+        <% else %>
+          <p class="text-center p-a-lg">
+            You have to be logged in to start a new project.<br>
+            Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+          </p>
+          <div class="b-t p-a text-right">
+            <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+            <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+            <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+          </div>
+
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,3 +1,99 @@
+<div class="jumbotron users-jumbotron home-bg no-radius box-shadow-z3 m-b-0" style="z-index:99999999999;">
+  <div class="container-fluid">
+    <h1 class="text-left m-b-0 text-white"><%= @project_entry.name %></h1>
+    <p class="text-left">
+      <% if user_signed_in? %>
+        <% if (current_user.id == @project_entry.user_id) %>
+          <div class="btn-group">
+            <a href="<%= edit_project_project_entry_path(@project_entry.project, @project_entry) %>" type="button" class="btn btn-xs btn-outline text-uppercase text-sm b-white text-white _300">Edit</a>
+            <%= link_to "Delete", project_project_entry_path(@project_entry.project, @project_entry), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-xs btn-outline text-uppercase text-sm b-white text-white _300" %>
+          </div>
+        <% end %>
+      <% end %>
+    </p>
+  </div>
+</div>
+<div class="list-item white box-shadow-z0 p-a-md b-l-blue m-b-0">
+  <div class="list-left">
+    <span class="w-40 avatar white" >
+      <%= image_tag(@project_entry.user.gravatar_url, :alt => "Project", :style => "", :class => "light box-shadow-z0" ) %>
+    </span>
+  </div>
+  <div class="list-body p-l-md">
+    <div class="text-muted text-sm ng-binding text-primary-hover">
+      Author
+    </div>
+    <div class="text-blue _700 text">
+      <%= @project_entry.user.name %>
+    </div>
+  </div>
+</div>
+
+<div class="list-item white box-shadow-z0 p-a-md b-l-blue m-b-0">
+  <div class="list-left">
+    <span class="w-40 avatar white" >
+      <span class="icon-lab v-m text-lg text-blue"></span>
+    </span>
+  </div>
+  <div class="list-body p-l-md">
+    <div class="text-muted text-sm ng-binding text-primary-hover">
+      Project
+    </div>
+    <div class="text-blue _700 text">
+      <%= @project_entry.project.title %>
+    </div>
+  </div>
+</div>
+
+<% unless @project_entry.project.closed? %>
+<div class="list-item white box-shadow-z0 p-a-md b-l-blue m-b-0">
+  <div class="list-left">
+    <span class="w-40 avatar white" >
+      <% if @project_entry.is_a?(Idea) %>
+        <span class="icon-bulb v-m text-lg text-blue"></span>
+      <% elsif @project_entry.is_a?(Resource) %>
+        <span class="icon-diamond v-m text-lg text-blue"></span>
+      <% elsif @project_entry.is_a?(Appliance) %>
+        <span class="icon-user v-m text-lg text-blue"></span>
+      <% end %>
+    </span>
+  </div>
+  <div class="list-body p-l-md">
+    <div class="text-muted text-sm ng-binding text-primary-hover">
+      Description
+    </div>
+    <div class="text text-primary-hover _400 text-dark">
+      <%= @project_entry.description %>
+    </div>
+  </div>
+</div>
+
+<div class="list-item white box-shadow-z0 p-a-md b-l-blue m-b-0">
+  <div class="list-left">
+    <span class="w-40 avatar white" style="">
+      <span class="icon-clip v-m text-lg text-blue"></span>
+    </span>
+  </div>
+  <div class="list-body p-l-md">
+    <div class="text-muted text-sm ng-binding text-primary-hover">
+      Attachement
+    </div>
+    <div class="text text-dark text-primary-hover">
+      <% if @project_entry.link? %><%= @project_entry.link %><% else %>None<% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<% if user_signed_in? %>
+  <% if (current_user.id == @project_entry.user_id) %>
+  <div class="col-xs-12" style="margin-top: 25px;">
+    <%= link_to "Editar", edit_project_project_entry_path(@project_entry.project, @project_entry), class: "btn btn-default"  %>
+    <%= link_to "Eliminar", project_project_entry_path(@project_entry.project, @project_entry), method: :delete, data: { confirm: 'Tens a certeza?' }, class: "btn btn-default" %>
+  </div>
+  <% end %>
+<% end %>
+
+
 <div class="jumbotron <% if @project_entry.is_a?(Idea) %>ideas-jumbotron<% elsif @project_entry.is_a?(Resource) %>resources-jumbotron<% end %>">
   <div class="container">
     <h1 class="text-center" style="margin-bottom:15px;">
@@ -8,7 +104,8 @@
       <% elsif @project_entry.is_a?(Appliance) %>
         <big class="icon-user" style="display: block;"></big>
       <% end %>
-      <%= @project_entry.name %></h1>
+      <%= @project_entry.name %>
+    </h1>
   </div>
 </div>
 <div class="container">

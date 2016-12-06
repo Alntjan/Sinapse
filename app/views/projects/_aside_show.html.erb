@@ -1,8 +1,95 @@
-<div class="col-sm w-xxl w-auto-xs b-r bg-auto white">
-  <div class="pos-rlt">
+<div class="col-xs-12 col-md-3 bg-auto white p-x-0">
+  <div class="row no-gutter text-blue-hover pos-abs">
+    <div class="col-xs-4 text-center p-y text-lg b-r b-b">
+      <a href="#" role="button" data-toggle="modal" data-target="#new-idea" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center text-lg no-shadow <% unless @project.seeks_ideas? || (user_signed_in? && current_user.id == @project.user_id)  %>disabled<% end %>">
+        <% if @project.seeks_ideas? || (user_signed_in? && current_user.id == @project.user_id) %>
+          <i class="text-accent _500 text-center icon-bulb text-lg"></i>
+          <i class="text-accent _300 text-center fa fa-plus text-lg"></i>
+        <% else %>
+          <i class="text-accent _500 text-center icon-bulb text-lg"></i>
+          <i class="fa fa-ban nested"></i>
+          <i class="fa fa-ban nested text-warning"></i>
+        <% end %>
+      </a>
+      <% if !@project.seeks_ideas? && user_signed_in? && current_user.id == @project.user_id %>
+        <i class="icon-key text-dark text text-muted" style="right:5px; bottom:5px; position: absolute;"></i>
+      <% end %>
+    </div>
+    <div class="col-xs-4 text-center p-y text-lg b-r b-b">
+      <a href="#" role="button" data-toggle="modal" data-target="#new-resource" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center no-shadow <% unless @project.seeks_resources? || (user_signed_in? && current_user.id == @project.user_id) %>disabled<% end %>">
+        <% if @project.seeks_resources? || (user_signed_in? && current_user.id == @project.user_id) %>
+          <i class="text-accent _500 text-center icon-diamond text-lg"></i>
+          <i class="text-accent _300 text-center fa fa-plus text-lg"></i>
+        <% else %>
+          <i class="text-accent _500 text-center icon-diamond text-lg"></i>
+          <i class="fa fa-ban nested fourtimes"></i>
+          <i class="fa fa-ban nested text-warning"></i>
+        <% end %>
+      </a>
+      <% if !@project.seeks_resources? && user_signed_in? && current_user.id == @project.user_id %>
+        <i class="icon-key text-dark text text-muted" style="right:5px; bottom:5px; position: absolute;"></i>
+      <% end %>
+    </div>
+    <div class="col-xs-4 text-center p-y b-b text-lg">
+      <a href="#" role="button" data-toggle="modal" data-target="#new-appliance" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center no-shadow <% unless @project.seeks_appliances? || (user_signed_in? && current_user.id == @project.user_id) %>disabled<% end %>">
+        <% if @project.seeks_appliances? || (user_signed_in? && current_user.id == @project.user_id) %>
+          <i class="text-accent _500 text-center icon-user text-lg"></i>
+          <i class="text-accent _300 text-center fa fa-plus text-lg"></i>
+        <% else %>
+          <i class="text-accent _500 text-center icon-user text-lg"></i>
+          <i class="fa fa-ban nested fourtimes"></i>
+          <i class="fa fa-ban nested text-warning"></i>
+        <% end %>
+      </a>
+      <% if !@project.seeks_appliances? && user_signed_in? && current_user.id == @project.user_id %>
+        <i class="icon-key text-dark text text-muted" style="right:5px; bottom:5px; position: absolute;"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="row no-gutter text-blue-hover pos-abs">
+    <div class="col-xs-4 text-center p-y text-lg b-r b-b">
+      <a href="" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center text-lg no-shadow"><span class="text-accent"><%= @project.ideas.count %></span><span style="color: #4a148c;">/<%= @project.accepted_ideas.count %></span></a>
+    </div>
+    <div class="col-xs-4 text-center p-y text-lg b-r b-b">
+      <a href="" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center text-lg no-shadow"><span class="text-accent"><%= @project.resources.count %></span><span style="color: #4a148c;">/<%= @project.accepted_resources.count %></span></a>
+    </div>
+    <div class="col-xs-4 text-center p-y b-b text-lg">
+      <a href="" class="btn btn-lg btn-icon btn-social rounded white btn-sm text-center text-lg no-shadow"><span class="text-accent"><%= @project.appliances.count %></span><span style="color: #4a148c;">/<%= @project.accepted_appliances.count %></span></a>
+    </div>
+  </div>
+
+
+
+
+  <% if user_signed_in? && current_user.id == @project.user_id %>
+  <div class="row no-gutter b-b">
+    <div class="col-xs-4 b-r text-blue-hover">
+      <a class="p-a block text-center">
+        <span class="text-muted text-lg m-v-sm inline" style="line-height:1.35;"><%= @project.pending_project_friendships.count %></span>
+        <span class="block text-xs text-muted"><%= "Request".pluralize(@project.pending_project_friendships.count) %></span>
+      </a>
+    </div>
+    <div class="col-xs-4 b-r text-blue-hover">
+      <a href="<%= edit_project_path(@project) %>" class="p-a block text-center" ui-toggle-class="">
+        <i class="icon-settings text-muted text-lg m-v-sm inline p-y-xs"></i>
+        <span class="block text-xs text-muted">Edit</span>
+      </a>
+    </div>
+    <div class="col-xs-4 text-blue-hover">
+      <a data-confirm="Are you sure?" class="p-a white block text-center" rel="nofollow" data-method="delete" href="<%= project_path(@project) %>">
+        <i class="icon-trash text-muted text-lg m-v-sm inline p-y-xs"></i>
+        <span class="block text-xs text-muted">Delete</span>
+      </a>
+    </div>
+  </div>
+  <% end %>
+
+
+
+  <div class="pos-rlt" style="display:none;">
     <h6 class="p-a m-a-0 text-blue text-primary-hover">
       <%= link_to @project.title, project_path(@project) %>
-      <span class="block text-xs text-muted m-t-sm text-dark"><% if @project.opened? %>Closed Project<% else %>Open Project<% end %></span>
+      <span class="block text-xs text-muted m-t-sm text-dark"><% if @project.opened? %>Open Project<% else %>Closed Project<% end %></span>
     </h6>
     <ul class="list inset m-a-0 light b-b b-t no-radius">
       <li class="list-item v-m">
@@ -41,7 +128,7 @@
         </a>
       </div>
     </div>
-    <div class="">
+    <div class="" style="">
       <div class="project">
         <% if user_signed_in? %>
           <% if (current_user.id == @project.user_id) %>

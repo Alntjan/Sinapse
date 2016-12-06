@@ -4,10 +4,11 @@ class IdeasController < ApplicationController
     @idea = @project.ideas.build(idea_params)
     @idea.user_id = current_user.id
     if @idea.save
-      flash[:success] = "Ideia submetida com sucesso!"
+      @idea.create_activity :create, owner: current_user, recipient: @project
+      flash[:success] = "Idea submitted successfully!"
       redirect_to project_path(@project)
     else
-      flash[:success] = "Erro!"
+      flash[:success] = "Error!"
     end
     # p = Project.find(params[:project_id])
     # p.ideas.create(idea_params)
@@ -17,7 +18,6 @@ class IdeasController < ApplicationController
   end
   def index
     @ideas = Idea.all
-
   end
   private
   def idea_params

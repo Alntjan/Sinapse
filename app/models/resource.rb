@@ -1,4 +1,6 @@
 class Resource < ProjectEntry
+  include PublicActivity::Common
+
   belongs_to :user
 
   state_machine :state, :initial => :pending do

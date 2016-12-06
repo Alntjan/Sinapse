@@ -1,9 +1,6 @@
-<div class="tab-pane" id="settings">
+<div class="tab-pane" id="requests">
   <div class="box">
-    <div class="box-header light b-b">
-      <h3>Settings</h3>
-    </div>
-    <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 %>
+    <% if user_signed_in? && current_user.id == @project.user_id && @project.project_entries.count > 0 && false %>
     <div>
       <div class="row no-gutter b-b">
         <div class="col-xs-4 b-r">
@@ -40,12 +37,51 @@
         </div>
         <div class="col-xs-4 b-r text-blue-hover">
           <%= link_to project_path(@project), :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "p-a block text-center" do %>
-            <i class="icon-trash text-muted text-lg m-v-sm inline"></i>
-            <span class="block">Delete</span>
+          <i class="icon-trash text-muted text-lg m-v-sm inline"></i>
+          <span class="block">Delete</span>
           <% end %>
         </div>
       </div>
     </div>
-  <% end %>
+    <% end %>
+    <% if @project.project_friendships.count > 0 %>
+    <% @project.project_friendships.each do |friendship| %>
+    <div class="list-item white box-shadow-z0 p-a-md b-l-primary m-b-0">
+      <div class="list-left">
+        <div class="list-left pos-rlt">
+          <span class="w-40 avatar b-primary" style="border-width: 1px;">
+            <%= image_tag(friendship.user.gravatar_url, :alt => "Project", :style => "", :class => "light box-shadow-z0" ) %>
+          </span>
+          <% if friendship.pending? %>
+          <span class="fa fa-clock-o up text-white text-xs warn p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
+          <% else %>
+          <span class="fa fa-check up text-white text-xs primary p-a-xs rounded box-shadow-z3 pos-abt _800" style="left: -7px; bottom: -7px;"></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="list-body">
+        <div class="pull-right v-m p-y-sm">
+          <% if friendship.pending? %>
+          <%= form_for [@project, friendship], url: accept_project_project_friendship_path(@project, friendship), :html => {:class => 'form-inline', :style => 'display: inline-block;'}, method: :put do |form| %>
+          <div class="form-group">
+            <%= form.submit 'Accept?', :class => 'btn btn-xs white'  %>
+          </div>
+          <% end %>
+          <% else %>
+
+          <% end %>
+        </div>
+        <div class="text-dark">
+          <span class="text-blue _500"><%= friendship.user.name %></span><% if friendship.pending? %> asked for your permission to join the project.<% end %>
+        </div>
+        <div class="text-ellipsis text-sm ng-binding text-primary-hover">
+          <small class="text-muted"><%= time_ago_in_words(friendship.created_at) %></small>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <% else %>
+      <p class="p-a-md">This project has no requests yet.</p>
+    <% end %>
   </div>
 </div>

@@ -18,7 +18,7 @@ body{
   animation-delay: 3s;
   animation-duration: 2s;
   position: absolute;
-  top: 4rem;
+  top: 0.25rem;
   right: 0.25rem;
 }
 .layout-fill {
@@ -36,6 +36,31 @@ background: -ms-linear-gradient(top, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53
 background: linear-gradient(to bottom, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3498db', endColorstr='#9c59b6', GradientType=0 );
 }
+.home-bg-h{
+  background: rgba(255,255,255,1);
+background: -moz-linear-gradient(left, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(52,152,219,1)), color-stop(100%, rgba(156,89,182,0.53)));
+background: -webkit-linear-gradient(left, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
+background: -o-linear-gradient(left, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
+background: -ms-linear-gradient(left, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
+background: linear-gradient(to right, rgba(52,152,219,1) 0%, rgba(156,89,182,0.53) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3498db', endColorstr='#9c59b6', GradientType=0 );
+}
+
+.nested {
+position: absolute;
+top: 0;
+left: 0;
+font-size: 200%;
+color: #a88add;
+opacity: 0.6;
+}
+
+.nested.fourtimes {
+  font-size: 400%;
+}
+
+
 // $clouds: #ecf0f1;
 // $wet: #34495e;
 // $pomegranate: #c0392b;

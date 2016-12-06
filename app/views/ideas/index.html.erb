@@ -1,29 +1,86 @@
-<div class="jumbotron ideas-jumbotron">
-  <div class="container">
-    <h1 class="text-center"><big class="icon-bulb" style="display: block;"></big>
-      Ideias</h1>
-    <p class="text-center"><small>Um projecto pode começar com uma ideia...</small></p>
-    <p class="text-center"><a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a></p>
+<div class="jumbotron users-jumbotron home-bg no-radius box-shadow-z3 m-b-0" style="z-index:99999999999;">
+  <div class="container-fluid">
+    <h1 class="text-left m-b-0 text-white">Ideas</h1>
+      <p class="text-left text-white text-md _300">A project can begin with only one idea...</p>
+      <p class="text-left"><a class="btn btn-sm btn-outline text-uppercase text-sm b-white text-white b-2x _600"  data-toggle="modal" data-target="#new-project">Start a project</a></p>
   </div>
 </div>
 <% @ideas.reverse.each do |idea| %>
   <% unless idea.project.closed? %>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="media project-entrie">
-          <div class="media-left media-middle">
-            <a href="<%= project_path(idea.project_id) %>">
-              <span class="icon-bulb"></span>
-            </a>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading"><%= link_to idea.name, project_path(idea.project_id) %></h4>
-            <small>Ideia de <%= link_to idea.user.name, user_path(idea.user) %> em  <%= link_to "#{idea.project.title}" , project_path(idea.project_id) %></small>
-          </div>
-        </div>
+  <div class="list-item white box-shadow-z0 p-a-md b-l-blue m-b-0">
+    <div class="list-left">
+      <span class="w-40 avatar white b-blue" style="border-width: 1px; border-style: solid; border-radius:50%;">
+        <span class="icon-bulb v-m text-lg text-blue"></span>
+      </span>
+    </div>
+    <div class="list-body">
+      <div class="text-blue">
+        <%= link_to idea.name, project_project_entry_path(idea.project_id, idea.id), class: "_500" %>
+      </div>
+      <div class="text-ellipsis text-sm ng-binding text-primary-hover">
+        <%= link_to idea.user.name, user_path(idea.user_id), class: "link" %> in <%= link_to "#{idea.project.title}" , project_path(idea.project_id) %><small class="text-muted m-l-sm"><%= time_ago_in_words(idea.created_at) %></small>
       </div>
     </div>
   </div>
   <% end %>
 <% end %>
+<div id="new-project" class="modal gd-overlay ng-scope" data-backdrop="false" style="display: none;">
+  <div class="modal-dialog box-shadow-z3 no-radius">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Project <i class="icon-lab pull-right m-t-xs"></i></h5>
+      </div>
+      <div class="modal-body text-center p-a-0">
+        <% if user_signed_in? %>
+          <%= form_for Project.new do |p| %>
+            <%= p.hidden_field :user_id, :value => current_user.id %>
+            <div class="form-group text-left p-x p-t">
+              <label for="project_title" class="control-label text-sm text-dark">Title</label>
+              <%= p.text_field :title, class: "form-control", type: "text" %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_about" class="control-label text-sm text-dark">Description</label>
+              <%= p.text_field :about, class: "form-control" %>
+            </div>
+            <div class="form-group text-left p-x b-b p-b-md">
+              <label for="project_state" class="control-label block text-sm text-dark">Visibility</label>
+              <%= p.select(:state, options_for_select([['Open to everyone', 'opened'], ['By request', 'closed']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Ideas</span>?</label>
+              <%= p.select(:seeks_ideas, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Resources</span>?</label>
+              <%= p.select(:seeks_resources, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x p-b">
+              <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700 text-blue">Applications</span>?</label>
+              <%= p.select(:seeks_appliances, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+
+
+            <div class="b-t p-a text-right light">
+              <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+              <%= p.submit 'Start Project', :class => 'btn blue text-white'  %>
+            </div>
+          <% end %>
+        <% else %>
+        <p class="text-center p-a-lg">
+          You have to be logged in to start a new project.<br>
+          Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+        </p>
+        <div class="b-t p-a text-right">
+          <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+          <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+          <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+        </div>
+
+
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

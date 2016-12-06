@@ -6,5 +6,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @entries = @user.project_entries
     @entries = @entries.type(params[:type]) if params[:type].present?
+    @projects = @user.projects
   end
 end

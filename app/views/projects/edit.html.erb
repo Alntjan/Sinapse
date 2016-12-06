@@ -1,46 +1,56 @@
-<div class="container" style="padding-top:25px;">
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-      <div class="jumbotron projects-jumbotron" style="padding:25px; margin:0; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom:0;">
-        <div class="container">
-          <h1 class="text-center" style="margin:0;"><big class="icon-lab" style="display: block;"></big>
-            Edição do Projecto</h1>
-        </div>
-      </div>
-      <div class="project">
-
-
-        <%= form_for :project, url: project_path(@project), method: :patch do |f| %>
-
-          <% if @project.errors.any? %>
-            <div id="error_explanation">
-              <h2>
-                <%= pluralize(@project.errors.count, "error") %> prohibited
-                this article from being saved:
-              </h2>
-              <ul>
-                <% @project.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-                <% end %>
-              </ul>
-            </div>
+<div class="jumbotron users-jumbotron home-bg-h no-radius box-shadow-z3 m-b-0 p-y-md" style="z-index:99999999999;">
+  <div class="container-fluid">
+    <h1 class="text-left text-white m-b-0">Edit Project</h1>
+  </div>
+</div>
+<div class="project white">
+  <%= form_for :project, url: project_path(@project), method: :patch do |f| %>
+    <% if @project.errors.any? %>
+      <div id="error_explanation" class=" danger box-shadow-z0 m-b">
+        <p class="text-white p-a m-b-0">
+          <%= pluralize(@project.errors.count, "error") %> prohibited your Project from being saved:
+        </h2>
+        <ul class="list-group m-b text-danger no-radius">
+          <% @project.errors.full_messages.each do |msg| %>
+            <li class="list-group-item">
+              <div class="block _500">
+                  <%= msg %>
+              </div>
+            </li>
           <% end %>
-
-          <div class="form-group">
-            <%= label_tag(:title, "Titulo") %><br>
-            <%= f.text_field :title, class: "form-control"  %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag(:about, "Descrição") %><br>
-            <%= f.text_area :about, class: "form-control"  %>
-          </div>
-            <%= f.submit 'Editar Projecto', :class => 'btn btn-primary btn-block' %>
-
-        <% end %>
-        <hr>
-        <%= link_to 'Voltar', project_path %>
+        </ul>
       </div>
+    <% end %>
+    <div class="form-group text-dark p-x-md p-t-md">
+      <%= label_tag(:title, "Title") %><br>
+      <%= f.text_field :title, class: "form-control"  %>
+    </div>
+
+        <div class="form-group text-dark p-x-md">
+          <%= label_tag(:about, "Description") %><br>
+          <%= f.text_area :about, class: "form-control"  %>
+        </div>
+        <div class="form-group text-left p-x-md">
+          <label for="project_state" class="control-label block text-dark">Visibility</label>
+          <%= f.select(:state, options_for_select([['Open to everyone', 'opened'], ['By request', 'closed']], @project.state), {}, { :class => 'form-control' }) %>
+        </div>
+        <div class="form-group text-left p-x-md">
+          <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700">Ideas</span>?</label>
+          <%= f.select(:seeks_ideas, options_for_select([['Yes', 'true'], ['No', 'false']], @project.seeks_ideas), {}, { :class => 'form-control' }) %>
+        </div>
+        <div class="form-group text-left p-x-md">
+          <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700">Resources</span>?</label>
+          <%= f.select(:seeks_resources, options_for_select([['Yes', 'true'], ['No', 'false']], @project.seeks_resources), {}, { :class => 'form-control' }) %>
+        </div>
+        <div class="form-group text-left p-x-md p-b-md">
+          <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700">Applications</span>?</label>
+          <%= f.select(:seeks_appliances, options_for_select([['Yes', 'true'], ['No', 'false']], @project.seeks_appliances), {}, { :class => 'form-control' }) %>
+        </div>
+        <div class="light p-a-md box-shadow-z0">
+          <%= f.submit 'Editar Projecto', :class => 'btn text-uppercase text-sm text-white blue _600' %>
+          <a href="<%= project_path %>" class="btn text-uppercase text-sm white m-l-xs text-dark _600">Cancel</a>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

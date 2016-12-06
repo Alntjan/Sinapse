@@ -1,0 +1,38 @@
+<div class="col-sm-12 col-md-4 m-t">
+  <div class="box">
+    <div class="box-header">
+      <span class="label success pull-right">5</span>
+      <h3>Activity</h3>
+      <small>10 members update their activies.</small>
+    </div>
+    <div class="box-body">
+      <div class="streamline b-l m-b m-l">
+        <% @activities.each do |activity| %>
+        <!-- <% if activity.recipient %>
+
+        <% if activity.recipient.project_friendships.where(user_id: current_user, state: "accepted") %>
+          sim
+        <% end %>
+        <% activity.recipient.project_friendships.each do |friendship| %>
+         <%= friendship.inspect %>
+         <%= friendship.user.name %>
+        <% end %>
+
+          <% end %> -->
+        <div class="sl-item">
+          <div class="sl-left">
+            <img src="<%= activity.owner.gravatar_url if activity.owner %>" class="img-circle white b-a">
+          </div>
+          <div class="sl-content text-dark">
+            <strong><%= link_to activity.owner.name, activity.owner if activity.owner %></strong>
+            <span class="m-l-sm sl-date text-muted"><%= time_ago_in_words(activity.created_at) %></span>
+            <div class="text-dark">
+              <%= render_activity activity %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

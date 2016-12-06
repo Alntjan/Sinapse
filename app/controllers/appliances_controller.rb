@@ -4,10 +4,10 @@ class AppliancesController < ApplicationController
     @appliance = @project.appliances.build(appliance_params)
     @appliance.user_id = current_user.id
     if @appliance.save
-      flash[:success] = "Candidatura submetida com sucesso!"
+      flash[:success] = "Applied successfully!"
       redirect_to project_path(@project)
     else
-      flash[:success] = "Já te candidatas-te a este projecto!"
+      flash[:success] = "You already applied for this project."
     end
   end
 

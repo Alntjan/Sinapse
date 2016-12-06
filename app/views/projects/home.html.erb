@@ -1,6 +1,6 @@
-<div class="home-bg text-center dark">
+<div class="home-bg text-center dark layout-fill">
   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <svg width="200px" height="200px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="m-t-lg">
+  <svg class="m-t-lg" width="200px" height="200px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="m-t-lg">
       <!-- Generator: Sketch 3.8.2 (29753) - http://www.bohemiancoding.com/sketch -->
       <title>Artboard 3 Copy 2</title>
       <desc>Created with Sketch.</desc>
@@ -20,13 +20,88 @@
       </g>
   </svg>
   <h1 class="text-center text-u-c _800 text-white maven" id="sinapse-title">Synapse</h1>
-  <p class="general-stats text-center">
-    <%= @projects.count %><span class="icon-lab"></span>
-    <%= @ideas.count %><span class="icon-bulb"></span>
-    <%= @resources.count %><span class="icon-diamond"></span>
-    <%= @appliances.count %><span class="icon-user" style="position:relative;"><small style="position: absolute; right: -5px; top:-5px; font-size: 0.7em;"><%= @users.count %></small></span>
+  <p class="general-stats text-center m-t m-b-0 text-dark-hover">
+    <a href="/ideas" class="btn btn-icon rounded btn-outline text-lg" title="Facebook" style="z-index:1;"><i class="icon-bulb"></i></a>
+    <a href="/resources" class="btn btn-icon rounded btn-outline text-lg" title="Facebook"><i class="icon-diamond"></i></a>
+    <a href="/users" class="btn btn-icon rounded btn-outline text-lg" title="Facebook"><i class="icon-user"></i></a>
+    <a href="/projects" class="btn btn-icon rounded btn-outline text-lg" title="Facebook"><i class="icon-lab"></i></a>
   </p>
-  <p>
-    <a href="/projects" class="btn btn-primary home-cta">começar projecto</a>
+  <p class="general-stats text-center m-t-0" style="display:none;">
+    <a href="/ideas" class="btn btn-icon rounded btn-outline b-white" title="Facebook" style="margin-top: -5px; z-index: 0;"><%= @ideas.count %></a>
+    <a href="/resources" class="btn btn-icon rounded btn-outline b-white" title="Facebook" style="margin-top: -5px; z-index: 0;"><%= @resources.count %></a>
+    <a href="/users" class="btn btn-icon rounded btn-outline b-white" title="Facebook" style="margin-top: -5px; z-index: 0;"><%= @appliances.count %></a>
+    <a href="/projects" class="btn btn-icon rounded btn-outline b-white" title="Facebook" style="margin-top: -5px; z-index: 0;"></a>
   </p>
+  <p class="m-y-md">
+    <a data-toggle="modal" data-target="#new-project" class="btn box-shadow-z3 text-uppercase primary home-cta">Start Project</a>
+  </p>
+</div>
+<div class="app-footer">
+  <div class="p-a text-xs text-center text-muted text-white">
+      <img src="https://cdn.shopify.com/s/files/1/0266/9827/files/nova.png?5400875958694030377" alt="" class="w-40 block m-b-sm" /><br />
+      © Copyright <strong>Synapse</strong> <span class="hidden-xs-down">- Built with Love - Beta Version</span>
+    </div>
+  </div>
+</div>
+
+<div id="new-project" class="modal gd-overlay ng-scope" data-backdrop="false" style="display: none;">
+  <div class="modal-dialog box-shadow-z3 no-radius">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Project <i class="icon-lab pull-right m-t-xs"></i></h5>
+      </div>
+      <div class="modal-body text-center p-a-0">
+        <% if user_signed_in? %>
+          <%= form_for Project.new do |p| %>
+            <%= p.hidden_field :user_id, :value => current_user.id %>
+            <div class="form-group text-left p-x p-t">
+              <label for="project_title" class="control-label text-sm text-dark">Title</label>
+              <%= p.text_field :title, class: "form-control", type: "text" %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_about" class="control-label text-sm text-dark">Description</label>
+              <%= p.text_field :about, class: "form-control" %>
+            </div>
+            <div class="form-group text-left p-x b-b p-b-md">
+              <label for="project_state" class="control-label block text-sm text-dark">Visibility</label>
+              <%= p.select(:state, options_for_select([['Open to everyone', 'opened'], ['By request', 'closed']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Ideas</span>?</label>
+              <%= p.select(:seeks_ideas, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x">
+              <label for="project_state" class="control-label block text" style="color:#34495e;">Are you accepting <span class="_700 text-blue">Resources</span>?</label>
+              <%= p.select(:seeks_resources, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+            <div class="form-group text-left p-x p-b">
+              <label for="project_state" class="control-label block text text-dark">Are you accepting <span class="_700 text-blue">Applications</span>?</label>
+              <%= p.select(:seeks_appliances, options_for_select([['Yes', 'true'], ['No', 'false']], 1), {}, { :class => 'form-control' }) %>
+            </div>
+
+
+            <div class="b-t p-a text-right light">
+              <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+              <%= p.submit 'Start Project', :class => 'btn blue text-white'  %>
+            </div>
+          <% end %>
+        <% else %>
+        <p class="text-center p-a-lg">
+          You have to be logged in to start a new project.<br>
+          Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+        </p>
+        <div class="b-t p-a text-right">
+          <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+          <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+          <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+        </div>
+
+
+
+
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

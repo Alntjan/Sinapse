@@ -1,0 +1,7 @@
+updated
+<% if activity.trackable %>
+<span class="text-primary">
+  <%= link_to activity.trackable.name, project_project_entry_path(activity.trackable.project, activity.trackable) %></span> an idea on <span class="text-blue"><%= link_to activity.trackable.project.title, activity.trackable.project %></span>.
+<% else %>
+ja nao ha
+<% end %>

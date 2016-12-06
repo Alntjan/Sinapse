@@ -1,4 +1,7 @@
 class Appliance < ProjectEntry
+  include PublicActivity::Model
+  tracked
+
   belongs_to :user
 
   state_machine :state, :initial => :pending do

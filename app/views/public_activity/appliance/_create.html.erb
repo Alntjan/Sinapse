@@ -1,0 +1,6 @@
+applied to
+  <% if activity.trackable %>
+    to <%= link_to activity.recipient.title, activity.recipient, class: "text-blue _600" %>.
+  <% else %>
+    removed the application to <%= link_to activity.recipient.title, activity.recipient, class: "text-blue _600" if activity.recipient %>.
+  <% end %>

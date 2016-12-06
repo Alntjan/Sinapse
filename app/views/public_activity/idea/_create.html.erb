@@ -1,0 +1,6 @@
+added an
+  <% if activity.trackable %>
+    <%= link_to "idea", project_project_entry_path(activity.recipient, activity.trackable) if activity.trackable %> to <%= link_to activity.recipient.title, activity.recipient, class: "text-blue _600" %>.
+  <% else %>
+    idea to <%= link_to activity.recipient.title, activity.recipient, class: "text-blue _600" if activity.recipient %> which has since been removed.
+  <% end %>

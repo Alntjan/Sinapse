@@ -16,9 +16,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="app">
   <%= render '/layouts/aside' %>
   <div id="content" class="app-content box-shadow-z0 ng-scope" role="main">
-    <%= render '/layouts/navbar' %>
+
     <div class="app-body pos-rlt layout-fill">
       <% flash.each do |type, message| %>
         <div class="alert <%= flash_class type %> <%= type %> alert-dismissible text-center animated fadeOut" role="alert">
@@ -28,7 +29,8 @@
       <% end %>
       <%= yield %>
 
+    </div>
   </div>
-</div>
+  </div>
 </body>
 </html>

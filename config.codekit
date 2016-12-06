@@ -1,16 +1,7 @@
 {
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
-"creatorBuild": "19115",
+"creatorBuild": "19127",
 "files": {
-	"\/app\/assets\/css\/application.css": {
-		"fileType": 16,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/app\/assets\/css\/application.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/app\/assets\/images\/placeholder.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -21,6 +12,19 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
+		},
+	"\/app\/assets\/javascripts\/activities.coffee": {
+		"createSourceMap": 0,
+		"fileType": 32,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/assets\/javascripts\/activities.coffee",
+		"minifyOutput": 1,
+		"outputAbbreviatedPath": "\/app\/assets\/javascripts\/activities.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 1
 		},
 	"\/app\/assets\/javascripts\/appliances.coffee": {
 		"createSourceMap": 0,
@@ -148,6 +152,22 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 1
 		},
+	"\/app\/assets\/stylesheets\/activities.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 10,
+		"fileType": 4,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/activities.scss",
+		"outputAbbreviatedPath": "\/css\/activities.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 0,
+		"shouldRunBless": 0,
+		"useLibsass": 0
+		},
 	"\/app\/assets\/stylesheets\/animate.min.css": {
 		"fileType": 16,
 		"ignore": 0,
@@ -183,7 +203,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/appliances.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/appliances.css",
+		"outputAbbreviatedPath": "\/css\/appliances.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -199,7 +219,7 @@
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/application.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/application.css",
+		"outputAbbreviatedPath": "\/css\/application.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -215,7 +235,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/ideas.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/ideas.css",
+		"outputAbbreviatedPath": "\/css\/ideas.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -231,7 +251,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/project_entries.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/project_entries.css",
+		"outputAbbreviatedPath": "\/css\/project_entries.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -247,7 +267,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/project_friendships.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/project_friendships.css",
+		"outputAbbreviatedPath": "\/css\/project_friendships.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -263,7 +283,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/projects.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/projects.css",
+		"outputAbbreviatedPath": "\/css\/projects.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -279,7 +299,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/resources.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/resources.css",
+		"outputAbbreviatedPath": "\/css\/resources.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -295,7 +315,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/scaffolds.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/scaffolds.css",
+		"outputAbbreviatedPath": "\/css\/scaffolds.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -311,7 +331,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/statuses.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/statuses.css",
+		"outputAbbreviatedPath": "\/css\/statuses.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -327,13 +347,22 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/app\/assets\/stylesheets\/users.scss",
-		"outputAbbreviatedPath": "\/app\/assets\/css\/users.css",
+		"outputAbbreviatedPath": "\/css\/users.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
 		"useLibsass": 0
+		},
+	"\/app\/views\/activities\/index.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/activities\/index.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
 		},
 	"\/app\/views\/devise\/confirmations\/new.html.erb": {
 		"fileType": 8192,
@@ -641,6 +670,78 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/app\/views\/public_activity\/appliance\/_create.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/appliance\/_create.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/appliance\/_destroy.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/appliance\/_destroy.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/idea\/_create.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/idea\/_create.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/idea\/_destroy.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/idea\/_destroy.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/idea\/_update.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/idea\/_update.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/project_entry\/_create.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/project_entry\/_create.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/resource\/_create.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/resource\/_create.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/app\/views\/public_activity\/resource\/_destroy.html.erb": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/app\/views\/public_activity\/resource\/_destroy.html.erb",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/app\/views\/resources\/index.html.erb": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -713,6 +814,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/config.rb": {
+		"fileType": 131072,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/config.rb",
+		"outputAbbreviatedPath": "\/config.rb",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/public\/404.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -769,7 +879,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/vendor\/assets\/stylesheets\/icons.css.scss",
-		"outputAbbreviatedPath": "\/vendor\/assets\/css\/icons.css.css",
+		"outputAbbreviatedPath": "\/css\/icons.css.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -787,10 +897,10 @@
 	"bowerAbbreviatedPath": "",
 	"displayValue": "sye",
 	"displayValueWasSetByUser": 0,
-	"iconImageName": "brackets_yellow"
+	"iconImageName": "brackets_blue"
 	},
 "projectSettings": {
-	"alwaysUseExternalServer": 1,
+	"alwaysUseExternalServer": 0,
 	"animateCSSInjections": 1,
 	"autoApplyPSLanguageSettingsStyle": 0,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
@@ -944,7 +1054,7 @@
 	"coffeeMinifyOutput": 1,
 	"coffeeOutputStyle": 0,
 	"coffeeSyntaxCheckerStyle": 1,
-	"externalServerAddress": "http:\/\/localhost:5000",
+	"externalServerAddress": "http:\/\/localhost:8888",
 	"externalServerPreviewPathAddition": "",
 	"genericWebpageFileExtensionsString": "html, htm, shtml, shtm, xhtml, php, jsp, asp, aspx, erb, ctp",
 	"hamlAutoOutputPathEnabled": 1,
@@ -1421,7 +1531,7 @@
 	"typescriptJSXMode": 0,
 	"typescriptMinifyOutput": 0,
 	"typescriptModuleResolutionType": 0,
-	"typescriptModuleType": 0,
+	"typescriptModuleType": 2,
 	"typescriptNoImplicitAny": 0,
 	"typescriptPreserveConstEnums": 0,
 	"typescriptRemoveComments": 0,

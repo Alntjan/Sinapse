@@ -1,36 +1,38 @@
-<div class="container" style="padding-top:25px;">
+<div class="container-fluid layout-fill p-t-lg home-bg">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-      <div class="jumbotron projects-jumbotron" style="padding:25px; margin:0; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom:0;">
+      <div class="p-a text-white">
         <div class="container">
-          <h1 class="text-center" style="margin:0;"><big class="icon-key" style="display: block;"></big>
+          <h1 class="text-center" style="margin:0;">
             Login</h1>
         </div>
       </div>
       <div class="project">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="form-group">
-            <%= f.label :email %><br />
+            <%= f.label :email, class: "text-white" %><br />
             <%= f.email_field :email, autofocus: true, class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <%= f.label :password %><br />
+            <%= f.label :password, class: "text-white"  %><br />
             <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <%= f.submit "Entrar", :class => 'btn btn-primary btn-block' %>
+            <%= f.submit "Login", :class => 'btn blue btn-block box-shadow-z0' %>
           </div>
           <% if devise_mapping.rememberable? -%>
-            <div class="form-group">
+            <div class="form-group text-center text-white m-b-0">
               <%= f.check_box :remember_me %>
               <%= f.label :remember_me %>
             </div>
           <% end -%>
         <% end %>
         <hr>
-        <%= render "devise/shared/links" %>
+        <div class="text-center">
+          <%= render "devise/shared/links" %>
+        </div>
       </div>
     </div>
   </div>

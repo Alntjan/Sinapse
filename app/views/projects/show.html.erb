@@ -1,147 +1,233 @@
-<div class="row-col ng-scope layout-fill">
-  <%= render 'projects/aside_show' %>
-  <div class="col-sm-12">
-    <div class="p-a light clearfix nav-active-primary top b-b b-grey-500">
-      <ul class="nav nav-pills nav-sm no-borders">
-        <% if (@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>
-          <li class="nav-item" aria-expanded="false">
-            <a class="nav-link active text-sm" href="" data-toggle="tab" data-target="#feed" aria-expanded="true">Feed</a>
+<div class="jumbotron users-jumbotron home-bg no-radius box-shadow-z3 m-b-0" style="z-index:99999999999;">
+  <div class="container-fluid">
+    <h1 class="text-left m-b text-white"><%= @project.title %></h1>
+    <p class="text-left text-white text-md _300 m-b-0"><%= @project.about %></p>
+    <ul class="list inset m-a-0 no-radius">
+      <li class="list-item v-m p-x-0">
+        <a herf="<%= user_path(@project.user) %>" class="list-left p-r-xs">
+          <span class="w-32 avatar">
+            <%= image_tag(@project.user.gravatar_url, :alt => "Project", :class => "" ) %>
+          </span>
+        </a>
+        <div class="list-body v-m m-l">
+          <div class="m-t-sm text-ellipsis">
+            <a href="<%= user_path(@project.user) %>" class="v-b m-l-sm text-white _700"><%= @project.user.name %></a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="">
+  <div class="row m-x-0 layout-fill">
+    <div class="col-xs-12 col-md-4 col-lg-3 white p-x-0">
+      <%= render 'projects/aside_show' %>
+    </div>
+    <div class="col-xs-12 col-md-8 col-lg-9 p-x-0 b-l white">
+      <div class="p-a-sm white clearfix nav-active-primary top b-b b-grey-500">
+        <ul class="nav nav-pills nav-sm no-borders">
+          <% if (@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>
+          <li class="nav-item m-r-sm dropdown inline" aria-expanded="false">
+            <a class="nav-link white" href="" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-filter text-muted"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-scale blue">
+              <a class="dropdown-item <% unless params[:type].present? %>active _600<% end %>" href="<%= project_path() %>">
+                All
+                <% unless params[:type].present? %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
+              </a>
+              <a class="dropdown-item <% if (params[:type].present? and params[:type] == "Idea") %>active _600<% end %>" href="<%= project_path(type: "Idea") %>">
+                Ideas
+                <% if (params[:type].present? and params[:type] == "Idea") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
+              </a>
+              <a class="dropdown-item <% if (params[:type].present? and params[:type] == "Resource") %>active _600<% end %>" href="<%= project_path(type: "Resource") %>">
+                Resources
+                <% if (params[:type].present? and params[:type] == "Resource") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
+              </a>
+              <a class="dropdown-item <% if (params[:type].present? and params[:type] == "Appliance") %>active _600<% end %>" href="<%= project_path(type: "Appliance") %>">
+                Appliances
+                <% if (params[:type].present? and params[:type] == "Appliance") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
+              </a>
+            </div>
           </li>
-        <% end %>
-        <li class="nav-item">
-          <a class="nav-link text-sm <% if !(@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>active<% end %>" href="" data-toggle="tab" data-target="#messages" aria-expanded="false">Messages</a>
-        </li>
-        <% if user_signed_in? && current_user.id == @project.user_id %>
+          <li class="nav-item" aria-expanded="false">
+            <a class="nav-link active" href="" data-toggle="tab" data-target="#feed" aria-expanded="true">Feed</a>
+          </li>
+          <% end %>
           <li class="nav-item">
+            <a class="nav-link text-sm <% if !(@project.opened? || (user_signed_in? && ((current_user.id == @project.user_id) || (@project.closed? && @project_friendship.present? && @project_friendship.accepted?)))) %>active<% end %>" href="" data-toggle="tab" data-target="#messages" aria-expanded="false">Messages</a>
+          </li>
+          <% if user_signed_in? && current_user.id == @project.user_id %>
+          <li class="nav-item" style="display:none;">
             <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#settings" aria-expanded="false">Settings</a>
           </li>
+          <% if @project.closed? %>
+          <li class="nav-item">
+            <a class="nav-link text-sm p-r-0" href="" data-toggle="tab" data-target="#requests" aria-expanded="false">Requests<b class="label rounded danger up"><%= @project.pending_project_friendships.count %></b></a>
+          </li>
+          <% end %>
           <li class="nav-item">
             <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#stats" aria-expanded="false">Stats</a>
           </li>
-        <% end %>
-        <!-- <li class="nav-item">
-          <a class="nav-link text-sm" href="" data-toggle="tab" data-target="#tab_3" aria-expanded="false">Ideas</a>
-        </li>
-        <li class="nav-item text-sm"><a class="nav-link" href="" data-toggle="tab" data-target="#tab_4" aria-expanded="false">Resources</a>
-        </li> -->
-      </ul>
-    </div>
-    <div class="p-a light layout-fill">
-      <%= render 'projects/content' %>
-    </div>
-  </div>
-
-<!-- Modal New Appliance -->
-<div id="new-appliance" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-      <% if user_signed_in? %>
-        Estamos prestes a submeter a tua candidatura a este projecto.<br>Tens a certeza?
-      <% else %>
-        <p class="text-center" style="margin:0;">
-          Tens que estar registado para começar projectos!<br>
-          Regista-te <%= link_to "aqui", register_path %>, é fácil!
-        </p>
-      <% end %>
-      </div>
-      <% if user_signed_in? %>
-      <div class="modal-footer" style="background-color: #ecf0f1;">
-        <%= form_for [@project, Appliance.new] do |f| %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-          <% if current_user == @project.user %>
-            <%= f.hidden_field :state, :value => 'accepted' %>
-          <% else %>
-            <%= f.hidden_field :state, :value => 'pending' %>
           <% end %>
-          <%= f.submit 'Sim, quero candidatar-me!', :class => 'btn btn-primary btn-block'  %>
-        <% end %>
-      <% end %>
+    </ul>
+  </div>
+  <div class="p-a-0 light layout-fill">
+    <%= render 'projects/content' %>
+  </div>
+</div>
+</div>
+<!-- Modal New Appliance -->
+<div id="new-appliance" class="modal gd-overlay ng-scope m-t-lg" data-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Application <i class="icon-user pull-right m-t-xs"></i></h5>
       </div>
+      <div class="modal-body text-left p-a-lg text-md">
+        <% if user_signed_in? %>
+         You're applying for this project.<br>Are you sure?
+        <% else %>
+        <p class="text-center p-a-lg">
+          You have to be logged in to start a new project.<br>
+          Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+        </p>
+        <div class="b-t p-a text-right">
+          <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+          <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+          <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+        </div>
+
+
+        <% end %>
+      </div>
+      <% if user_signed_in? %>
+        <%= form_for [@project, Appliance.new] do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <% if current_user == @project.user %>
+        <%= f.hidden_field :state, :value => 'accepted' %>
+        <% else %>
+        <%= f.hidden_field :state, :value => 'pending' %>
+        <% end %>
+        <div class="b-t p-a text-right light">
+          <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Yes, i want to apply!', :class => 'btn blue text-white'  %>
+        </div>
+
+        <% end %>
+        <% end %>
     </div>
   </div>
 </div>
 <!-- Modal New Resource -->
-<div id="new-resource" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
+<div id="new-resource" class="modal gd-overlay" data-backdrop="false">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Resource <i class="icon-diamond pull-right m-t-xs"></i></h5>
+      </div>
+      <div class="modal-body p-a-0">
         <% if user_signed_in? %>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
-
         <%= form_for [@project, Resource.new] do |f| %>
-          <%= f.hidden_field :user_id %>
-          <% if current_user == @project.user %>
-            <%= f.hidden_field :state, :value => 'accepted' %>
-          <% else %>
-            <%= f.hidden_field :state, :value => 'pending' %>
-          <% end %>
-          <div class="form-group">
-            <label for="name" class="control-label" style="color:#34495e;">Titulo</label>
-            <%= f.text_field :name, class: "form-control", type: "text" %>
-          </div>
-          <div class="form-group">
-            <label for="description" class="control-label" style="color:#34495e;">Breve Descrição</label>
-            <%= f.text_field :description, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <label for="link" class="control-label" style="color:#34495e;">Link Anexo</label>
-            <%= f.text_field :link, class: "form-control" %>
-          </div>
-          <%= f.submit 'Submeter Recurso', :class => 'btn btn-primary btn-block'  %>
+        <%= f.hidden_field :user_id %>
+        <% if current_user == @project.user %>
+        <%= f.hidden_field :state, :value => 'accepted' %>
+        <% else %>
+        <%= f.hidden_field :state, :value => 'pending' %>
+        <% end %>
+        <div class="form-group p-x p-t">
+          <label for="name" class="control-label text-dark">Title</label>
+          <%= f.text_field :name, class: "form-control", type: "text" %>
+        </div>
+        <div class="form-group p-x">
+          <label for="description" class="control-label text-dark">Short Description</label>
+          <%= f.text_field :description, class: "form-control" %>
+        </div>
+        <div class="form-group p-x">
+          <label for="link" class="control-label text-dark">Attachment Link</label>
+          <%= f.text_field :link, class: "form-control" %>
+        </div>
+        <div class="b-t p-a text-right light">
+          <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Submit Resource!', :class => 'btn blue text-white'  %>
+        </div>
+
         <% end %>
         <% else %>
-          <p class="text-center" style="margin:0;">
-            Tens que estar registado para começar projectos!<br>
-            Regista-te <%= link_to "aqui", register_path %>, é fácil!
-          </p>
+        <p class="text-center p-a-lg">
+          You have to be logged in to start a new project.<br>
+          Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+        </p>
+        <div class="b-t p-a text-right">
+          <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+          <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+          <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+        </div>
+
+
         <% end %>
       </div>
       <!-- <div class="modal-footer" style="background-color: #ecf0f1;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div> -->
-    </div>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    </div> -->
   </div>
 </div>
+</div>
 <!-- Modal New Idea -->
-<div id="new-idea" class="modal black-overlay ng-scope m-t-lg" data-backdrop="false">
+<div id="new-idea" class="modal gd-overlay" data-backdrop="false">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
+    <div class="modal-content no-radius">
+      <div class="modal-header home-bg-h">
+        <h5 class="modal-title text-white">New Idea <i class="icon-bulb pull-right m-t-xs"></i></h5>
+      </div>
+      <div class="modal-body p-a-0">
         <% if user_signed_in? %>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="margin-top:-10px;">&times;</span></button>
 
         <%= form_for [@project, Idea.new] do |p| %>
-          <%= p.hidden_field :user_id %>
-          <% if current_user == @project.user %>
-            <%= p.hidden_field :state, :value => 'accepted' %>
-          <% else %>
-            <%= p.hidden_field :state, :value => 'pending' %>
-          <% end %>
-          <div class="form-group">
-            <label for="recipient-name" class="control-label" style="color:#34495e;">Titulo</label>
-            <%= p.text_field :name, class: "form-control", type: "text" %>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label" style="color:#34495e;">Breve Descrição</label>
-            <%= p.text_field :description, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <label for="link" class="control-label" style="color:#34495e;">Link Anexo</label>
-            <%= p.text_field :link, class: "form-control" %>
-          </div>
-          <%= p.submit 'Submeter Ideia', :class => 'btn btn-primary btn-block'  %>
+        <%= p.hidden_field :user_id %>
+        <% if current_user == @project.user %>
+        <%= p.hidden_field :state, :value => 'accepted' %>
+        <% else %>
+        <%= p.hidden_field :state, :value => 'pending' %>
+        <% end %>
+        <div class="form-group p-x p-t">
+          <label for="recipient-name" class="control-label" style="color:#34495e;">Title</label>
+          <%= p.text_field :name, class: "form-control", type: "text" %>
+        </div>
+        <div class="form-group p-x">
+          <label for="message-text" class="control-label" style="color:#34495e;">Short Description</label>
+          <%= p.text_field :description, class: "form-control" %>
+        </div>
+        <div class="form-group p-x">
+          <label for="link" class="control-label" style="color:#34495e;">Attachement Link</label>
+          <%= p.text_field :link, class: "form-control" %>
+        </div>
+        <div class="b-t p-a text-right light">
+          <button type="button" class="btn dark-white p-x-md box-shadow-z0 m-r-sm" data-dismiss="modal">Cancel</button>
+          <%= p.submit 'Submit Idea!', :class => 'btn blue text-white'  %>
+        </div>
+
         <% end %>
         <% else %>
-          <p class="text-center" style="margin:0;">
-            Tens que estar registado para começar projectos!<br>
-            Regista-te <%= link_to "aqui", register_path %>, é fácil!
-          </p>
+        <p class="text-center p-a-lg">
+          You have to be logged in to start a new project.<br>
+          Log in or <%= link_to "register", register_path, class: "text-primary" %> for free!
+        </p>
+        <div class="b-t p-a text-right">
+          <a type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</a>
+          <a href="<%= register_path %>" type="button" class="btn blue p-x-md pull-left">Register</a>
+          <a href="<%= login_path %>" type="button" class="btn accent p-x-md">Login</a>
+
+        </div>
+
+
         <% end %>
       </div>
       <!-- <div class="modal-footer" style="background-color: #ecf0f1;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div> -->
-    </div>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    </div> -->
   </div>
+</div>
 </div>

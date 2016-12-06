@@ -4,10 +4,11 @@ class ResourcesController < ApplicationController
     @resource = @project.resources.build(resource_params)
     @resource.user_id = current_user.id
     if @resource.save
-      flash[:success] = "Recurso submetido com sucesso!"
+      @resource.create_activity :create, owner: current_user, recipient: @project
+      flash[:success] = "Resource submitted successfully!"
       redirect_to project_path(@project)
     else
-      flash[:success] = "Erro!"
+      flash[:success] = "Error!"
     end
 
     # p = Project.find(params[:project_id])

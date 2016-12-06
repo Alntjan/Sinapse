@@ -1,44 +1,58 @@
-<div class="col-sm w w-auto-xs b-r bg-auto white">
-  <div class="p-a-sm pos-rlt">
-    <div>
-      <button class="btn btn-sm white pull-right hidden-sm-up" ui-toggle-class="show" target="#inbox-menu"><i class="fa fa-bars"></i></button>
-      <a class="btn btn-sm btn-block text-white primary" data-toggle="modal" data-target="#new-project">New Project</a>
-    </div>
-    <div class="hidden-xs-down m-t" id="inbox-menu">
-      <div class="nav-active-danger">
+<div class="b-b p-a">
+  <a class="btn btn-sm btn-block text-primary b-2x _600 b-primary btn-outline" data-toggle="modal" data-target="#new-project">New Project</a>
+</div>
+
+<div class="p-a white">
+  <div class="p-a-0 pos-rlt">
+    <div class="" id="inbox-menu">
+      <div class="b-b p-b-sm">
+
+      <div class="nav-active-primary" style="">
         <div class="nav nav-pills nav">
-          <a class="nav-link ng-binding ng-scope"  ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/">
+          <a class="nav-link <% unless params[:state].present? %>active _600<% end %>" href="<%= projects_path() %>">
+            All
+            <% unless params[:state].present? %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
+          </a>
+          <a class="nav-link <% if (params[:state].present? and params[:state] == "opened") %>active _600<% end %>" href="<%= projects_path(state: "opened") %>">
             Open
+            <% if (params[:state].present? and params[:state] == "opened") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/starred">
+          <a class="nav-link <% if (params[:state].present? and params[:state] == "closed") %>active _600<% end %>" href="<%= projects_path(state: "closed") %>">
             Closed
+            <% if (params[:state].present? and params[:state] == "closed") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link <% if (params[:state].present? and params[:state] == "completed") %>active _600<% end %>" href="<%= projects_path(state: "completed") %>">
             Completed
+            <% if (params[:state].present? and params[:state] == "completed") %><i class="fa fa-check pull-right m-t-xs text-white"></i><% end %>
           </a>
         </div>
       </div>
-      <div class="nav-active-white m-t">
+    </div>
+
+      <div class="hidden-xs-down nav-active-white m-t">
         <div class="nav nav-pills nav">
-          <a class="nav-link ng-binding ng-scope"  ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/">
+          <a class="label blue-grey text-white" href="">
+            Coming Soon
+          </a>
+          <a class="nav-link disabled"  ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/">
             Art
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/starred">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/starred">
             Economy
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
             Engineering
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
             Health
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
             Sport
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
             Law
           </a>
-          <a class="nav-link ng-binding ng-scope" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
+          <a class="nav-link disabled" ui-sref="app.inbox.list({fold:fold.filter})" ng-repeat="fold in folds" ui-sref-active="active" href="#/app/inbox/inbox/sent">
             Social Sciences
           </a>
         </div>

@@ -1,54 +1,41 @@
-<div class="jumbotron users-jumbotron">
-  <div class="container text-center">
-    <%= image_tag(@user.gravatar_url, :alt => "Project", :style => "height: 150px; display: block;  background-color:#f9f9fa; margin-top:25px; border-radius:10px;", :class => "center-block" ) %>
-    <h1 class="text-center"><%= @user.name %></h1>
-    <ul class="user-summary" style="color: #ecf0f1; margin-top:10px;">
+<div class="jumbotron home-bg m-b-0 no-radius">
+  <div class="container-fluid text-left">
+    <%= image_tag(@user.gravatar_url, :alt => "Project", :style => "", :class => "w-128 r-2x box-shadow-z0 white" ) %>
+    <h1 class="text-left text-white p-t"><%= @user.name %></h1>
+    <h6 style="display:none;"><% @user.project_friendships.each do |friendship| %>
+          <%= friendship.project_id %>
+        <% end %>
+    <% current_user.project_friendships.each do |friendship| %>
+          <%= friendship.project_id %>
+        <% end %>
+    </h6>
+    <ul class="user-summary" style="color: #ecf0f1; margin-top:10px; display: none;">
       <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>
       <li><%= @user.ideas.count %><span class="icon-bulb"></span></li>
       <li><%= @user.resources.count %><span class="icon-diamond"></span></li>
       <li><%= @user.appliances.count %><span class="icon-user"></span></li>
     </ul>
-    <p class="text-center">
-      <a class="btn btn-primary btn-sm" href="/projects" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;">Começar Projecto</a>
+    <p class="text-left">
       <% if user_signed_in? %>
         <% if (current_user.id == @user.id) %>
-          <a class="btn btn-primary btn-sm" href="<%= edit_user_registration_path %>" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;margin-left:10px;">Editar Perfil</a>
-          <a class="btn btn-danger btn-sm" href="<%= logout_path %>" style="text-transform: uppercase; font-weight: 700;font-size: 0.7em; border: none;margin-left:10px;"><span class="icon-trash"></span></a>
+          <div class="btn-group">
+            <a href="<%= edit_user_registration_path %>" type="button" class="btn btn-xs btn-outline text-uppercase text-sm b-white text-white _300">Edit</a>
+            <a href="<%= logout_path %>" type="button" class="btn btn-xs btn-outline text-uppercase text-sm b-white text-white _300">Logout</a>
+          </div>
         <% end %>
       <% end %>
     </p>
-    <p class="text-center"><small><%= @user.description %></small></p>
+    <p class="text-left m-b-0 text-white _300 text-md"><small><%= @user.description %></small></p>
+
   </div>
 </div>
+  <div class="p-y-0 text-center row">
 
 
 
 
 
 
-<!-- <div class="jumbotron">
-  <div class="container text-center">
-    <%= image_tag("placeholder.png", :alt => "Project", :style => "height: 150px; display: block; padding: 35px 25px; background-color:#f9f9fa; border: 1px solid #ecf0f1; margin-top:25px;", :class => "center-block" ) %>
-    <h1 class="text-center"><%= @user.name %></h1>
-    <ul class="user-summary">
-      <li><%= @user.projects.uniq.count %><span class="icon-lab"></span></li>
-      <li><%= @user.ideas.count %><span class="icon-bulb"></span></li>
-      <li><%= @user.resources.count %><span class="icon-diamond"></span></li>
-      <li><%= @user.appliances.count %><span class="icon-user"></span></li>
-    </ul>
-    <p class="text-center">
-    </p>
-    <p class="user-description text-center"><%= @user.description %></p>
-  </div>
-</div> -->
-<h4 class="hidden">
-  Entries<br>
-  <small><%= pluralize(@user.project_entries.count, 'entrada', 'entradas') %><br>
-  <%= pluralize(@user.ideas.count, 'ideia', 'ideias') %><br>
-  <%= pluralize(@user.resources.count, 'recurso', 'recursos') %><br>
-  <%= pluralize(@user.projects.uniq.count, 'projecto', 'projectos') %></small>
-</h4>
-<div class="container" style="padding-bottom:200px;">
   <div class="row">
     <div class="col-md-12">
       <% if @user.project_entries.count > 0 %>
@@ -132,44 +119,3 @@
       <% end %>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>User</th>
-      <th>Type</th>
-      <th>Inspect</th>
-    </tr>
-  </thead>
-  <% @user.project_entries.each do |entry| %>
-  <tr>
-    <td><%= link_to entry.name, project_project_entry_path(entry.project, entry.id) %></td>
-    <td><%= entry.description %></td>
-    <td><%= link_to entry.project.title, project_path(entry.project) %></td>
-    <td><%= entry.type %></td>
-    <td><small><%= entry.inspect %></small></td>
-  </tr>
-  <% end %>
-</table>
-
-<h4>Projects in wich the user is envolved</h4>
-<% @user.projects.uniq.each do |p| %>
-  <%= p.title %><br>
-
-<% end %> -->

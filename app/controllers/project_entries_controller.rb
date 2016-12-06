@@ -10,9 +10,9 @@ class ProjectEntriesController < ApplicationController
     @project = Project.find(params[:project_id])
     @project_entry = @project.project_entries.find(params[:id])
     if @project_entry.accept!
-      flash[:success] = "Selecionada!"
+      flash[:success] = "Accepted!"
     else
-      flash[:success] = "Erro!"
+      flash[:success] = "Error!"
     end
     redirect_to project_path(@project)
   end
@@ -35,6 +35,7 @@ class ProjectEntriesController < ApplicationController
     @project_entry = ProjectEntry.find(params[:id])
 
     if @project_entry.update(project_entrie_params)
+      @project_entry.create_activity :update, owner: current_user
       redirect_to project_project_entry_path(@project_entry.project, @project_entry)
     else
       render 'edit'
@@ -42,10 +43,12 @@ class ProjectEntriesController < ApplicationController
   end
 
   def destroy
+    @project = Project.find(params[:project_id])
     @project_entry = ProjectEntry.find(params[:id])
-    @project_entry.destroy
-
-    redirect_to project_path(@project_entry.project)
+    @project_entry.create_activity :destroy, owner: current_user, recipient: @project
+    if @project_entry.destroy
+      redirect_to project_path(@project_entry.project)
+    end
   end
 
   private

@@ -1,10 +1,10 @@
-<div class="container" style="padding-top:25px;">
+<div class="container-fluid layout-fill p-t-lg home-bg">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-      <div class="jumbotron projects-jumbotron" style="padding:25px; margin:0; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom:0;">
+      <div class="p-a text-white">
         <div class="container">
-          <h1 class="text-center" style="margin:0;"><big class="icon-pen" style="display: block;"></big>
-            Registar</h1>
+          <h1 class="text-center" style="margin:0;">
+            Register</h1>
         </div>
       </div>
       <div class="project">
@@ -12,39 +12,41 @@
           <%= devise_error_messages! %>
 
           <div class="form-group">
-            <label for="" class="control-label">Nome</label>
+            <label for="" class="control-label text-white text-white">Name</label>
             <%= f.text_field :name, autofocus: true, class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <label for="" class="control-label">Descrição</label>
+            <label for="" class="control-label text-white">About</label>
             <%= f.text_field :description, autofocus: true, class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <label for="" class="control-label">Email</label>
+            <label for="" class="control-label text-white">Email</label>
             <%= f.email_field :email, autofocus: true, class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <label for="" class="control-label">Password</label>
+            <label for="" class="control-label text-white">Password</label>
             <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> caracteres no mínimo)</em>
+            <em class="text-white">(<%= @minimum_password_length %> characters minimum)</em>
             <% end %><br />
             <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <label for="" class="control-label">Confirmação de Password</label>
+            <label for="" class="control-label text-white">Password Confirmation</label>
             <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
           </div>
 
           <div class="form-group">
-            <%= f.submit "Registar", :class => 'btn btn-primary btn-block'   %>
+            <%= f.submit "Register", :class => 'btn blue btn-block box-shadow-z0'   %>
           </div>
         <% end %>
         <hr>
-        <%= render "devise/shared/links" %>
+        <div class="text-center">
+          <%= render "devise/shared/links" %>
+        </div>
       </div>
     </div>
   </div>
