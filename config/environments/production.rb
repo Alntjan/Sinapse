@@ -87,8 +87,8 @@ Rails.application.configure do
     domain: "mail.google.com",####important
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "oliveiracatarino88@gmail.com",
-    password: "tiwpbjwtecewnadv"
+    user_name: "suporte.synapse@gmail.com", ###oliveiracatarino88@gmail.com
+    password: "Synapse#2015" ###tiwpbjwtecewnadv
 }
 
 
