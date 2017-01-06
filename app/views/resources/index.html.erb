@@ -2,7 +2,13 @@
   <div class="container-fluid">
     <h1 class="text-left m-b-0 text-white">Resources</h1>
       <p class="text-left text-white text-md _300">A project can begin with only one resource...</p>
-      <p class="text-left"><a class="btn btn-sm btn-outline text-uppercase text-sm b-white text-white b-2x _600"  data-toggle="modal" data-target="#new-project">Start a project</a></p>
+      <p class="text-left">
+        <a class="btn btn-sm btn-outline text-uppercase text-sm b-white text-white b-2x _600"  data-toggle="modal" data-target="#new-project">Start a project</a>
+        <a href="/howto" class="m-l-xs btn btn-icon btn-social accent">
+          <i class="fa fa-question"></i>
+          <i class="fa fa-question"></i>
+        </a>
+      </p>
   </div>
 </div>
 <% @resources.reverse.each do |resource| %>

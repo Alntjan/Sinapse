@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get 'ideas' => 'ideas#index'
   get 'resources' => 'resources#index'
   root to: "projects#home"
+  get 'howto' => 'projects#howto'
 
   # Example resource route with options:
   #   resources :products do
